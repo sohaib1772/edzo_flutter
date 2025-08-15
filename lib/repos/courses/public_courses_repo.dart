@@ -1,0 +1,102 @@
+import 'package:dio/dio.dart';
+import 'package:edzo/core/network/api_result.dart';
+import 'package:edzo/core/network/error_handler.dart';
+import 'package:edzo/core/network/main_api.dart';
+import 'package:edzo/models/add_course_model.dart';
+import 'package:edzo/models/code_model.dart';
+import 'package:edzo/models/course_model.dart';
+import 'package:edzo/models/upload_video_model.dart';
+import 'package:edzo/models/video_model.dart';
+
+class PublicCoursesRepo {
+  MainApi mainApi;
+  PublicCoursesRepo(this.mainApi);
+
+  Future<ApiResult> getCourses() async {
+    try {
+      var res = await mainApi.getPublicCourses();
+
+      return ApiResult<List<CourseModel>>(
+        status: true,
+        message: "تم الحصول على الدورات بنجاح",
+        data: res.data,
+      );
+    } on DioException catch (e) {
+      return ApiResult(
+        status: false,
+        message: e.response?.data["message"] ?? "حدث خطأ في جلب الدورات",
+        error: e,
+        data: null,
+        errorHandler: ErrorHandler.fromJson(e.response?.data),
+      );
+    }
+  }
+
+  Future<ApiResult> getCoursesByTitle(String title) async {
+    try {
+      var res = await mainApi.getPublicCoursesByTitle(title);
+
+      return ApiResult<List<CourseModel>>(
+        status: true,
+        message: "تم الحصول على الدورات بنجاح",
+        data: res.data,
+      );
+    } on DioException catch (e) {
+      return ApiResult(
+        status: false,
+        message: e.response?.data["message"] ?? "حدث خطأ في جلب الدورات",
+        error: e,
+        data: null,
+        errorHandler: ErrorHandler.fromJson(e.response?.data),
+      );
+    }
+  }
+
+ 
+  
+  
+
+  Future<ApiResult> getTeacherCoursesById(int id) async {
+    try {
+      var res = await mainApi.getPublicTeacherCoursesById(id);
+
+      return ApiResult(
+        status: true,
+        message: "تم الحصول على دورات المدرس بنجاح",
+        data: res.data,
+      );
+    } on DioException catch (e) {
+      return ApiResult(
+        status: false,
+        message:
+            e.response?.data["message"] ??
+            "حدث خطاء في جلب الدورات المشترك بها",
+        error: e,
+        data: null,
+        errorHandler: ErrorHandler.fromJson(e.response?.data),
+      );
+    }
+  }
+
+  
+
+  Future<ApiResult<List<VideoModel>>> getCourseVideos(int id) async {
+    try {
+      var res = await mainApi.getPublicCourseVideos(id);
+      return ApiResult<List<VideoModel>>(
+        status: true,
+        message: "تم الحصول على الفيديو بنجاح",
+        data: res.data,
+      );
+    } on DioException catch (e) {
+      return ApiResult(
+        status: false,
+        message: e.response?.data["message"] ?? "حدث خطاء في جلب الفيديو",
+        error: e,
+        data: null,
+        errorHandler: ErrorHandler.fromJson(e.response?.data ?? {}),
+      );
+    }
+  }
+
+}
