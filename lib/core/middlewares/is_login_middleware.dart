@@ -1,5 +1,5 @@
-import 'package:edzo/core/constance/app_router_keys.dart';
-import 'package:edzo/core/services/app_services.dart';
+import 'package:Edzo/core/constance/app_router_keys.dart';
+import 'package:Edzo/core/services/app_services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 

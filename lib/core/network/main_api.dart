@@ -1,16 +1,16 @@
 import 'package:dio/dio.dart';
-import 'package:edzo/core/constance/app_constance.dart';
-import 'package:edzo/models/add_course_model.dart';
-import 'package:edzo/models/auth/email_verification_model.dart';
-import 'package:edzo/models/auth/login_model.dart';
-import 'package:edzo/models/auth/register_model.dart';
-import 'package:edzo/models/auth/reset_password_model.dart';
-import 'package:edzo/models/code_model.dart';
-import 'package:edzo/models/course_model.dart';
-import 'package:edzo/models/teacher_info_model.dart';
-import 'package:edzo/models/teachers_response_model.dart';
-import 'package:edzo/models/user_model.dart';
-import 'package:edzo/models/video_model.dart';
+import 'package:Edzo/core/constance/app_constance.dart';
+import 'package:Edzo/models/add_course_model.dart';
+import 'package:Edzo/models/auth/email_verification_model.dart';
+import 'package:Edzo/models/auth/login_model.dart';
+import 'package:Edzo/models/auth/register_model.dart';
+import 'package:Edzo/models/auth/reset_password_model.dart';
+import 'package:Edzo/models/code_model.dart';
+import 'package:Edzo/models/course_model.dart';
+import 'package:Edzo/models/teacher_info_model.dart';
+import 'package:Edzo/models/teachers_response_model.dart';
+import 'package:Edzo/models/user_model.dart';
+import 'package:Edzo/models/video_model.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'main_api.g.dart';
@@ -115,19 +115,36 @@ abstract class MainApi {
     @Part() MultipartFile image,
   );
 
+  //old add video
+  // @POST("courses/videos")
+  // @MultiPart()
+  // Future<void> uploadVideo(
+  //   @Part(name: "course_id") int courseId,
+  //   @Part(name: "title") String title,
+  //   @Part(name: "is_paid") bool isPaid,
+  //   @Part(name: "file") MultipartFile file,
+  //   @Part(name: "resumableChunkNumber") int chunkNumber,
+  //   @Part(name: "resumableTotalChunks") int totalChunks,
+  //   @Part(name: "resumableFilename") String filename,
+  //   @Part(name: "resumableIdentifier") String identifier,
+  //   @Part(name: "resumableTotalSize") int totalSize,
+  //   @Part(name: "resumableChunkSize") int chunkSize,
+  // );
+
+  // new add video
   @POST("courses/videos")
-  @MultiPart()
-  Future<void> uploadVideo(
-    @Part(name: "course_id") int courseId,
-    @Part(name: "title") String title,
-    @Part(name: "is_paid") bool isPaid,
-    @Part(name: "file") MultipartFile file,
-    @Part(name: "resumableChunkNumber") int chunkNumber,
-    @Part(name: "resumableTotalChunks") int totalChunks,
-    @Part(name: "resumableFilename") String filename,
-    @Part(name: "resumableIdentifier") String identifier,
-    @Part(name: "resumableTotalSize") int totalSize,
-    @Part(name: "resumableChunkSize") int chunkSize,
+  Future<void> uploadVideo(@Body() Map<String, dynamic> data);
+
+  @GET("/get-video/{course_id}/{video_id}")
+  Future<VideoModel> getVideo(
+    @Path("course_id") int courseId,
+    @Path("video_id") int videoId,
+  );
+
+  @GET("public/get-video/{course_id}/{video_id}")
+  Future<VideoModel> getPublicVideo(
+    @Path("course_id") int courseId,
+    @Path("video_id") int videoId,
   );
 
 

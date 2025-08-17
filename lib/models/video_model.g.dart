@@ -20,7 +20,7 @@ Map<String, dynamic> _$VideosResponseModelToJson(
 VideoModel _$VideoModelFromJson(Map<String, dynamic> json) => VideoModel(
   id: (json['id'] as num?)?.toInt(),
   title: json['title'] as String?,
-  url: json['path'] as String?,
+  url: json['url'] as String?,
   isPaid: json['is_paid'] as bool?,
   courseId: (json['course_id'] as num?)?.toInt(),
 );
@@ -29,7 +29,7 @@ Map<String, dynamic> _$VideoModelToJson(VideoModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
-      'path': instance.url,
       'is_paid': instance.isPaid,
       'course_id': instance.courseId,
+      'url': instance.url,
     };

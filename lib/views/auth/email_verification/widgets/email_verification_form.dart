@@ -1,9 +1,9 @@
-import 'package:edzo/controllers/auth/email_verification_controller.dart';
-import 'package:edzo/controllers/auth/login_controller.dart';
-import 'package:edzo/controllers/auth/register_controller.dart';
-import 'package:edzo/core/helpers/app_form_validator.dart';
-import 'package:edzo/core/widgets/app_text_button.dart';
-import 'package:edzo/core/widgets/app_text_form.dart';
+import 'package:Edzo/controllers/auth/email_verification_controller.dart';
+import 'package:Edzo/controllers/auth/login_controller.dart';
+import 'package:Edzo/controllers/auth/register_controller.dart';
+import 'package:Edzo/core/helpers/app_form_validator.dart';
+import 'package:Edzo/core/widgets/app_text_button.dart';
+import 'package:Edzo/core/widgets/app_text_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';

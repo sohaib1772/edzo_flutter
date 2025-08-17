@@ -1,9 +1,9 @@
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:edzo/core/constance/app_router_keys.dart';
-import 'package:edzo/core/helpers/device_info.dart';
-import 'package:edzo/models/auth/login_model.dart';
-import 'package:edzo/repos/auth/email_verification_repo.dart';
-import 'package:edzo/repos/auth/login_repo.dart';
+import 'package:Edzo/core/constance/app_router_keys.dart';
+import 'package:Edzo/core/helpers/device_info.dart';
+import 'package:Edzo/models/auth/login_model.dart';
+import 'package:Edzo/repos/auth/email_verification_repo.dart';
+import 'package:Edzo/repos/auth/login_repo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

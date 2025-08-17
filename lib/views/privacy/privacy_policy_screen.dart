@@ -1,4 +1,4 @@
-import 'package:edzo/core/widgets/scaffold/app_scaffold.dart';
+import 'package:Edzo/core/widgets/scaffold/app_scaffold.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

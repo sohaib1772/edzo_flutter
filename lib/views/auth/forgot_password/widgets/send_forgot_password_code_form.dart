@@ -1,7 +1,7 @@
-import 'package:edzo/controllers/auth/forgot_password_controller.dart';
-import 'package:edzo/core/helpers/app_form_validator.dart';
-import 'package:edzo/core/widgets/app_text_button.dart';
-import 'package:edzo/core/widgets/app_text_form.dart';
+import 'package:Edzo/controllers/auth/forgot_password_controller.dart';
+import 'package:Edzo/core/helpers/app_form_validator.dart';
+import 'package:Edzo/core/widgets/app_text_button.dart';
+import 'package:Edzo/core/widgets/app_text_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';

@@ -1,12 +1,12 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:edzo/core/helpers/role_helper.dart';
-import 'package:edzo/core/helpers/session_helper.dart';
-import 'package:edzo/core/services/app_services.dart';
-import 'package:edzo/models/course_model.dart';
-import 'package:edzo/repos/courses/courses_repo.dart';
-import 'package:edzo/repos/teacher_repo.dart';
+import 'package:Edzo/core/helpers/role_helper.dart';
+import 'package:Edzo/core/helpers/session_helper.dart';
+import 'package:Edzo/core/services/app_services.dart';
+import 'package:Edzo/models/course_model.dart';
+import 'package:Edzo/repos/courses/courses_repo.dart';
+import 'package:Edzo/repos/teacher_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide MultipartFile;
 import 'package:image_picker/image_picker.dart';

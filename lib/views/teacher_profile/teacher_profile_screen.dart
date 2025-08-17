@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:edzo/controllers/teacher_profile_controller.dart';
-import 'package:edzo/core/constance/app_constance.dart';
-import 'package:edzo/core/widgets/course_card_loading_skeleton.dart';
-import 'package:edzo/core/widgets/course_card_widget.dart';
-import 'package:edzo/core/widgets/scaffold/app_scaffold.dart';
+import 'package:Edzo/controllers/teacher_profile_controller.dart';
+import 'package:Edzo/core/constance/app_constance.dart';
+import 'package:Edzo/core/widgets/course_card_loading_skeleton.dart';
+import 'package:Edzo/core/widgets/course_card_widget.dart';
+import 'package:Edzo/core/widgets/scaffold/app_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';

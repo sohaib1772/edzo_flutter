@@ -1,4 +1,4 @@
-import 'package:edzo/core/helpers/role_helper.dart';
+import 'package:Edzo/core/helpers/role_helper.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -34,7 +34,7 @@ class LocalStorage {
   }
 
   static Future<bool> getTheme() async {
-    return sharedPreferences.getBool('isDarkMode') ?? false;
+    return sharedPreferences.getBool('isDarkMode') ?? true;
   }
 
   static Future<void> saveLastChunkNumber(String key,int lastChunkNumber) async {

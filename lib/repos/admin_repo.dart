@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:edzo/core/network/api_result.dart';
-import 'package:edzo/core/network/main_api.dart';
-import 'package:edzo/models/teachers_response_model.dart';
-import 'package:edzo/models/user_model.dart';
+import 'package:Edzo/core/network/api_result.dart';
+import 'package:Edzo/core/network/main_api.dart';
+import 'package:Edzo/models/teachers_response_model.dart';
+import 'package:Edzo/models/user_model.dart';
 
 class AdminRepo{
   MainApi mainApi;

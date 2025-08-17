@@ -1,9 +1,9 @@
 
 import 'package:dio/dio.dart';
-import 'package:edzo/core/network/api_result.dart';
-import 'package:edzo/core/network/error_handler.dart';
-import 'package:edzo/core/network/main_api.dart';
-import 'package:edzo/models/teacher_info_model.dart';
+import 'package:Edzo/core/network/api_result.dart';
+import 'package:Edzo/core/network/error_handler.dart';
+import 'package:Edzo/core/network/main_api.dart';
+import 'package:Edzo/models/teacher_info_model.dart';
 
 class TeacherRepo {
   MainApi mainApi;

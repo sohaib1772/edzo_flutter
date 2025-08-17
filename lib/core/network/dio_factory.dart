@@ -1,6 +1,6 @@
 
 import 'package:dio/dio.dart';
-import 'package:edzo/core/helpers/local_storage.dart';
+import 'package:Edzo/core/helpers/local_storage.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class DioFactory {

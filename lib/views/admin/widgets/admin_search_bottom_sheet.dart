@@ -1,6 +1,6 @@
-import 'package:edzo/controllers/admin_controller.dart';
-import 'package:edzo/core/helpers/role_helper.dart';
-import 'package:edzo/core/widgets/app_text_form.dart';
+import 'package:Edzo/controllers/admin_controller.dart';
+import 'package:Edzo/core/helpers/role_helper.dart';
+import 'package:Edzo/core/widgets/app_text_form.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_popup/flutter_popup.dart';

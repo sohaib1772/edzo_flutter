@@ -672,39 +672,14 @@ class _MainApi implements MainApi {
   }
 
   @override
-  Future<void> uploadVideo(
-    int courseId,
-    String title,
-    bool isPaid,
-    MultipartFile file,
-    int chunkNumber,
-    int totalChunks,
-    String filename,
-    String identifier,
-    int totalSize,
-    int chunkSize,
-  ) async {
+  Future<void> uploadVideo(Map<String, dynamic> data) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = FormData();
-    _data.fields.add(MapEntry('course_id', courseId.toString()));
-    _data.fields.add(MapEntry('title', title));
-    _data.fields.add(MapEntry('is_paid', isPaid.toString()));
-    _data.files.add(MapEntry('file', file));
-    _data.fields.add(MapEntry('resumableChunkNumber', chunkNumber.toString()));
-    _data.fields.add(MapEntry('resumableTotalChunks', totalChunks.toString()));
-    _data.fields.add(MapEntry('resumableFilename', filename));
-    _data.fields.add(MapEntry('resumableIdentifier', identifier));
-    _data.fields.add(MapEntry('resumableTotalSize', totalSize.toString()));
-    _data.fields.add(MapEntry('resumableChunkSize', chunkSize.toString()));
+    final _data = <String, dynamic>{};
+    _data.addAll(data);
     final _options = _setStreamType<void>(
-      Options(
-            method: 'POST',
-            headers: _headers,
-            extra: _extra,
-            contentType: 'multipart/form-data',
-          )
+      Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
             'courses/videos',
@@ -714,6 +689,60 @@ class _MainApi implements MainApi {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     await _dio.fetch<void>(_options);
+  }
+
+  @override
+  Future<VideoModel> getVideo(int courseId, int videoId) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<VideoModel>(
+      Options(method: 'GET', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/get-video/${courseId}/${videoId}',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late VideoModel _value;
+    try {
+      _value = VideoModel.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<VideoModel> getPublicVideo(int courseId, int videoId) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<VideoModel>(
+      Options(method: 'GET', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            'public/get-video/${courseId}/${videoId}',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late VideoModel _value;
+    try {
+      _value = VideoModel.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
   }
 
   @override

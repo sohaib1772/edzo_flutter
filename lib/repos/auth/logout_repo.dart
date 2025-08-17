@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:edzo/core/helpers/local_storage.dart';
-import 'package:edzo/core/network/api_result.dart';
-import 'package:edzo/core/network/error_handler.dart';
-import 'package:edzo/core/network/main_api.dart';
-import 'package:edzo/models/auth/login_model.dart';
+import 'package:Edzo/core/helpers/local_storage.dart';
+import 'package:Edzo/core/network/api_result.dart';
+import 'package:Edzo/core/network/error_handler.dart';
+import 'package:Edzo/core/network/main_api.dart';
+import 'package:Edzo/models/auth/login_model.dart';
 
 class LogoutRepo {
   MainApi mainApi;

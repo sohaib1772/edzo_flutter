@@ -12,12 +12,15 @@ class VideosResponseModel {
 class VideoModel {
   int? id;
   String? title;
-  @JsonKey(name: 'path')
-  String? url;
+  //@JsonKey(name: 'path')
+  //String? url;
   @JsonKey(name: 'is_paid')
   bool? isPaid;
   @JsonKey(name: 'course_id')
   int? courseId;
+  
+  String? url;
+
   VideoModel({
     this.id,
     this.title,

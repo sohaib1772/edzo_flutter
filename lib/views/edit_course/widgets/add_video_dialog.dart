@@ -1,8 +1,8 @@
-import 'package:edzo/controllers/upload_video_controller.dart';
-import 'package:edzo/core/helpers/app_form_validator.dart';
-import 'package:edzo/core/widgets/app_text_button.dart';
-import 'package:edzo/core/widgets/app_text_form.dart';
-import 'package:edzo/models/course_model.dart';
+import 'package:Edzo/controllers/upload_video_controller.dart';
+import 'package:Edzo/core/helpers/app_form_validator.dart';
+import 'package:Edzo/core/widgets/app_text_button.dart';
+import 'package:Edzo/core/widgets/app_text_form.dart';
+import 'package:Edzo/models/course_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -36,54 +36,54 @@ class AddVideoDialog extends StatelessWidget {
                   style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 20.h),
-                Obx(
-                  () => Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16.r),
-                      color: Theme.of(context).colorScheme.surface,
-                    ),
-                    height: 200.h,
-                    width: double.infinity,
-                    child: uploadVideoController.isPicked.value
-                        ? GestureDetector(
-                            onTap: () async {
-                              if(uploadVideoController.isUploading.value) return;
-                              await uploadVideoController.pickVideo();
-                            },
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(16.r),
-                              child: Image.memory(
-                                uploadVideoController.thumbnailBytes!,
+                // Obx(
+                //   () => Container(
+                //     decoration: BoxDecoration(
+                //       borderRadius: BorderRadius.circular(16.r),
+                //       color: Theme.of(context).colorScheme.surface,
+                //     ),
+                //     height: 200.h,
+                //     width: double.infinity,
+                //     child: uploadVideoController.isPicked.value
+                //         ? GestureDetector(
+                //             onTap: () async {
+                //               if(uploadVideoController.isUploading.value) return;
+                //               await uploadVideoController.pickVideo();
+                //             },
+                //             child: ClipRRect(
+                //               borderRadius: BorderRadius.circular(16.r),
+                //               child: Image.memory(
+                //                 uploadVideoController.thumbnailBytes!,
             
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          )
-                        : GestureDetector(
-                            onTap: () async {
-                               if(uploadVideoController.isUploading.value) return;
-                              await uploadVideoController.pickVideo();
-                            },
-                            child: Container(
-                              padding: EdgeInsets.all(20.r),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16.r),
-                                color: Theme.of(context).colorScheme.surface,
-                              ),
-                              alignment: Alignment.center,
-                              height: 100.h,
-                              width: double.infinity,
-                              child: Text(
-                                "لم يتم اختيار الفيديو",
-                                style: TextStyle(
-                                  fontSize: 20.sp,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                  ),
-                ),
+                //                 fit: BoxFit.cover,
+                //               ),
+                //             ),
+                //           )
+                //         : GestureDetector(
+                //             onTap: () async {
+                //                if(uploadVideoController.isUploading.value) return;
+                //               await uploadVideoController.pickVideo();
+                //             },
+                //             child: Container(
+                //               padding: EdgeInsets.all(20.r),
+                //               decoration: BoxDecoration(
+                //                 borderRadius: BorderRadius.circular(16.r),
+                //                 color: Theme.of(context).colorScheme.surface,
+                //               ),
+                //               alignment: Alignment.center,
+                //               height: 100.h,
+                //               width: double.infinity,
+                //               child: Text(
+                //                 "لم يتم اختيار الفيديو",
+                //                 style: TextStyle(
+                //                   fontSize: 20.sp,
+                //                   fontWeight: FontWeight.bold,
+                //                 ),
+                //               ),
+                //             ),
+                //           ),
+                //   ),
+                // ),
                 SizedBox(height: 20.h),
                 Obx(
                   ()=> AppTextForm(
@@ -95,6 +95,19 @@ class AddVideoDialog extends StatelessWidget {
                       return null;
                     },
                     controller: uploadVideoController.titleController,
+                  ),
+                ),
+                SizedBox(height: 20.h),
+                Obx(
+                  ()=> AppTextForm(
+                    enabled: !uploadVideoController.isUploading.value,
+                    hint: "الرابط",
+                    validator: (value) {
+                      if (AppFormValidator.isEmpty(value ?? ""))
+                        return 'ألرابط مطلوب';
+                      return null;
+                    },
+                    controller: uploadVideoController.urlController,
                   ),
                 ),
                 SizedBox(height: 20.h),
@@ -119,31 +132,31 @@ class AddVideoDialog extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 10.h),
-                Obx(
-                  () => uploadVideoController.isUploading.value
-                      ? Column(
-                          children: [
-                            Text(
-                              '${(uploadVideoController.progress.value * 100).toStringAsFixed(0)}%',
-                            ),
-                            SizedBox(height: 10.h),
-                            LinearProgressIndicator(
-                              value: uploadVideoController.progress.value,
-                            ),
-                            SizedBox(height: 10.h),
+                // Obx(
+                //   () => uploadVideoController.isUploading.value
+                //       ? Column(
+                //           children: [
+                //             Text(
+                //               '${(uploadVideoController.progress.value * 100).toStringAsFixed(0)}%',
+                //             ),
+                //             SizedBox(height: 10.h),
+                //             LinearProgressIndicator(
+                //               value: uploadVideoController.progress.value,
+                //             ),
+                //             SizedBox(height: 10.h),
                           
-                            Text(
-                              "لا تغادر التطبيق اثناء رفع الفيديو",
-                              style: TextStyle(
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.red.shade300,
-                              ),
-                            ),
-                          ],
-                        )
-                      : SizedBox.shrink(),
-                ),
+                //             Text(
+                //               "لا تغادر التطبيق اثناء رفع الفيديو",
+                //               style: TextStyle(
+                //                 fontSize: 18.sp,
+                //                 fontWeight: FontWeight.bold,
+                //                 color: Colors.red.shade300,
+                //               ),
+                //             ),
+                //           ],
+                //         )
+                //       : SizedBox.shrink(),
+                // ),
                 SizedBox(height: 10.h),
                 Obx(
                   ()=> AppTextButton(

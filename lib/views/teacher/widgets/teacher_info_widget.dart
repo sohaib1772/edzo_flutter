@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:edzo/controllers/teacher_controller.dart';
-import 'package:edzo/core/constance/app_constance.dart';
-import 'package:edzo/core/helpers/session_helper.dart';
-import 'package:edzo/core/widgets/app_text_button.dart';
-import 'package:edzo/core/widgets/app_text_form.dart';
+import 'package:Edzo/controllers/teacher_controller.dart';
+import 'package:Edzo/core/constance/app_constance.dart';
+import 'package:Edzo/core/helpers/session_helper.dart';
+import 'package:Edzo/core/widgets/app_text_button.dart';
+import 'package:Edzo/core/widgets/app_text_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';

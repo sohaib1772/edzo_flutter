@@ -1,17 +1,17 @@
 import 'dart:io';
 
-import 'package:edzo/controllers/add_course_controller.dart';
-import 'package:edzo/controllers/edit_course_controller.dart';
-import 'package:edzo/controllers/upload_video_controller.dart';
-import 'package:edzo/core/constance/app_router_keys.dart';
-import 'package:edzo/core/helpers/app_form_validator.dart';
-import 'package:edzo/core/services/app_services.dart';
-import 'package:edzo/core/widgets/app_text_button.dart';
-import 'package:edzo/core/widgets/app_text_form.dart';
-import 'package:edzo/core/widgets/scaffold/app_scaffold.dart';
-import 'package:edzo/models/course_model.dart';
-import 'package:edzo/views/edit_course/widgets/add_video_dialog.dart';
-import 'package:edzo/views/edit_course/widgets/edit_course_form_widget.dart';
+import 'package:Edzo/controllers/add_course_controller.dart';
+import 'package:Edzo/controllers/edit_course_controller.dart';
+import 'package:Edzo/controllers/upload_video_controller.dart';
+import 'package:Edzo/core/constance/app_router_keys.dart';
+import 'package:Edzo/core/helpers/app_form_validator.dart';
+import 'package:Edzo/core/services/app_services.dart';
+import 'package:Edzo/core/widgets/app_text_button.dart';
+import 'package:Edzo/core/widgets/app_text_form.dart';
+import 'package:Edzo/core/widgets/scaffold/app_scaffold.dart';
+import 'package:Edzo/models/course_model.dart';
+import 'package:Edzo/views/edit_course/widgets/add_video_dialog.dart';
+import 'package:Edzo/views/edit_course/widgets/edit_course_form_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -130,6 +130,10 @@ class EditCourseScreen extends StatelessWidget {
                                               arguments: {
                                                 "videoModel":
                                                     controller.videos[index],
+                                                    "courseVideos":
+                                                    controller.videos,
+                                                    "courseModel":
+                                                    controller.courseModel,
                                               },
                                             );
                                           },

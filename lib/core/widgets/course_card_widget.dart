@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:edzo/core/constance/app_constance.dart';
-import 'package:edzo/core/constance/app_router_keys.dart';
-import 'package:edzo/core/helpers/role_helper.dart';
-import 'package:edzo/core/helpers/session_helper.dart';
-import 'package:edzo/models/course_model.dart';
+import 'package:Edzo/core/constance/app_constance.dart';
+import 'package:Edzo/core/constance/app_router_keys.dart';
+import 'package:Edzo/core/helpers/role_helper.dart';
+import 'package:Edzo/core/helpers/session_helper.dart';
+import 'package:Edzo/models/course_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

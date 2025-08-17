@@ -1,7 +1,9 @@
-import 'package:edzo/controllers/course_controller.dart';
-import 'package:edzo/core/constance/app_router_keys.dart';
-import 'package:edzo/core/helpers/role_helper.dart';
-import 'package:edzo/core/helpers/session_helper.dart';
+import 'package:Edzo/controllers/course_controller.dart';
+import 'package:Edzo/core/constance/app_router_keys.dart';
+import 'package:Edzo/core/helpers/role_helper.dart';
+import 'package:Edzo/core/helpers/session_helper.dart';
+import 'package:Edzo/models/course_model.dart';
+import 'package:Edzo/models/video_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,8 +11,14 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 class CourseVideosListWidget extends StatelessWidget {
-  CourseVideosListWidget({super.key});
-  CourseController controller = Get.find();
+  CourseVideosListWidget({
+    super.key,
+    required this.courseModel,
+    required this.controller,
+  });
+  CourseModel courseModel;
+  CourseController controller;
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -18,20 +26,33 @@ class CourseVideosListWidget extends StatelessWidget {
       physics: NeverScrollableScrollPhysics(),
       itemCount: controller.videos.length,
       itemBuilder: (context, index) {
-
-        bool canPlay   =false;
-        if(RoleHelper.role == Role.full || !controller.videos[index].isPaid! || controller.courseModel.isSubscribed){
+        bool canPlay = false;
+        if (RoleHelper.role == Role.full ||
+            !controller.videos[index].isPaid! ||
+            controller.courseModel.isSubscribed) {
           canPlay = true;
-        }else if (SessionHelper.user == null && !controller.videos[index].isPaid!) {
+        } else if (SessionHelper.user == null &&
+            !controller.videos[index].isPaid!) {
           canPlay = true;
-        }else{
+        } else {
           canPlay = false;
         }
-                
+
         return GestureDetector(
           onTap: () async {
-            if (!canPlay)return;
-            controller.courseModel = await Get.toNamed(
+            if (!canPlay) return;
+            if (Get.currentRoute == AppRouterKeys.videoPlayerScreen) {
+              await Get.toNamed(
+                AppRouterKeys.videoPlayerScreen,
+                arguments: {
+                  'videoModel': controller.videos[index],
+                  "courseModel": controller.courseModel,
+                },
+              );
+              controller.update();
+              return;
+            }
+            await Get.toNamed(
               AppRouterKeys.videoPlayerScreen,
               arguments: {
                 'videoModel': controller.videos[index],

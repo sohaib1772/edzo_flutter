@@ -1,5 +1,5 @@
-import 'package:edzo/models/code_model.dart';
-import 'package:edzo/models/teacher_info_model.dart';
+import 'package:Edzo/models/code_model.dart';
+import 'package:Edzo/models/teacher_info_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'course_model.g.dart';
 

@@ -1,7 +1,7 @@
-import 'package:edzo/controllers/app_search_controller.dart';
-import 'package:edzo/core/widgets/app_text_form.dart';
-import 'package:edzo/core/widgets/course_card_widget.dart';
-import 'package:edzo/core/widgets/course_card_loading_skeleton.dart';
+import 'package:Edzo/controllers/app_search_controller.dart';
+import 'package:Edzo/core/widgets/app_text_form.dart';
+import 'package:Edzo/core/widgets/course_card_widget.dart';
+import 'package:Edzo/core/widgets/course_card_loading_skeleton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';

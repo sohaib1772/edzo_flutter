@@ -1,7 +1,7 @@
-import 'package:edzo/core/helpers/role_helper.dart';
-import 'package:edzo/models/teachers_response_model.dart';
-import 'package:edzo/models/user_model.dart';
-import 'package:edzo/repos/admin_repo.dart';
+import 'package:Edzo/core/helpers/role_helper.dart';
+import 'package:Edzo/models/teachers_response_model.dart';
+import 'package:Edzo/models/user_model.dart';
+import 'package:Edzo/repos/admin_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';

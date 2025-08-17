@@ -1,5 +1,5 @@
 
-import 'package:edzo/models/user_model.dart';
+import 'package:Edzo/models/user_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'login_model.g.dart';
 @JsonSerializable()

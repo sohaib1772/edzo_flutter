@@ -1,19 +1,19 @@
-import 'package:edzo/core/constance/app_router_keys.dart';
-import 'package:edzo/core/middlewares/is_login_middleware.dart';
-import 'package:edzo/views/add_course/add_course_screen.dart';
-import 'package:edzo/views/auth/email_verification/email_verification_screen.dart';
-import 'package:edzo/views/auth/forgot_password/forgot_password_screen.dart';
-import 'package:edzo/views/auth/login/login_screen.dart';
-import 'package:edzo/views/auth/register/screens/register_screen.dart';
-import 'package:edzo/views/cource/course_screen.dart';
-import 'package:edzo/views/course_codes/course_codes_screen.dart';
-import 'package:edzo/views/edit_course/edit_course_screen.dart';
-import 'package:edzo/views/edit_course/widgets/edit_course_form_widget.dart';
-import 'package:edzo/views/main_layout/main_layout_screen.dart';
-import 'package:edzo/views/privacy/privacy_policy_screen.dart';
-import 'package:edzo/views/teacher_profile/teacher_profile_screen.dart';
-import 'package:edzo/views/teacher_reports/teacher_reports_screen.dart';
-import 'package:edzo/views/video_player/video_player_screen.dart';
+import 'package:Edzo/core/constance/app_router_keys.dart';
+import 'package:Edzo/core/middlewares/is_login_middleware.dart';
+import 'package:Edzo/views/add_course/add_course_screen.dart';
+import 'package:Edzo/views/auth/email_verification/email_verification_screen.dart';
+import 'package:Edzo/views/auth/forgot_password/forgot_password_screen.dart';
+import 'package:Edzo/views/auth/login/login_screen.dart';
+import 'package:Edzo/views/auth/register/screens/register_screen.dart';
+import 'package:Edzo/views/cource/course_screen.dart';
+import 'package:Edzo/views/course_codes/course_codes_screen.dart';
+import 'package:Edzo/views/edit_course/edit_course_screen.dart';
+import 'package:Edzo/views/edit_course/widgets/edit_course_form_widget.dart';
+import 'package:Edzo/views/main_layout/main_layout_screen.dart';
+import 'package:Edzo/views/privacy/privacy_policy_screen.dart';
+import 'package:Edzo/views/teacher_profile/teacher_profile_screen.dart';
+import 'package:Edzo/views/teacher_reports/teacher_reports_screen.dart';
+import 'package:Edzo/views/video_player/video_player_screen.dart';
 import 'package:get/get.dart';
 
 class AppRouter {

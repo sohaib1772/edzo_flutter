@@ -1,13 +1,13 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:edzo/controllers/home_controller.dart';
-import 'package:edzo/controllers/my_subscriptions_controller.dart';
-import 'package:edzo/controllers/teacher_controller.dart';
-import 'package:edzo/core/constance/app_router_keys.dart';
-import 'package:edzo/core/routing/app_router.dart';
+import 'package:Edzo/controllers/home_controller.dart';
+import 'package:Edzo/controllers/my_subscriptions_controller.dart';
+import 'package:Edzo/controllers/teacher_controller.dart';
+import 'package:Edzo/core/constance/app_router_keys.dart';
+import 'package:Edzo/core/routing/app_router.dart';
 
-import 'package:edzo/models/add_course_model.dart';
-import 'package:edzo/repos/courses/courses_repo.dart';
+import 'package:Edzo/models/add_course_model.dart';
+import 'package:Edzo/repos/courses/courses_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide MultipartFile;
 import 'package:image_picker/image_picker.dart';

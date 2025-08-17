@@ -1,12 +1,12 @@
 import 'package:dio/dio.dart';
-import 'package:edzo/core/network/api_result.dart';
-import 'package:edzo/core/network/error_handler.dart';
-import 'package:edzo/core/network/main_api.dart';
-import 'package:edzo/models/add_course_model.dart';
-import 'package:edzo/models/code_model.dart';
-import 'package:edzo/models/course_model.dart';
-import 'package:edzo/models/upload_video_model.dart';
-import 'package:edzo/models/video_model.dart';
+import 'package:Edzo/core/network/api_result.dart';
+import 'package:Edzo/core/network/error_handler.dart';
+import 'package:Edzo/core/network/main_api.dart';
+import 'package:Edzo/models/add_course_model.dart';
+import 'package:Edzo/models/code_model.dart';
+import 'package:Edzo/models/course_model.dart';
+import 'package:Edzo/models/upload_video_model.dart';
+import 'package:Edzo/models/video_model.dart';
 
 class CoursesRepo {
   MainApi mainApi;
@@ -211,16 +211,13 @@ class CoursesRepo {
   Future<ApiResult> uploadVideo(UploadVideoModel uploadVideoModel) async {
     try {
       await mainApi.uploadVideo(
-        uploadVideoModel.courseId,
-        uploadVideoModel.title,
-        uploadVideoModel.isPaid,
-        uploadVideoModel.video,
-        uploadVideoModel.chunkNumber,
-        uploadVideoModel.totalChunks,
-        uploadVideoModel.filename,
-        uploadVideoModel.identifier,
-        uploadVideoModel.totalSize,
-        uploadVideoModel.chunkSize,
+        {
+          "course_id": uploadVideoModel.courseId,
+          "title": uploadVideoModel.title,
+          "is_paid": uploadVideoModel.isPaid,
+          "url": uploadVideoModel.url
+
+        }
       );
       return ApiResult<CourseModel>(
         status: true,
@@ -306,6 +303,28 @@ class CoursesRepo {
       return ApiResult(
         status: false,
         message: e.response?.data["message"] ?? "حدث خطاء في جلب الكودات",
+        error: e,
+        data: null,
+        errorHandler: ErrorHandler.fromJson(e.response?.data ?? {}),
+      );
+    }
+  }
+
+  Future<ApiResult> getVideo(int courseId, int videoId)async{
+    try {
+      var res = await mainApi.getVideo(
+        courseId,
+        videoId,
+      );
+      return ApiResult<VideoModel>(
+        status: true,
+        message: "تم الحصول على الفيديو بنجاح",
+        data: res,
+      );
+    } on DioException catch (e) {
+      return ApiResult(
+        status: false,
+        message: e.response?.data["message"] ?? "حدث خطاء في جلب الفيديو",
         error: e,
         data: null,
         errorHandler: ErrorHandler.fromJson(e.response?.data ?? {}),

@@ -1,6 +1,6 @@
-import 'package:edzo/core/helpers/session_helper.dart';
-import 'package:edzo/models/course_model.dart';
-import 'package:edzo/repos/courses/courses_repo.dart';
+import 'package:Edzo/core/helpers/session_helper.dart';
+import 'package:Edzo/models/course_model.dart';
+import 'package:Edzo/repos/courses/courses_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
