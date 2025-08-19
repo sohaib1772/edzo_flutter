@@ -1,6 +1,6 @@
 
-import 'package:Edzo/models/monthly_subscribers_model.dart';
-import 'package:Edzo/models/user_model.dart';
+import 'package:edzo/models/monthly_subscribers_model.dart';
+import 'package:edzo/models/user_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'teachers_response_model.g.dart';

@@ -1,12 +1,12 @@
 import 'dart:io';
 
-import 'package:Edzo/controllers/teacher_controller.dart';
-import 'package:Edzo/core/constance/app_router_keys.dart';
-import 'package:Edzo/core/widgets/app_text_button.dart';
-import 'package:Edzo/core/widgets/app_text_form.dart';
-import 'package:Edzo/core/widgets/course_card_loading_skeleton.dart';
-import 'package:Edzo/core/widgets/course_card_widget.dart';
-import 'package:Edzo/views/teacher/widgets/teacher_info_widget.dart';
+import 'package:edzo/controllers/teacher_controller.dart';
+import 'package:edzo/core/constance/app_router_keys.dart';
+import 'package:edzo/core/widgets/app_text_button.dart';
+import 'package:edzo/core/widgets/app_text_form.dart';
+import 'package:edzo/core/widgets/course_card_loading_skeleton.dart';
+import 'package:edzo/core/widgets/course_card_widget.dart';
+import 'package:edzo/views/teacher/widgets/teacher_info_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

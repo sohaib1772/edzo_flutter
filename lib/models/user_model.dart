@@ -1,7 +1,7 @@
 
 
-import 'package:Edzo/models/teacher_info_model.dart';
-import 'package:Edzo/models/teachers_response_model.dart';
+import 'package:edzo/models/teacher_info_model.dart';
+import 'package:edzo/models/teachers_response_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'user_model.g.dart';
 

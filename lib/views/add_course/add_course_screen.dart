@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:Edzo/controllers/add_course_controller.dart';
-import 'package:Edzo/core/helpers/app_form_validator.dart';
-import 'package:Edzo/core/widgets/app_text_button.dart';
-import 'package:Edzo/core/widgets/app_text_form.dart';
-import 'package:Edzo/core/widgets/scaffold/app_scaffold.dart';
+import 'package:edzo/controllers/add_course_controller.dart';
+import 'package:edzo/core/helpers/app_form_validator.dart';
+import 'package:edzo/core/widgets/app_text_button.dart';
+import 'package:edzo/core/widgets/app_text_form.dart';
+import 'package:edzo/core/widgets/scaffold/app_scaffold.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

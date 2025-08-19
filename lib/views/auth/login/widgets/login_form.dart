@@ -1,8 +1,8 @@
-import 'package:Edzo/controllers/auth/login_controller.dart';
-import 'package:Edzo/core/constance/app_router_keys.dart';
-import 'package:Edzo/core/helpers/app_form_validator.dart';
-import 'package:Edzo/core/widgets/app_text_button.dart';
-import 'package:Edzo/core/widgets/app_text_form.dart';
+import 'package:edzo/controllers/auth/login_controller.dart';
+import 'package:edzo/core/constance/app_router_keys.dart';
+import 'package:edzo/core/helpers/app_form_validator.dart';
+import 'package:edzo/core/widgets/app_text_button.dart';
+import 'package:edzo/core/widgets/app_text_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

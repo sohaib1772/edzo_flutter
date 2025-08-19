@@ -1,16 +1,16 @@
 import 'package:dio/dio.dart';
-import 'package:Edzo/core/constance/app_constance.dart';
-import 'package:Edzo/models/add_course_model.dart';
-import 'package:Edzo/models/auth/email_verification_model.dart';
-import 'package:Edzo/models/auth/login_model.dart';
-import 'package:Edzo/models/auth/register_model.dart';
-import 'package:Edzo/models/auth/reset_password_model.dart';
-import 'package:Edzo/models/code_model.dart';
-import 'package:Edzo/models/course_model.dart';
-import 'package:Edzo/models/teacher_info_model.dart';
-import 'package:Edzo/models/teachers_response_model.dart';
-import 'package:Edzo/models/user_model.dart';
-import 'package:Edzo/models/video_model.dart';
+import 'package:edzo/core/constance/app_constance.dart';
+import 'package:edzo/models/add_course_model.dart';
+import 'package:edzo/models/auth/email_verification_model.dart';
+import 'package:edzo/models/auth/login_model.dart';
+import 'package:edzo/models/auth/register_model.dart';
+import 'package:edzo/models/auth/reset_password_model.dart';
+import 'package:edzo/models/code_model.dart';
+import 'package:edzo/models/course_model.dart';
+import 'package:edzo/models/teacher_info_model.dart';
+import 'package:edzo/models/teachers_response_model.dart';
+import 'package:edzo/models/user_model.dart';
+import 'package:edzo/models/video_model.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'main_api.g.dart';
@@ -184,3 +184,4 @@ abstract class MainApi {
   
 
 }
+

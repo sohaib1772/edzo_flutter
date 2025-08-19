@@ -1,12 +1,12 @@
-import 'package:Edzo/controllers/main_layout_controller.dart';
-import 'package:Edzo/core/helpers/role_helper.dart';
-import 'package:Edzo/core/services/app_services.dart';
-import 'package:Edzo/core/widgets/scaffold/app_scaffold.dart';
-import 'package:Edzo/views/admin/admin_screen.dart';
-import 'package:Edzo/views/home/home_screen.dart';
-import 'package:Edzo/views/my_subscriptions/my_subscriptions_screen.dart';
-import 'package:Edzo/views/search/search_screen.dart';
-import 'package:Edzo/views/teacher/teacher_screen.dart';
+import 'package:edzo/controllers/main_layout_controller.dart';
+import 'package:edzo/core/helpers/role_helper.dart';
+import 'package:edzo/core/services/app_services.dart';
+import 'package:edzo/core/widgets/scaffold/app_scaffold.dart';
+import 'package:edzo/views/admin/admin_screen.dart';
+import 'package:edzo/views/home/home_screen.dart';
+import 'package:edzo/views/my_subscriptions/my_subscriptions_screen.dart';
+import 'package:edzo/views/search/search_screen.dart';
+import 'package:edzo/views/teacher/teacher_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -1,14 +1,14 @@
-import 'package:Edzo/core/constance/app_router_keys.dart';
-import 'package:Edzo/core/helpers/local_storage.dart';
-import 'package:Edzo/core/helpers/role_helper.dart';
-import 'package:Edzo/core/helpers/session_helper.dart';
-import 'package:Edzo/core/services/app_services.dart';
-import 'package:Edzo/repos/auth/logout_repo.dart';
-import 'package:Edzo/views/admin/admin_screen.dart';
-import 'package:Edzo/views/home/home_screen.dart';
-import 'package:Edzo/views/my_subscriptions/my_subscriptions_screen.dart';
-import 'package:Edzo/views/search/search_screen.dart';
-import 'package:Edzo/views/teacher/teacher_screen.dart';
+import 'package:edzo/core/constance/app_router_keys.dart';
+import 'package:edzo/core/helpers/local_storage.dart';
+import 'package:edzo/core/helpers/role_helper.dart';
+import 'package:edzo/core/helpers/session_helper.dart';
+import 'package:edzo/core/services/app_services.dart';
+import 'package:edzo/repos/auth/logout_repo.dart';
+import 'package:edzo/views/admin/admin_screen.dart';
+import 'package:edzo/views/home/home_screen.dart';
+import 'package:edzo/views/my_subscriptions/my_subscriptions_screen.dart';
+import 'package:edzo/views/search/search_screen.dart';
+import 'package:edzo/views/teacher/teacher_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

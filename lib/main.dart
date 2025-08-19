@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:Edzo/core/constance/app_router_keys.dart';
-import 'package:Edzo/core/di/binding.dart';
-import 'package:Edzo/core/routing/app_router.dart';
-import 'package:Edzo/core/services/app_services.dart';
-import 'package:Edzo/core/theme/app_theme.dart';
+import 'package:edzo/core/constance/app_router_keys.dart';
+import 'package:edzo/core/di/binding.dart';
+import 'package:edzo/core/routing/app_router.dart';
+import 'package:edzo/core/services/app_services.dart';
+import 'package:edzo/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

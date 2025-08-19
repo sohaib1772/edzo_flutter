@@ -1,6 +1,6 @@
 
 import 'package:dio/dio.dart';
-import 'package:Edzo/models/course_model.dart';
+import 'package:edzo/models/course_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'add_course_model.g.dart';
 

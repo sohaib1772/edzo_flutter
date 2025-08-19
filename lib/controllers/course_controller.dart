@@ -1,10 +1,10 @@
-import 'package:Edzo/controllers/home_controller.dart';
-import 'package:Edzo/core/helpers/session_helper.dart';
-import 'package:Edzo/core/network/api_result.dart';
-import 'package:Edzo/models/course_model.dart';
-import 'package:Edzo/models/video_model.dart';
-import 'package:Edzo/repos/courses/courses_repo.dart';
-import 'package:Edzo/repos/courses/public_courses_repo.dart';
+import 'package:edzo/controllers/home_controller.dart';
+import 'package:edzo/core/helpers/session_helper.dart';
+import 'package:edzo/core/network/api_result.dart';
+import 'package:edzo/models/course_model.dart';
+import 'package:edzo/models/video_model.dart';
+import 'package:edzo/repos/courses/courses_repo.dart';
+import 'package:edzo/repos/courses/public_courses_repo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

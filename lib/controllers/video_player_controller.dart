@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:chewie/chewie.dart';
-import 'package:Edzo/core/helpers/session_helper.dart';
-import 'package:Edzo/core/network/api_result.dart';
-import 'package:Edzo/repos/courses/courses_repo.dart';
-import 'package:Edzo/repos/courses/public_courses_repo.dart';
+import 'package:edzo/core/helpers/session_helper.dart';
+import 'package:edzo/core/network/api_result.dart';
+import 'package:edzo/repos/courses/courses_repo.dart';
+import 'package:edzo/repos/courses/public_courses_repo.dart';
 
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';

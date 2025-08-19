@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:Edzo/controllers/edit_course_controller.dart';
-import 'package:Edzo/core/helpers/app_form_validator.dart';
-import 'package:Edzo/core/widgets/app_text_button.dart';
-import 'package:Edzo/core/widgets/app_text_form.dart';
-import 'package:Edzo/models/course_model.dart';
-import 'package:Edzo/views/edit_course/widgets/edit_course_select_image_widget.dart';
+import 'package:edzo/controllers/edit_course_controller.dart';
+import 'package:edzo/core/helpers/app_form_validator.dart';
+import 'package:edzo/core/widgets/app_text_button.dart';
+import 'package:edzo/core/widgets/app_text_form.dart';
+import 'package:edzo/models/course_model.dart';
+import 'package:edzo/views/edit_course/widgets/edit_course_select_image_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';

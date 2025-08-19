@@ -1,7 +1,7 @@
-import 'package:Edzo/controllers/course_codes_controller.dart';
-import 'package:Edzo/core/widgets/app_text_button.dart';
-import 'package:Edzo/core/widgets/course_card_loading_skeleton.dart';
-import 'package:Edzo/core/widgets/scaffold/app_scaffold.dart';
+import 'package:edzo/controllers/course_codes_controller.dart';
+import 'package:edzo/core/widgets/app_text_button.dart';
+import 'package:edzo/core/widgets/course_card_loading_skeleton.dart';
+import 'package:edzo/core/widgets/scaffold/app_scaffold.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

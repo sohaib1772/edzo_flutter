@@ -1,12 +1,12 @@
 import 'package:dio/dio.dart';
-import 'package:Edzo/core/network/api_result.dart';
-import 'package:Edzo/core/network/error_handler.dart';
-import 'package:Edzo/core/network/main_api.dart';
-import 'package:Edzo/models/add_course_model.dart';
-import 'package:Edzo/models/code_model.dart';
-import 'package:Edzo/models/course_model.dart';
-import 'package:Edzo/models/upload_video_model.dart';
-import 'package:Edzo/models/video_model.dart';
+import 'package:edzo/core/network/api_result.dart';
+import 'package:edzo/core/network/error_handler.dart';
+import 'package:edzo/core/network/main_api.dart';
+import 'package:edzo/models/add_course_model.dart';
+import 'package:edzo/models/code_model.dart';
+import 'package:edzo/models/course_model.dart';
+import 'package:edzo/models/upload_video_model.dart';
+import 'package:edzo/models/video_model.dart';
 
 class PublicCoursesRepo {
   MainApi mainApi;

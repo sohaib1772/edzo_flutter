@@ -1,5 +1,5 @@
-import 'package:Edzo/core/widgets/scaffold/app_scaffold.dart';
-import 'package:Edzo/views/auth/email_verification/widgets/email_verification_form.dart';
+import 'package:edzo/core/widgets/scaffold/app_scaffold.dart';
+import 'package:edzo/views/auth/email_verification/widgets/email_verification_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';

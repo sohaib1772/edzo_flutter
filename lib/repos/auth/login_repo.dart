@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart';
-import 'package:Edzo/core/helpers/local_storage.dart';
-import 'package:Edzo/core/helpers/role_helper.dart';
-import 'package:Edzo/core/helpers/session_helper.dart';
-import 'package:Edzo/core/network/api_result.dart';
-import 'package:Edzo/core/network/error_handler.dart';
-import 'package:Edzo/core/network/main_api.dart';
-import 'package:Edzo/core/services/app_services.dart';
-import 'package:Edzo/models/auth/login_model.dart';
-import 'package:Edzo/models/user_model.dart';
+import 'package:edzo/core/helpers/local_storage.dart';
+import 'package:edzo/core/helpers/role_helper.dart';
+import 'package:edzo/core/helpers/session_helper.dart';
+import 'package:edzo/core/network/api_result.dart';
+import 'package:edzo/core/network/error_handler.dart';
+import 'package:edzo/core/network/main_api.dart';
+import 'package:edzo/core/services/app_services.dart';
+import 'package:edzo/models/auth/login_model.dart';
+import 'package:edzo/models/user_model.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 

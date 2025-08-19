@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:Edzo/core/network/error_handler.dart';
+import 'package:edzo/core/network/error_handler.dart';
 
 class ApiResult<T> {
   final bool status;

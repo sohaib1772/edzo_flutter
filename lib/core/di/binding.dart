@@ -1,19 +1,19 @@
-import 'package:Edzo/controllers/add_course_controller.dart';
-import 'package:Edzo/controllers/admin_controller.dart';
-import 'package:Edzo/controllers/app_search_controller.dart';
-import 'package:Edzo/controllers/auth/email_verification_controller.dart';
-import 'package:Edzo/controllers/auth/forgot_password_controller.dart';
-import 'package:Edzo/controllers/course_codes_controller.dart';
-import 'package:Edzo/controllers/course_controller.dart';
-import 'package:Edzo/controllers/edit_course_controller.dart';
-import 'package:Edzo/controllers/home_controller.dart';
-import 'package:Edzo/controllers/main_layout_controller.dart';
-import 'package:Edzo/controllers/auth/login_controller.dart';
-import 'package:Edzo/controllers/auth/register_controller.dart';
-import 'package:Edzo/controllers/my_subscriptions_controller.dart';
-import 'package:Edzo/controllers/teacher_controller.dart';
-import 'package:Edzo/controllers/teacher_profile_controller.dart';
-import 'package:Edzo/controllers/upload_video_controller.dart';
+import 'package:edzo/controllers/add_course_controller.dart';
+import 'package:edzo/controllers/admin_controller.dart';
+import 'package:edzo/controllers/app_search_controller.dart';
+import 'package:edzo/controllers/auth/email_verification_controller.dart';
+import 'package:edzo/controllers/auth/forgot_password_controller.dart';
+import 'package:edzo/controllers/course_codes_controller.dart';
+import 'package:edzo/controllers/course_controller.dart';
+import 'package:edzo/controllers/edit_course_controller.dart';
+import 'package:edzo/controllers/home_controller.dart';
+import 'package:edzo/controllers/main_layout_controller.dart';
+import 'package:edzo/controllers/auth/login_controller.dart';
+import 'package:edzo/controllers/auth/register_controller.dart';
+import 'package:edzo/controllers/my_subscriptions_controller.dart';
+import 'package:edzo/controllers/teacher_controller.dart';
+import 'package:edzo/controllers/teacher_profile_controller.dart';
+import 'package:edzo/controllers/upload_video_controller.dart';
 
 import 'package:get/get.dart';
 

@@ -1,6 +1,6 @@
-import 'package:Edzo/core/constance/app_router_keys.dart';
-import 'package:Edzo/models/auth/email_verification_model.dart';
-import 'package:Edzo/repos/auth/email_verification_repo.dart';
+import 'package:edzo/core/constance/app_router_keys.dart';
+import 'package:edzo/models/auth/email_verification_model.dart';
+import 'package:edzo/repos/auth/email_verification_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';

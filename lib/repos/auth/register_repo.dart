@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:Edzo/core/network/api_result.dart';
-import 'package:Edzo/core/network/error_handler.dart';
-import 'package:Edzo/core/network/main_api.dart';
-import 'package:Edzo/models/auth/register_model.dart';
+import 'package:edzo/core/network/api_result.dart';
+import 'package:edzo/core/network/error_handler.dart';
+import 'package:edzo/core/network/main_api.dart';
+import 'package:edzo/models/auth/register_model.dart';
 
 class RegisterRepo {
   MainApi mainApi;

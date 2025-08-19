@@ -1,8 +1,8 @@
-import 'package:Edzo/controllers/main_layout_controller.dart';
-import 'package:Edzo/core/constance/app_router_keys.dart';
-import 'package:Edzo/core/helpers/session_helper.dart';
-import 'package:Edzo/core/widgets/app_text_button.dart';
-import 'package:Edzo/core/widgets/app_text_form.dart';
+import 'package:edzo/controllers/main_layout_controller.dart';
+import 'package:edzo/core/constance/app_router_keys.dart';
+import 'package:edzo/core/helpers/session_helper.dart';
+import 'package:edzo/core/widgets/app_text_button.dart';
+import 'package:edzo/core/widgets/app_text_form.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_popup/flutter_popup.dart';

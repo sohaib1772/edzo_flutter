@@ -2,10 +2,10 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
-import 'package:Edzo/controllers/edit_course_controller.dart';
-import 'package:Edzo/core/helpers/local_storage.dart';
-import 'package:Edzo/models/upload_video_model.dart';
-import 'package:Edzo/repos/courses/courses_repo.dart';
+import 'package:edzo/controllers/edit_course_controller.dart';
+import 'package:edzo/core/helpers/local_storage.dart';
+import 'package:edzo/models/upload_video_model.dart';
+import 'package:edzo/repos/courses/courses_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide MultipartFile;
 

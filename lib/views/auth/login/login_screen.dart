@@ -1,9 +1,9 @@
-import 'package:Edzo/controllers/auth/login_controller.dart';
-import 'package:Edzo/core/constance/app_router_keys.dart';
-import 'package:Edzo/core/widgets/app_text_button.dart';
-import 'package:Edzo/core/widgets/app_text_form.dart';
-import 'package:Edzo/core/widgets/scaffold/app_scaffold.dart';
-import 'package:Edzo/views/auth/login/widgets/login_form.dart';
+import 'package:edzo/controllers/auth/login_controller.dart';
+import 'package:edzo/core/constance/app_router_keys.dart';
+import 'package:edzo/core/widgets/app_text_button.dart';
+import 'package:edzo/core/widgets/app_text_form.dart';
+import 'package:edzo/core/widgets/scaffold/app_scaffold.dart';
+import 'package:edzo/views/auth/login/widgets/login_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -11,8 +11,12 @@ import 'package:get/get_core/src/get_main.dart';
 
 
 class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
-  final controller = Get.find<LoginController>();
+
+
+  LoginScreen({super.key ,});
+
+  LoginController controller = Get.find<LoginController>();
+  
   @override
   Widget build(BuildContext context) {
     return AppScaffold(

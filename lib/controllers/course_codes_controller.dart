@@ -1,5 +1,5 @@
-import 'package:Edzo/models/code_model.dart';
-import 'package:Edzo/repos/courses/courses_repo.dart';
+import 'package:edzo/models/code_model.dart';
+import 'package:edzo/repos/courses/courses_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';

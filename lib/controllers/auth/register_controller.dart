@@ -1,8 +1,8 @@
-import 'package:Edzo/core/constance/app_router_keys.dart';
-import 'package:Edzo/core/helpers/device_info.dart';
-import 'package:Edzo/core/network/api_result.dart';
-import 'package:Edzo/models/auth/register_model.dart';
-import 'package:Edzo/repos/auth/register_repo.dart';
+import 'package:edzo/core/constance/app_router_keys.dart';
+import 'package:edzo/core/helpers/device_info.dart';
+import 'package:edzo/core/network/api_result.dart';
+import 'package:edzo/models/auth/register_model.dart';
+import 'package:edzo/repos/auth/register_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
