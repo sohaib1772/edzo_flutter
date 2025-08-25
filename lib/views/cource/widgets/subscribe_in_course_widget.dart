@@ -21,7 +21,7 @@ class SubscribeInCourseWidget extends StatelessWidget {
       children: [
         Container(
           alignment: Alignment.center,
-          height: 45,
+          height: 45.h,
           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           decoration: BoxDecoration(
             color: courseModel.price.toString() == "0"

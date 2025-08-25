@@ -21,7 +21,6 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-
 class VideoPlayerScreen extends StatefulWidget {
   final VideoModel videoModel = Get.arguments['videoModel'];
   final CourseModel courseModel = Get.arguments['courseModel'];
@@ -34,29 +33,30 @@ class VideoPlayerScreen extends StatefulWidget {
 
 class _VideoPlayerScreenState extends State<VideoPlayerScreen>
     with WidgetsBindingObserver {
-  bool _isScreenCaptured = false;
-
-  static const platform = MethodChannel("flutter/secure");
+  
   final CourseController courseController = Get.find();
 
+  late final VideoController controller;
+static const platform = MethodChannel("flutter/secure");
   @override
   void initState() {
     super.initState();
+
+    WidgetsBinding.instance.addObserver(this);
+
+    // إنشاء VideoController مرة واحدة فقط
+    controller = Get.put(VideoController(
+      id: widget.videoModel.id ?? 0,
+      title: widget.videoModel.title ?? "",
+      courseId: widget.videoModel.courseId ?? 0,
+      videoId: widget.videoModel.id ?? 0,
+    ));
 
     if (Platform.isAndroid) {
       platform.invokeMethod("setSecure", {"enable": true});
     }
 
-    if (Platform.isIOS) {
-      platform.setMethodCallHandler((call) async {
-        if (call.method == "screenCaptured") {
-          bool captured = call.arguments as bool;
-          setState(() {
-            _isScreenCaptured = captured;
-          });
-        }
-      });
-    }
+  
   }
 
   Future<void> _enterFullScreenMode() async {
@@ -95,92 +95,63 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen>
     final isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
 
-    return GetBuilder<VideoController>(
-      init: VideoController(
-        id: widget.videoModel.id ?? 0,
-        title: widget.videoModel.title ?? "",
-        courseId: widget.videoModel.courseId ?? 0,
-        videoId: widget.videoModel.id ?? 0,
-      ),
-      builder: (controller) {
-        return AppScaffold(
-          showAppBar: !isLandscape, // إخفاء الـ AppBar في وضع landscape
-          body: controller.isLoading
-              ? const Center(child: CircularProgressIndicator())
-              : GestureDetector(
-                  onDoubleTap: () => _toggleFullScreen(context),
-                  child: Column(
-                    children: [
-                      if (!isLandscape) ...[
-                        Text(widget.videoModel.title ?? ""),
-                        SizedBox(height: 10.h),
-                      ],
-                      Expanded(
-                        child: Center(
-                          child: isLandscape
-                              ? SizedBox.expand(
-                                  // ياخذ كل الشاشة في الـ fullscreen
-                                  child: YoutubePlayer(
-                                    liveUIColor: Colors.transparent,
-                                    showVideoProgressIndicator: false,
-                                    bottomActions: const [
-                                      RemainingDuration(),
-                                      PlaybackSpeedButton(),
-                                      ProgressBar(isExpanded: true),
-                                      CurrentPosition(),
-                                    ],
-                                    bufferIndicator: const Center(
-                                      child: CircularProgressIndicator(),
-                                    ),
-                                    controller:
-                                        controller.videoPlayerController,
-                                    topActions: [
-                                      IconButton(
-                                        onPressed: () =>
-                                            _toggleFullScreen(context),
-                                        icon: const Icon(
-                                          Icons.fullscreen_exit,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              : AspectRatio(
-                                  aspectRatio: 16 / 9, // الوضع العادي
-                                  child: YoutubePlayer(
-                                    liveUIColor: Colors.transparent,
-                                    showVideoProgressIndicator: false,
-                                    bottomActions: const [
-                                      RemainingDuration(),
-                                      PlaybackSpeedButton(),
-                                      ProgressBar(isExpanded: true),
-                                      CurrentPosition(),
-                                    ],
-                                    bufferIndicator: const Center(
-                                      child: CircularProgressIndicator(),
-                                    ),
-                                    controller:
-                                        controller.videoPlayerController,
-                                    topActions: [
-                                      IconButton(
-                                        onPressed: () =>
-                                            _toggleFullScreen(context),
-                                        icon: const Icon(
-                                          Icons.fullscreen,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ],
+    return AppScaffold(
+      showAppBar: !isLandscape,
+      body: Obx(() => controller.isLoading.value
+          ? const Center(child: CircularProgressIndicator())
+          : GestureDetector(
+              onDoubleTap: () => _toggleFullScreen(context),
+              child: Column(
+                children: [
+                  if (!isLandscape) ...[
+                    Text(widget.videoModel.title ?? ""),
+                    SizedBox(height: 10.h),
+                  ],
+                  Expanded(
+                    child: Stack(
+                      children: [
+                        Positioned.fill(
+                          child: YoutubePlayer(
+                            controller: controller.videoPlayerController,
+                            liveUIColor: Colors.transparent,
+                            showVideoProgressIndicator: false,
+                            bufferIndicator:
+                                const Center(child: CircularProgressIndicator()),
+                            topActions: [
+                              if (!isLandscape)
+                                IconButton(
+                                  onPressed: () =>
+                                      _toggleFullScreen(context),
+                                  icon: const Icon(
+                                    Icons.fullscreen,
+                                    color: Colors.white,
                                   ),
                                 ),
+                              if (isLandscape)
+                                IconButton(
+                                  onPressed: () =>
+                                      _toggleFullScreen(context),
+                                  icon: const Icon(
+                                    Icons.fullscreen_exit,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                            ],
+                            bottomActions: const [
+                              RemainingDuration(),
+                              PlaybackSpeedButton(),
+                              ProgressBar(isExpanded: true),
+                              CurrentPosition(),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                       
+                      ],
+                    ),
                   ),
-                ),
-        );
-      },
+                ],
+              ),
+            )),
     );
   }
 }

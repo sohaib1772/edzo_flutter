@@ -64,7 +64,7 @@ class CourseVideosListWidget extends StatelessWidget {
           child: Container(
             margin: EdgeInsets.symmetric(vertical: 5.h),
             padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
-            height: 60.h,
+            height: 85.h,
             decoration: BoxDecoration(
               color: Theme.of(context).cardColor,
               borderRadius: BorderRadius.circular(16.r),

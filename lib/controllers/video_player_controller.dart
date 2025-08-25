@@ -17,7 +17,7 @@ class VideoController extends GetxController {
   final int videoId;
   final int id;
   bool isError = false;
-  bool isLoading = false;
+  RxBool isLoading = false.obs;
   RxBool isBufferingNow = true.obs;
   RxBool isFullScreen = false.obs;
 
@@ -74,7 +74,7 @@ class VideoController extends GetxController {
   //   update();
   // }
   Future<void> initVideo() async {
-    isLoading = true;
+    isLoading.value = true;
     update();
     ApiResult res;
     if (SessionHelper.user == null) {
@@ -121,7 +121,7 @@ class VideoController extends GetxController {
 
       }
     });
-    isLoading = false;
+    isLoading.value = false;
     update();
   }
 

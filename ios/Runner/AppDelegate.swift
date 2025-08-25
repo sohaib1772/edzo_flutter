@@ -3,29 +3,36 @@ import Flutter
 
 @main
 @objc class AppDelegate: FlutterAppDelegate {
-  override func application(
-    _ application: UIApplication,
-    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
-  ) -> Bool {
-    
-    GeneratedPluginRegistrant.register(with: self)
-    
-    if let window = self.window {
-        let secureView = UIView(frame: window.bounds)
-        secureView.backgroundColor = .black
-        secureView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        
-        NotificationCenter.default.addObserver(forName: UIScreen.capturedDidChangeNotification, object: nil, queue: .main) { _ in
-            if UIScreen.main.isCaptured {
-                // أظهر طبقة سوداء عند تسجيل الشاشة أو أخذ سكرين شوت
-                window.addSubview(secureView)
-            } else {
-                // إزالة الطبقة السوداء عند انتهاء التسجيل
-                secureView.removeFromSuperview()
+
+    // نخزن الحالة المبدئية
+    var initialCaptureStatus: Bool = UIScreen.main.isCaptured
+
+    override func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    ) -> Bool {
+
+        GeneratedPluginRegistrant.register(with: self)
+
+        let controller: FlutterViewController = window?.rootViewController as! FlutterViewController
+        let channel = FlutterMethodChannel(name: "flutter/secure", binaryMessenger: controller.binaryMessenger)
+
+        // إرجاع الحالة المبدئية عند طلب Flutter
+        channel.setMethodCallHandler { [weak self] (call, result) in
+            if call.method == "getInitialCaptureStatus" {
+                result(self?.initialCaptureStatus)
             }
         }
+
+        // مراقبة أي تغيير في حالة التسجيل
+        NotificationCenter.default.addObserver(
+            forName: UIScreen.capturedDidChangeNotification,
+            object: nil,
+            queue: .main
+        ) { _ in
+            channel.invokeMethod("screenCaptured", arguments: UIScreen.main.isCaptured)
+        }
+
+        return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
-    
-    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
-  }
 }

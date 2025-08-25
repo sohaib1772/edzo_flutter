@@ -9,42 +9,69 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
-
-void main()async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await ScreenUtil.ensureScreenSize();
   await Get.putAsync(() => AppServices().init());
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  MyApp({super.key});
+  static const platform = MethodChannel("flutter/secure");
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool _isScreenCaptured = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (Platform.isIOS) {
+      // ✅ جلب الحالة عند الإقلاع
+      MyApp.platform.invokeMethod("getInitialCaptureStatus").then((value) {
+        if (value != null && value is bool) {
+          setState(() {
+            _isScreenCaptured = value;
+          });
+        }
+      });
+
+      // ✅ متابعة التغييرات بعد الإقلاع
+      MyApp.platform.setMethodCallHandler((call) async {
+        if (call.method == "screenCaptured") {
+          bool captured = call.arguments as bool;
+          setState(() {
+            _isScreenCaptured = captured;
+          });
+        }
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    if (Platform.isIOS) {
-      SystemChannels.platform.invokeMethod('preventScreenRecording');
-    }
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       minTextAdapt: true,
       splitScreenMode: true,
-      child: GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: AppTheme.light,
-        darkTheme: AppTheme.dark,
-        
-        themeMode: Get.isDarkMode ? ThemeMode.dark : ThemeMode.light,
-        locale: const Locale('ar'),
-        initialRoute: AppRouterKeys.loginScreen,
-        initialBinding: Binding(),
-        getPages: AppRouter.pages,
-
-      ),
+      child: _isScreenCaptured
+          ? Container(color: Colors.black) // شاشة سوداء إذا في تسجيل
+          : GetMaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'Edzo',
+              theme: AppTheme.light,
+              darkTheme: AppTheme.dark,
+              themeMode: Get.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+              locale: const Locale('ar'),
+              initialRoute: AppRouterKeys.loginScreen,
+              initialBinding: Binding(),
+              getPages: AppRouter.pages,
+            ),
     );
   }
 }
-

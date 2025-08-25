@@ -13,6 +13,7 @@ class AppScaffold extends StatelessWidget {
     this.bottomNavigationBar,
     this.defaultLeading = false,
     this.leading,
+    this.padding=20
   });
   Widget body;
   bool showAppBar;
@@ -20,6 +21,7 @@ class AppScaffold extends StatelessWidget {
   Widget? bottomNavigationBar;
   bool defaultLeading = false;
   Widget? leading;
+  double padding;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +42,7 @@ class AppScaffold extends StatelessWidget {
             )
           : null,
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.w),
+        padding: EdgeInsets.symmetric(horizontal: padding.w),
         child: body,
       ),
       bottomNavigationBar: bottomNavigationBar,
