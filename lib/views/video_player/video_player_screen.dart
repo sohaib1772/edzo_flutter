@@ -44,7 +44,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen>
     super.initState();
 
     if (Platform.isAndroid) {
-      platform.invokeMethod("setSecure", {"enable": true}); // منع التصوير
+      platform.invokeMethod("setSecure", {"enable": true});
     }
 
     if (Platform.isIOS) {
@@ -83,9 +83,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen>
   @override
   void dispose() {
     if (Platform.isAndroid) {
-      platform.invokeMethod("setSecure", {
-        "enable": false,
-      }); // رجع الوضع الطبيعي
+      platform.invokeMethod("setSecure", {"enable": false});
     }
     _exitFullScreenMode();
     WidgetsBinding.instance.removeObserver(this);
@@ -106,66 +104,76 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen>
       ),
       builder: (controller) {
         return AppScaffold(
-          showAppBar: !isLandscape, // أخفي الـ AppBar في وضع landscape
+          showAppBar: !isLandscape, // إخفاء الـ AppBar في وضع landscape
           body: controller.isLoading
               ? const Center(child: CircularProgressIndicator())
               : GestureDetector(
                   onDoubleTap: () => _toggleFullScreen(context),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
                     children: [
-                      if (!isLandscape)
-                        Column(
-                          children: [
-                            Text(widget.videoModel.title ?? ""),
-                            SizedBox(height: 10.h),
-                          ],
-                        ),
+                      if (!isLandscape) ...[
+                        Text(widget.videoModel.title ?? ""),
+                        SizedBox(height: 10.h),
+                      ],
                       Expanded(
-                        flex: !isLandscape ? 0 : 1,
-                        child: Stack(
-                          children: [
-                            YoutubePlayer(
-                              liveUIColor: Colors.transparent,
-                              showVideoProgressIndicator: false,
-                              bottomActions: const [
-                                RemainingDuration(),
-                                PlaybackSpeedButton(),
-                                ProgressBar(isExpanded: true),
-                                //speed
-                                CurrentPosition(),
-                              ],
-                              bufferIndicator: const Center(
-                                child: CircularProgressIndicator(),
-                              ),
-                              controller: controller.videoPlayerController,
-                              topActions: [
-                                IconButton(
-                                  onPressed: () => _toggleFullScreen(context),
-                                  icon: Icon(
-                                    isLandscape
-                                        ? Icons.fullscreen_exit
-                                        : Icons.fullscreen,
-                                    color: Colors.white,
+                        child: Center(
+                          child: isLandscape
+                              ? SizedBox.expand(
+                                  // ياخذ كل الشاشة في الـ fullscreen
+                                  child: YoutubePlayer(
+                                    liveUIColor: Colors.transparent,
+                                    showVideoProgressIndicator: false,
+                                    bottomActions: const [
+                                      RemainingDuration(),
+                                      PlaybackSpeedButton(),
+                                      ProgressBar(isExpanded: true),
+                                      CurrentPosition(),
+                                    ],
+                                    bufferIndicator: const Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                    controller:
+                                        controller.videoPlayerController,
+                                    topActions: [
+                                      IconButton(
+                                        onPressed: () =>
+                                            _toggleFullScreen(context),
+                                        icon: const Icon(
+                                          Icons.fullscreen_exit,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              : AspectRatio(
+                                  aspectRatio: 16 / 9, // الوضع العادي
+                                  child: YoutubePlayer(
+                                    liveUIColor: Colors.transparent,
+                                    showVideoProgressIndicator: false,
+                                    bottomActions: const [
+                                      RemainingDuration(),
+                                      PlaybackSpeedButton(),
+                                      ProgressBar(isExpanded: true),
+                                      CurrentPosition(),
+                                    ],
+                                    bufferIndicator: const Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                    controller:
+                                        controller.videoPlayerController,
+                                    topActions: [
+                                      IconButton(
+                                        onPressed: () =>
+                                            _toggleFullScreen(context),
+                                        icon: const Icon(
+                                          Icons.fullscreen,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ],
-                            ),
-                            Obx(
-                              () => controller.isBufferingNow.value
-                                  ? Container(
-                                      height: isLandscape
-                                          ? double.infinity
-                                          : 200.h,
-                                      width: double.infinity,
-                                      alignment: Alignment.center,
-                                      color: Colors.black,
-                                      child: const CircularProgressIndicator(),
-                                    )
-                                  : const SizedBox.shrink(),
-                            ),
-                          ],
                         ),
                       ),
                     ],

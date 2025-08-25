@@ -9,7 +9,14 @@ class LocalStorage {
   
   static Future<void> init() async {
     sharedPreferences = await SharedPreferences.getInstance();
-    secureStorage = const FlutterSecureStorage();
+    secureStorage = const FlutterSecureStorage(
+      aOptions: AndroidOptions(
+        encryptedSharedPreferences: true,
+      ),
+      iOptions: IOSOptions(
+        accessibility: KeychainAccessibility.first_unlock,
+      ),
+    );
   }
   static Future<void> saveRole(String role) async {
      await secureStorage.write(key: 'role', value: role);
