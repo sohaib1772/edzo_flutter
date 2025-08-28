@@ -95,7 +95,9 @@ static const platform = MethodChannel("flutter/secure");
     final isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
 
-    return AppScaffold(
+    return 
+    AppScaffold(
+      padding: 0,
       showAppBar: !isLandscape,
       body: Obx(() => controller.isLoading.value
           ? const Center(child: CircularProgressIndicator())

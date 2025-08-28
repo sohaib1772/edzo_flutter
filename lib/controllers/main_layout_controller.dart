@@ -23,25 +23,25 @@ class MainLayoutController extends GetxController {
   RxBool isDarkMode = true.obs;
 
   List<BottomNavigationBarItem> teacherItems = [
-    BottomNavigationBarItem(icon: Icon(Icons.home), label: 'الرئيسية'),
-    BottomNavigationBarItem(icon: Icon(Icons.search), label: 'بحث'),
-    BottomNavigationBarItem(icon: Icon(Icons.book), label: 'كورساتي'),
-    BottomNavigationBarItem(icon: Icon(Icons.person), label: 'المعلم'),
+    BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+    BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+    BottomNavigationBarItem(icon: Icon(Icons.book), label: 'My Courses'),
+    BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Lecturer'),
   ];
   List<BottomNavigationBarItem> adminItems = [
-    BottomNavigationBarItem(icon: Icon(Icons.home), label: 'الرئيسية'),
-    BottomNavigationBarItem(icon: Icon(Icons.search), label: 'بحث'),
-    BottomNavigationBarItem(icon: Icon(Icons.book), label: 'كورساتي'),
-    BottomNavigationBarItem(icon: Icon(Icons.person), label: 'المعلم'),
+    BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+    BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+    BottomNavigationBarItem(icon: Icon(Icons.book), label: 'My Courses'),
+    BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Lecturer'),
     BottomNavigationBarItem(
       icon: Icon(Icons.admin_panel_settings),
-      label: 'الادمن',
+      label: 'Admin',
     ),
   ];
   List<BottomNavigationBarItem> studentItems = [
-    BottomNavigationBarItem(icon: Icon(Icons.home), label: 'الرئيسية'),
-    BottomNavigationBarItem(icon: Icon(Icons.search), label: 'بحث'),
-    BottomNavigationBarItem(icon: Icon(Icons.book), label: 'كورساتي'),
+    BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+    BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+    BottomNavigationBarItem(icon: Icon(Icons.book), label: 'My Courses'),
   ];
 
   List<Widget> studentScreens = [
@@ -94,17 +94,17 @@ class MainLayoutController extends GetxController {
   String getTitle() {
     switch (currentScreen.value) {
       case 0:
-        return "الرئيسية";
+        return "Home";
       case 1:
-        return "بحث";
+        return "Search";
       case 2:
-        return "كورساتي";
+        return "My Courses";
       case 3:
-        return "المعلم";
+        return "Lecturer";
       case 4:
-        return "الادمن";
+        return "Admin";
       default:
-        return "الرئيسية";
+        return "Home";
     }
   }
 
