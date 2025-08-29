@@ -31,9 +31,13 @@ class TeacherInfoWidget extends StatelessWidget {
               onTap: () {
                 controller.selectImage();
               },
-              child: CircleAvatar(
-                radius: 80.r,
-                backgroundColor: Colors.white,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(80.r),
+                ),
+                height: 150.h,
+                width: 150.w,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(80.r),
                   child: controller.selectedImage?.path != null

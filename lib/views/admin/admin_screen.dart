@@ -64,8 +64,9 @@ class AdminScreen extends StatelessWidget {
                                       controller.teachers[index]
                                 });
                           },
-                          leading: CircleAvatar(
-                            radius: 24.r,
+                          leading: SizedBox(
+                            height: 48.h,
+                            width: 48.w,
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(24.r),
                               child:
@@ -76,6 +77,7 @@ class AdminScreen extends StatelessWidget {
                                           ?.image !=
                                       null
                                   ? CachedNetworkImage(
+                                      fit: BoxFit.cover,
                                       imageUrl:
                                           "${AppConstance.baseUrl}/storage/${controller.teachers[index].user?.teacherInfo?.image}",
                                     )

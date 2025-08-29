@@ -137,12 +137,14 @@ class CourseCardWidget extends StatelessWidget {
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              CircleAvatar(
-                                radius: 24.r,
+                              SizedBox(
+                                height: 50.h,
+                                width: 50.w,
                                 child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(24.r),
+                                  borderRadius: BorderRadius.circular(50.r),
                                   child: course.teacherInfo?.image != null
                                       ? CachedNetworkImage(
+                                        fit: BoxFit.cover,
                                           imageUrl:
                                               "${AppConstance.baseUrl}/storage/${course.teacherInfo?.image}",
                                         )

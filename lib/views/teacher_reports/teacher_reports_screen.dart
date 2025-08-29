@@ -31,12 +31,14 @@ class _TeacherReportsScreenState extends State<TeacherReportsScreen> {
         physics: BouncingScrollPhysics(),
         child: Column(
           children: [
-            CircleAvatar(
-              radius: 100,
+            SizedBox(
+              height: 100.h,
+              width: 100.w,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(100),
                 child: teachersInfoModel.user?.teacherInfo?.image != null
                     ? CachedNetworkImage(
+                        fit: BoxFit.cover,
                         imageUrl: "${AppConstance.baseUrl}/storage/${teachersInfoModel.user?.teacherInfo?.image}",
                       )
                     : Image.asset("assets/images/edzo_logo.png"),

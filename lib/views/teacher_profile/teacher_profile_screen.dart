@@ -21,8 +21,9 @@ class TeacherProfileScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              CircleAvatar(
-                radius: 80,
+              SizedBox(
+                height: 80.h,
+                width: 80.w,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(80),
                   child: controller.teacherInfoModel?.image != null

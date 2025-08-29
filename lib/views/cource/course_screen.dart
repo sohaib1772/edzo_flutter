@@ -76,10 +76,11 @@ class CourseScreen extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    CircleAvatar(
-                      radius: 24.r,
+                    SizedBox(
+                      width: 50.w,
+                      height: 50.h,
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(24.r),
+                        borderRadius: BorderRadius.circular(50.r),
                         child:
                             courseController.courseModel.teacherInfo?.image !=
                                 null
