@@ -17,6 +17,7 @@ class CourseController extends GetxController {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   RxList<VideoModel> videos = <VideoModel>[].obs;
   CourseModel courseModel = Get.arguments['courseModel'];
+RxInt totalDuration = 0.obs;
 
   @override
   void onInit() async {
@@ -79,13 +80,28 @@ class CourseController extends GetxController {
       return;
     }
     videos.value = res.data ?? [];
+    getTotalDuration();
     isLoading.value = false;
     update();
   }
 
-  String durationFromSeconds(int seconds) {
+  RxString durationFromSeconds(int seconds) {
     int minutes = seconds ~/ 60;
     int remainingSeconds = seconds % 60;
-    return '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
+    int hours = minutes ~/ 60;
+
+
+    return "${hours > 0 ? "$hours:" : ''}$minutes:$remainingSeconds".obs;
+  }
+
+  void getTotalDuration() {
+    var total = 0;
+    for (var video in videos) {
+      if (video.duration == null || video.duration == 0 || video.duration == "null") {
+        continue;
+      }
+      total += video.duration ?? 0;
+    }
+    totalDuration.value = total;
   }
 }

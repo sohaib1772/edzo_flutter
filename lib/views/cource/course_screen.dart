@@ -186,6 +186,25 @@ class CourseScreen extends StatelessWidget {
                   SizedBox(width: 8.w),
                 ],
               ),
+              SizedBox(height: 10.h),
+              Row(
+                children: [
+                  Icon(Icons.timer_outlined),
+                  SizedBox(width: 8.w),
+                  Text("اجمالي وقت المحاضرات"),
+                  Spacer(),
+                  Obx(
+                    ()=> Text(
+                      courseController.durationFromSeconds(courseController.totalDuration.value).value,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.sp,
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 8.w),
+                ],
+              ),
               SizedBox(height: 18.h),
 
               courseController.courseModel.telegramUrl != null

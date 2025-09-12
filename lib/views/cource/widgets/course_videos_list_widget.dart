@@ -109,7 +109,7 @@ final watchedTime = LocalStorage.getVideoLastWatchedSecond(controller.videos[ind
                     SizedBox(width: 5.w),
                     Text(
                       controller.durationFromSeconds(
-                          controller.videos[index].duration ?? 0) ,
+                          controller.videos[index].duration ?? 0).value ,
                       style: TextStyle(fontSize: 13.sp),
                     ),     
                     Spacer(),

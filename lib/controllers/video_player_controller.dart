@@ -94,10 +94,11 @@ class VideoController extends GetxController {
       update();
       return;
     }
+    final lastWatchedSecond = LocalStorage.getVideoLastWatchedSecond(videoId.toString());
     videoPlayerController = YoutubePlayerController(
       initialVideoId: res.data!.url ?? "",
-      flags: const YoutubePlayerFlags(
-        
+      flags:  YoutubePlayerFlags(
+        startAt: lastWatchedSecond ?? 0,
         autoPlay: true,
         mute: false,
         showLiveFullscreenButton: false,
