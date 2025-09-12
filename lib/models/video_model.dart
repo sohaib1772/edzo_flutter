@@ -21,12 +21,15 @@ class VideoModel {
   
   String? url;
 
+  int? duration;
+
   VideoModel({
     this.id,
     this.title,
     this.url,
     this.isPaid,
     this.courseId,
+    this.duration
   });
 
   factory VideoModel.fromJson(Map<String, dynamic> json) =>

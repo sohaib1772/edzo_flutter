@@ -54,4 +54,14 @@ class LocalStorage {
   static Future<void> removeLastChunkNumber(String key) async {
     await sharedPreferences.remove('lastUploadedChunk_$key');
   }
+
+  static Future<void> saveVideoLastWatchedSecond(String key,int lastChunkNumber) async {
+    await sharedPreferences.setInt('lastWatchedSecond_$key', lastChunkNumber);
+  }
+  static int? getVideoLastWatchedSecond(String key)  {
+    return sharedPreferences.getInt('lastWatchedSecond_$key');
+  }
+  static Future<void> removeVideoLastWatchedSecond(String key) async {
+    await sharedPreferences.remove('lastWatchedSecond_$key');
+  }
 }

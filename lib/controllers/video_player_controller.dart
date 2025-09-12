@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:chewie/chewie.dart';
+import 'package:edzo/core/helpers/local_storage.dart';
 import 'package:edzo/core/helpers/session_helper.dart';
 import 'package:edzo/core/network/api_result.dart';
 import 'package:edzo/repos/courses/courses_repo.dart';
@@ -107,9 +108,14 @@ class VideoController extends GetxController {
         hideControls: false,
         enableCaption: false,
         hideThumbnail: true,
+
       ),
     );
-    videoPlayerController.addListener(() {
+    videoPlayerController.addListener(() async{
+
+        final currentPosition = videoPlayerController.value.position.inSeconds;
+        await LocalStorage.saveVideoLastWatchedSecond(videoId.toString(), currentPosition);
+
       if (videoPlayerController.value.isFullScreen) {
         isFullScreen.value = true;
       } else {

@@ -23,6 +23,7 @@ VideoModel _$VideoModelFromJson(Map<String, dynamic> json) => VideoModel(
   url: json['url'] as String?,
   isPaid: json['is_paid'] as bool?,
   courseId: (json['course_id'] as num?)?.toInt(),
+  duration: (json['duration'] as num?)?.toInt(),
 );
 
 Map<String, dynamic> _$VideoModelToJson(VideoModel instance) =>
@@ -32,4 +33,5 @@ Map<String, dynamic> _$VideoModelToJson(VideoModel instance) =>
       'is_paid': instance.isPaid,
       'course_id': instance.courseId,
       'url': instance.url,
+      'duration': instance.duration,
     };
