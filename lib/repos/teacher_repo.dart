@@ -9,12 +9,13 @@ class TeacherRepo {
   MainApi mainApi;
   TeacherRepo(this.mainApi);
 
-  Future<ApiResult<TeacherInfoModel>> addTeacherInfo( String bio, MultipartFile? image) async{
+  Future<ApiResult<TeacherInfoModel>> addTeacherInfo( String bio, MultipartFile? image,String? telegram) async{
     try {
-    final res =  await mainApi.addTeacherInfo(bio, image);
+    final res =  await mainApi.addTeacherInfo(bio, telegram ?? "", image);
       return ApiResult(
         status: true,
         message: "تم انشاء المعلومات بنجاح",
+
         data: res,
       );
     }on DioException catch (e) {

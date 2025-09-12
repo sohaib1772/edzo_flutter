@@ -22,12 +22,15 @@ class AddCourseModel {
   String description ;
   int price;
   MultipartFile image;
+  String? telegramUrl;
+
 
   AddCourseModel({
     required this.title,
     required this.description,
     required this.price,
-    required this.image
+    required this.image,
+    this.telegramUrl
   }); 
 
 }
@@ -36,7 +39,8 @@ class EditCourseModel {
   String title;
   String description ;
   int price;
-  MultipartFile image;
+  MultipartFile? image;
+  String? telegramUrl;
 
   EditCourseModel(
     {
@@ -44,7 +48,9 @@ class EditCourseModel {
       required this.title,
       required this.description,
       required this.price,
-      required this.image
+       this.image,
+      this.telegramUrl
+    
     }
   ); 
 

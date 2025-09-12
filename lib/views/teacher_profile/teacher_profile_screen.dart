@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TeacherProfileScreen extends StatelessWidget {
   TeacherProfileScreen({super.key});
@@ -39,6 +40,20 @@ class TeacherProfileScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 20.h),
+              controller.teacherInfoModel?.telegramUrl != null
+                  ? IconButton(
+                      onPressed: () async {
+                        if (!await launchUrl(
+                          Uri.parse(
+                            "${ controller.teacherInfoModel?.telegramUrl}",
+                          ),
+                          mode: LaunchMode.externalApplication,
+                        ))
+                          ;
+                      },
+                      icon: Icon(Icons.telegram, size: 50.sp),
+                    )
+                  : SizedBox.shrink(),
               Text(
                 controller.teacherName,
                 style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),

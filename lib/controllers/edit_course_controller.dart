@@ -17,6 +17,7 @@ class EditCourseController  extends GetxController {
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController priceController = TextEditingController();
+  TextEditingController telegramUrlController = TextEditingController();
   XFile? image;
   RxString imagePath = ''.obs;
   CoursesRepo coursesRepo = Get.find<CoursesRepo>();
@@ -39,6 +40,7 @@ class EditCourseController  extends GetxController {
     descriptionController.text = courseModel.description ?? "";
     priceController.text = courseModel.price.toString();
     imageUrl.value = courseModel.image ?? "";
+    telegramUrlController.text = courseModel.telegramUrl ?? "";
     this.courseModel = courseModel;
     await getCourseVideos();
   }
@@ -76,10 +78,13 @@ class EditCourseController  extends GetxController {
         title: titleController.text,
         description: descriptionController.text,
         price: int.parse(priceController.text),
-        image: MultipartFile.fromBytes(
+        image: imagePath.value.isEmpty
+            ? null
+            : MultipartFile.fromBytes(
           File(imagePath.value).readAsBytesSync(),
           filename: imagePath.value.split('/').last,
         ),
+        telegramUrl: telegramUrlController.text,
       ),
     );
 

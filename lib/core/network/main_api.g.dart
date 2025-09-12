@@ -10,7 +10,7 @@ part of 'main_api.dart';
 
 class _MainApi implements MainApi {
   _MainApi(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'https://educationzoneedzo.com/api/';
+    baseUrl ??= 'http://172.20.10.3:8003/api/';
   }
 
   final Dio _dio;
@@ -593,16 +593,23 @@ class _MainApi implements MainApi {
     String title,
     String description,
     int price,
-    MultipartFile image,
+    MultipartFile? image,
+    String? telegramUrl,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = FormData();
     _data.fields.add(MapEntry('title', title));
     _data.fields.add(MapEntry('description', description));
     _data.fields.add(MapEntry('price', price.toString()));
-    _data.files.add(MapEntry('image', image));
+    if (image != null) {
+      _data.files.add(MapEntry('image', image));
+    }
+    if (telegramUrl != null) {
+      _data.fields.add(MapEntry('telegramUrl', telegramUrl));
+    }
     final _options = _setStreamType<AddCourseResponseModel>(
       Options(
             method: 'POST',
@@ -635,16 +642,23 @@ class _MainApi implements MainApi {
     String title,
     String description,
     int price,
-    MultipartFile image,
+    MultipartFile? image,
+    String? telegramUrl,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = FormData();
     _data.fields.add(MapEntry('title', title));
     _data.fields.add(MapEntry('description', description));
     _data.fields.add(MapEntry('price', price.toString()));
-    _data.files.add(MapEntry('image', image));
+    if (image != null) {
+      _data.files.add(MapEntry('image', image));
+    }
+    if (telegramUrl != null) {
+      _data.fields.add(MapEntry('telegramUrl', telegramUrl));
+    }
     final _options = _setStreamType<AddCourseResponseModel>(
       Options(
             method: 'POST',
@@ -895,6 +909,7 @@ class _MainApi implements MainApi {
   @override
   Future<TeacherInfoModel> addTeacherInfo(
     String? bio,
+    String? telegramUrl,
     MultipartFile? image,
   ) async {
     final _extra = <String, dynamic>{};
@@ -904,6 +919,9 @@ class _MainApi implements MainApi {
     final _data = FormData();
     if (bio != null) {
       _data.fields.add(MapEntry('bio', bio));
+    }
+    if (telegramUrl != null) {
+      _data.fields.add(MapEntry('telegramUrl', telegramUrl));
     }
     if (image != null) {
       _data.files.add(MapEntry('image', image));

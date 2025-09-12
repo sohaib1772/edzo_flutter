@@ -143,6 +143,7 @@ class CoursesRepo {
         addCourseModel.description,
         addCourseModel.price,
         addCourseModel.image,
+        addCourseModel.telegramUrl,
       );
       return ApiResult<CourseModel>(
         status: true,
@@ -172,6 +173,7 @@ class CoursesRepo {
         addCourseModel.description,
         addCourseModel.price,
         addCourseModel.image,
+        addCourseModel.telegramUrl,
       );
       return ApiResult<CourseModel>(
         status: true,
@@ -215,7 +217,8 @@ class CoursesRepo {
           "course_id": uploadVideoModel.courseId,
           "title": uploadVideoModel.title,
           "is_paid": uploadVideoModel.isPaid,
-          "url": uploadVideoModel.url
+          "url": uploadVideoModel.url,
+          "duration": uploadVideoModel.duration
 
         }
       );

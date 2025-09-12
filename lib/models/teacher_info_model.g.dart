@@ -10,7 +10,12 @@ TeacherInfoModel _$TeacherInfoModelFromJson(Map<String, dynamic> json) =>
     TeacherInfoModel(
       bio: json['bio'] as String?,
       image: json['image'] as String?,
+      telegramUrl: json['telegram_url'] as String?,
     );
 
 Map<String, dynamic> _$TeacherInfoModelToJson(TeacherInfoModel instance) =>
-    <String, dynamic>{'bio': instance.bio, 'image': instance.image};
+    <String, dynamic>{
+      'bio': instance.bio,
+      'image': instance.image,
+      'telegram_url': instance.telegramUrl,
+    };

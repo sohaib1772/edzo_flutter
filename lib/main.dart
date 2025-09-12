@@ -9,6 +9,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
+
+// متطلبات جديدة
+// اضافة مدة الفيديو عند الرفع 
+// نظام جابترات
+// لكل فيديو مدة و لكل جابتر مجموع المدة
+// لكل كورس مجموع مدة الفيديوهات و عدد الفيديواهات و عدد الطلاب المشتركين 
+// حفظ اخر مكان شاهده الطالب لكل فيديو
+// عرض نسبة المشاهدة في قائمة الفيديوهات
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await ScreenUtil.ensureScreenSize();

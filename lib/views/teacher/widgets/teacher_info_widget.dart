@@ -73,6 +73,18 @@ class TeacherInfoWidget extends StatelessWidget {
               ),
             ),
             SizedBox(height: 10.h),
+            GestureDetector(
+              onTap: () {
+                controller.isEdited.value = true;
+                controller.update();
+              },
+              child: AppTextForm(
+                enabled: controller.isEdited.value,
+                controller: controller.telegramUrlController,
+                hint: "رابط تليجرامك",
+              ),
+            ),
+            SizedBox(height: 10.h),
 
             controller.isEdited.value
                 ? Row(

@@ -5,6 +5,7 @@ class UploadVideoModel {
   int courseId;
   bool isPaid;
   String url;
+  int duration;
   // int chunkNumber;
   // int totalChunks;
   // String filename;
@@ -25,6 +26,7 @@ class UploadVideoModel {
     // required this.chunkSize,
     // required this.video,
     required this.url,
+    required this.duration,
   });
 
   

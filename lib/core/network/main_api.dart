@@ -103,7 +103,8 @@ abstract class MainApi {
     @Part() String title,
     @Part() String description,
     @Part() int price,
-    @Part() MultipartFile image,
+    @Part() MultipartFile? image,
+    @Part() String? telegramUrl,
   );
   @POST("courses/{id}")
   @MultiPart()
@@ -112,7 +113,8 @@ abstract class MainApi {
     @Part() String title,
     @Part() String description,
     @Part() int price,
-    @Part() MultipartFile image,
+    @Part() MultipartFile? image,
+    @Part() String? telegramUrl,
   );
 
   //old add video
@@ -171,7 +173,9 @@ abstract class MainApi {
   @MultiPart()
   Future<TeacherInfoModel> addTeacherInfo(
     @Part() String? bio,
+    @Part() String? telegramUrl,
     @Part() MultipartFile? image,
+
   );
 
   @PUT("/teacher-info")

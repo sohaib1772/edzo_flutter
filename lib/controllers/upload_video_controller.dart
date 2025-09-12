@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -12,6 +13,8 @@ import 'package:get/get.dart' hide MultipartFile;
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class UploadVideoController extends GetxController {
   RxBool isPaid = false.obs;
@@ -38,43 +41,51 @@ class UploadVideoController extends GetxController {
   //   }
   // }
 
-  Future<void> uploadVideo(int courseId) async {
-    // if (pickedFile == null) {
-    //   Get.snackbar(
-    //     "يرجى اختيار الفيديو اولا",
-    //     "",
-    //     colorText: Colors.red.shade300,
-    //   );
-    //   return;
-    // }
-    isUploading.value = true;
-    final model = UploadVideoModel(
-      title: titleController.text,
-      courseId: courseId,
-      isPaid: isPaid.value,
-      url: urlController.text,
-    );
+  late YoutubePlayerController _controller;
+Future<int> getYoutubeVideoDuration(String url) async {
+  var yt = YoutubeExplode();
 
-    final res = await repo.uploadVideo(model);
-    if (!res.status) {
-      Get.snackbar(
-        "خطاء في رفع الفيديو",
-        res.errorHandler!.getErrorsList(),
-        colorText: Colors.red.shade300,
-      );
-      isUploading.value = false;
-      unableToUpload.value = true;
-      return;
-    }
+  // استخراج معلومات الفيديو
+  var video = await yt.videos.get(url);
+
+  print('Duration: ${video.duration?.inSeconds} seconds');
+    yt.close();
+
+  return video.duration!.inSeconds;
+}
+Future<void> uploadVideo(int courseId) async {
+  isUploading.value = true;
+
+ 
+
+
+int seconds =await  getYoutubeVideoDuration(  urlController.text);
+
+  final model = UploadVideoModel(
+    title: titleController.text,
+    courseId: courseId,
+    isPaid: isPaid.value,
+    url: urlController.text,
+    duration: seconds,
+  );
+
+  // بعدها ترفع
+  final res = await repo.uploadVideo(model);
+  if (!res.status) {
     Get.snackbar(
-        "تم رفع الفيديو",
-        "",
-        colorText: Colors.green.shade300,
-      );
-    clear();
+      "خطاء في رفع الفيديو",
+      res.errorHandler!.getErrorsList(),
+      colorText: Colors.red.shade300,
+    );
     isUploading.value = false;
-    await Get.find<EditCourseController>().getCourseVideos();
+    unableToUpload.value = true;
+    return;
   }
+  Get.snackbar("تم رفع الفيديو", "", colorText: Colors.green.shade300);
+  clear();
+  isUploading.value = false;
+  await Get.find<EditCourseController>().getCourseVideos();
+}
 
   // Future<void> _upload(
   //   File file,

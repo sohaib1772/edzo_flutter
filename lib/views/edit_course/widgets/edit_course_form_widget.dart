@@ -79,6 +79,15 @@ class EditCourseFormWidget extends StatelessWidget {
                         controller: controller.priceController,
                       ),
                       SizedBox(height: 30.h),
+                      AppTextForm(
+                        prefixIcon: Icons.link_outlined,
+                        hint: "رابط تيليجرام اختياري",
+                        validator: (value) {
+                        
+                        },
+                        controller: controller.telegramUrlController,
+                      ),
+                      SizedBox(height: 30.h),
             
                       Obx(
                         () => Row(

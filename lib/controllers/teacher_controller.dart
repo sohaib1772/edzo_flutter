@@ -19,6 +19,7 @@ class TeacherController extends GetxController {
   CoursesRepo coursesRepo = Get.find();
 
   TextEditingController bioController = TextEditingController();
+  TextEditingController telegramUrlController = TextEditingController();
   XFile? selectedImage;
   ImagePicker picker = ImagePicker();
 
@@ -53,7 +54,9 @@ class TeacherController extends GetxController {
           : MultipartFile.fromBytes(
               File(selectedImage!.path).readAsBytesSync(),
               filename: selectedImage?.path.split('/').last,
+              
             ),
+      telegramUrlController.text,
     );
     if (!res.status) {
       isLoading.value = false;

@@ -29,6 +29,10 @@ class CourseModel {
   @JsonKey(name: "subscribers_count")
   int? subscribersCount;
 
+  @JsonKey(name: "telegram_url")
+  String? telegramUrl;
+
+
   List<CodeModel>? codes;
 
   @JsonKey(name: "teacher_info")
@@ -47,8 +51,8 @@ class CourseModel {
       ,this.teacherName,
       this.teacherImage,
       this.subscribersCount,
-      this.codes
-      
+      this.codes,
+      this.telegramUrl
       });
 
       

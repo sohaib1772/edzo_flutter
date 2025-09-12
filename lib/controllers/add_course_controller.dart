@@ -17,6 +17,7 @@ class AddCourseController extends GetxController {
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController priceController = TextEditingController();
+  TextEditingController telegramUrlController = TextEditingController();
   XFile? image;
   RxString imagePath = ''.obs;
   CoursesRepo coursesRepo = Get.find<CoursesRepo>();
@@ -40,6 +41,7 @@ class AddCourseController extends GetxController {
           File(imagePath.value).readAsBytesSync(),
           filename: imagePath.value.split('/').last,
         ),
+        telegramUrl: telegramUrlController.text,
       ),
     );
 

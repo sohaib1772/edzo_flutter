@@ -3,23 +3,17 @@ import 'dart:io';
 import 'package:chewie/chewie.dart';
 import 'package:edzo/controllers/course_controller.dart';
 import 'package:edzo/controllers/video_player_controller.dart';
-import 'package:edzo/core/constance/app_router_keys.dart';
-import 'package:edzo/core/helpers/local_storage.dart';
-import 'package:edzo/core/widgets/app_text_button.dart';
-import 'package:edzo/core/widgets/course_card_loading_skeleton.dart';
+
 import 'package:edzo/core/widgets/scaffold/app_scaffold.dart';
 import 'package:edzo/models/course_model.dart';
 import 'package:edzo/models/video_model.dart';
-import 'package:edzo/repos/courses/courses_repo.dart';
-import 'package:edzo/views/cource/widgets/course_videos_list_widget.dart';
-import 'package:edzo/views/video_player/widgets/videos_list_widget.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 class VideoPlayerScreen extends StatefulWidget {
   final VideoModel videoModel = Get.arguments['videoModel'];
@@ -55,8 +49,6 @@ static const platform = MethodChannel("flutter/secure");
     if (Platform.isAndroid) {
       platform.invokeMethod("setSecure", {"enable": true});
     }
-
-  
   }
 
   Future<void> _enterFullScreenMode() async {
@@ -114,6 +106,7 @@ static const platform = MethodChannel("flutter/secure");
                       children: [
                         Positioned.fill(
                           child: YoutubePlayer(
+                            
                             controller: controller.videoPlayerController,
                             liveUIColor: Colors.transparent,
                             showVideoProgressIndicator: false,
@@ -139,7 +132,8 @@ static const platform = MethodChannel("flutter/secure");
                                   ),
                                 ),
                             ],
-                            bottomActions: const [
+                            bottomActions:  [
+                            
                               RemainingDuration(),
                               PlaybackSpeedButton(),
                               ProgressBar(isExpanded: true),

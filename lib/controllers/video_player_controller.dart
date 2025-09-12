@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:chewie/chewie.dart';
 import 'package:edzo/core/helpers/session_helper.dart';
@@ -9,6 +10,9 @@ import 'package:edzo/repos/courses/public_courses_repo.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:photo_manager/photo_manager.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class VideoController extends GetxController {
@@ -102,7 +106,7 @@ class VideoController extends GetxController {
         forceHD: false,
         hideControls: false,
         enableCaption: false,
-        hideThumbnail: false,
+        hideThumbnail: true,
       ),
     );
     videoPlayerController.addListener(() {
@@ -124,7 +128,7 @@ class VideoController extends GetxController {
     isLoading.value = false;
     update();
   }
-
+  
   @override
   void onInit() async {
     super.onInit();
