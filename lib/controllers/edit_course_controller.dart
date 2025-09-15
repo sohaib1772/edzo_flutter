@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:edzo/controllers/home_controller.dart';
 import 'package:edzo/controllers/my_subscriptions_controller.dart';
 import 'package:edzo/controllers/teacher_controller.dart';
+import 'package:edzo/controllers/teacher_playlist_controller.dart';
 
 import 'package:edzo/models/add_course_model.dart';
 import 'package:edzo/models/course_model.dart';
@@ -55,7 +56,7 @@ class EditCourseController  extends GetxController {
       Get.snackbar("خطاء في جلب الدروس", res.errorHandler!.getErrorsList(),colorText: Colors.red.shade300);
       return;
     }
-    videos.value = res.data ?? [];
+    videos.value = res.data?.directVideos ?? [];
     isLoading .value = false;
 
   }
@@ -123,7 +124,7 @@ class EditCourseController  extends GetxController {
 
   }
 
-  void deleteCourseVideo(int id)async{
+  void deleteCourseVideo(int id,{int? courseId})async{
     isLoading.value = true;
     final res = await coursesRepo.deleteCourseVideo(id);
     if (!res.status) {
@@ -135,8 +136,13 @@ class EditCourseController  extends GetxController {
       );
       return;
     }
-    Get.back();
-    Get.snackbar("تم حذف الفيديو بنجاح","");
+   
+    if(courseId != null){
+    await Get.find<TeacherPlaylistController>().getPlaylists(courseId );
+    return;
+    }
+     Get.back();
+    Get.snackbar("تم حذف الفيديو بنجاح","",colorText: Colors.green.shade300);
     videos.removeWhere((element) => element.id == id);
     isLoading.value = false;
 

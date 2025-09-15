@@ -19,29 +19,32 @@ class SubscribeInCourseWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return RoleHelper.role == Role.full ? SizedBox.shrink() :  Row(
       children: [
-        Container(
-          alignment: Alignment.center,
-          height: 45.h,
-          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          decoration: BoxDecoration(
-            color: courseModel.price.toString() == "0"
-                ? Colors.green.shade300
-                : Colors.red.shade300,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Text(
-            courseModel.price.toString() == "0"
-                ? "مجاني"
-                : courseModel.price.toString() + " دينار",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 16.sp,
-              fontWeight: FontWeight.bold,
+        Expanded(
+          child: Container(
+            alignment: Alignment.center,
+            height: 45.h,
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            decoration: BoxDecoration(
+              color: courseModel.price.toString() == "0"
+                  ? Colors.green.shade300
+                  : Colors.red.shade300,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Text(
+              courseModel.price.toString() == "0"
+                  ? "مجاني"
+                  : courseModel.price.toString() + " دينار",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16.sp,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ),
         SizedBox(width: 10.w),
-        Expanded(
+       courseModel.price.toString() == "0" ? SizedBox.shrink() :  Expanded(
+        flex: 2,
           child: AppTextButton(
             title: "اشترك الان",
             color: Colors.green.shade300,

@@ -218,7 +218,8 @@ class CoursesRepo {
           "title": uploadVideoModel.title,
           "is_paid": uploadVideoModel.isPaid,
           "url": uploadVideoModel.url,
-          "duration": uploadVideoModel.duration
+          "duration": uploadVideoModel.duration,
+          "playlist_id": uploadVideoModel.playlistId ?? ""
 
         }
       );
@@ -238,13 +239,13 @@ class CoursesRepo {
     }
   }
 
-  Future<ApiResult<List<VideoModel>>> getCourseVideos(int id) async {
+  Future<ApiResult<VideosResponseModel>> getCourseVideos(int id) async {
     try {
       var res = await mainApi.getCourseVideos(id);
-      return ApiResult<List<VideoModel>>(
+      return ApiResult<VideosResponseModel>(
         status: true,
         message: "تم الحصول على الفيديو بنجاح",
-        data: res.data,
+        data: res,
       );
     } on DioException catch (e) {
       return ApiResult(

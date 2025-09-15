@@ -6,6 +6,7 @@ import 'package:edzo/core/widgets/app_text_button.dart';
 import 'package:edzo/core/widgets/course_card_loading_skeleton.dart';
 import 'package:edzo/core/widgets/scaffold/app_scaffold.dart';
 import 'package:edzo/models/course_model.dart';
+import 'package:edzo/views/cource/widgets/course_playlist_widget.dart';
 import 'package:edzo/views/cource/widgets/course_videos_list_widget.dart';
 import 'package:edzo/views/cource/widgets/subscribe_in_course_widget.dart';
 import 'package:flutter/material.dart';
@@ -177,7 +178,13 @@ class CourseScreen extends StatelessWidget {
                   Text("عدد المحاضرات"),
                   Spacer(),
                   Text(
-                    courseController.videos.length.toString(),
+                    (courseController.videos.length +
+                            courseController.playlists.fold(
+                              0,
+                              (previous, element) =>
+                                  previous + element.videos!.length,
+                            ))
+                        .toString(),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18.sp,
@@ -194,8 +201,25 @@ class CourseScreen extends StatelessWidget {
                   Text("اجمالي وقت المحاضرات"),
                   Spacer(),
                   Obx(
-                    ()=> Text(
-                      courseController.durationFromSeconds(courseController.totalDuration.value).value,
+                    () => Text(
+                      courseController
+                          .durationFromSeconds(
+                            courseController.totalDuration.value +
+                                courseController.playlists.fold(
+                                  0,
+                                  (previousPlaylistSum, playlist) =>
+                                      previousPlaylistSum +
+                                      (playlist.videos?.fold(
+                                            0,
+                                            (previousVideoSum, video) =>
+                                                (previousVideoSum ?? 0) +
+                                                (video.duration ?? 0),
+                                          ) ??
+                                          0),
+                                ),
+                          )
+                          .value
+                          .toString(),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18.sp,
@@ -250,9 +274,18 @@ class CourseScreen extends StatelessWidget {
                           ],
                         ),
                       )
-                    : CourseVideosListWidget(
-                        courseModel: Get.arguments['courseModel'],
-                        controller: courseController,
+                    : Column(
+                        children: [
+                          CourseVideosListWidget(
+                            courseModel: Get.arguments['courseModel'],
+                            controller: courseController,
+                          ),
+                          SizedBox(height: 10.h),
+                          CoursePlaylistWidget(
+                            courseModel: Get.arguments['courseModel'],
+                            controller: courseController,
+                          ),
+                        ],
                       ),
               ),
               SizedBox(height: 10.h),

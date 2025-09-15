@@ -130,9 +130,9 @@ class EditCourseScreen extends StatelessWidget {
                                               arguments: {
                                                 "videoModel":
                                                     controller.videos[index],
-                                                    "courseVideos":
+                                                "courseVideos":
                                                     controller.videos,
-                                                    "courseModel":
+                                                "courseModel":
                                                     controller.courseModel,
                                               },
                                             );
@@ -232,6 +232,16 @@ class EditCourseScreen extends StatelessWidget {
                                       },
                                     ),
                             ),
+                            SizedBox(height: 20.h),
+                            AppTextButton(
+                              title: "قوائم التشغيل",
+                              onPressed: (){
+                                Get.toNamed(
+                                  AppRouterKeys.teacherPlaylistsScreen,
+                                  arguments: controller.courseModel.id ?? 0,
+                                );
+                              },
+                            )
                           ],
                         ),
                 ),

@@ -7,6 +7,7 @@ import 'package:edzo/models/auth/register_model.dart';
 import 'package:edzo/models/auth/reset_password_model.dart';
 import 'package:edzo/models/code_model.dart';
 import 'package:edzo/models/course_model.dart';
+import 'package:edzo/models/playlist_model.dart';
 import 'package:edzo/models/teacher_info_model.dart';
 import 'package:edzo/models/teachers_response_model.dart';
 import 'package:edzo/models/user_model.dart';
@@ -185,7 +186,19 @@ abstract class MainApi {
     @Part() MultipartFile image,
   );
 
+
+  @POST("/playlist")
+  Future<PlaylistModel> addPlaylist(@Body() AddPlaylistModel data);
+  @PUT("/playlist/{id}")
+  Future<PlaylistModel> updatePlaylist(@Path("id") int id,@Body() AddPlaylistModel data);
+  @DELETE("/playlist/{id}")
+  Future<void> deletePlaylist(@Path("id") int id,);
   
+  @GET("/playlist/{course_id}")
+  Future<List<PlaylistModel>> getPlaylistByCourseId(
+    @Path("course_id") int courseId,
+  );
+
 
 }
 

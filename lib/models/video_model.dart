@@ -1,9 +1,14 @@
+import 'package:edzo/models/playlist_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'video_model.g.dart';
 @JsonSerializable()
 class VideosResponseModel {
-  List<VideoModel>? data;
-  VideosResponseModel({this.data});
+  @JsonKey(name: 'direct_videos')
+  List<VideoModel>? directVideos;
+
+  List<PlaylistModel>? playlists;
+
+  VideosResponseModel({this.directVideos,this.playlists});
   factory VideosResponseModel.fromJson(Map<String, dynamic> json) =>
       _$VideosResponseModelFromJson(json);
       Map<String, dynamic> toJson() => _$VideosResponseModelToJson(this);

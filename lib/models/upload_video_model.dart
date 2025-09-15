@@ -6,6 +6,7 @@ class UploadVideoModel {
   bool isPaid;
   String url;
   int duration;
+  int? playlistId;
   // int chunkNumber;
   // int totalChunks;
   // String filename;
@@ -27,6 +28,8 @@ class UploadVideoModel {
     // required this.video,
     required this.url,
     required this.duration,
+    this.playlistId,
+  
   });
 
   

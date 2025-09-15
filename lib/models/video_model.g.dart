@@ -8,14 +8,20 @@ part of 'video_model.dart';
 
 VideosResponseModel _$VideosResponseModelFromJson(Map<String, dynamic> json) =>
     VideosResponseModel(
-      data: (json['data'] as List<dynamic>?)
+      directVideos: (json['direct_videos'] as List<dynamic>?)
           ?.map((e) => VideoModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      playlists: (json['playlists'] as List<dynamic>?)
+          ?.map((e) => PlaylistModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
 Map<String, dynamic> _$VideosResponseModelToJson(
   VideosResponseModel instance,
-) => <String, dynamic>{'data': instance.data};
+) => <String, dynamic>{
+  'direct_videos': instance.directVideos,
+  'playlists': instance.playlists,
+};
 
 VideoModel _$VideoModelFromJson(Map<String, dynamic> json) => VideoModel(
   id: (json['id'] as num?)?.toInt(),

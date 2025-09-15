@@ -2,6 +2,7 @@ import 'package:edzo/controllers/home_controller.dart';
 import 'package:edzo/core/helpers/session_helper.dart';
 import 'package:edzo/core/network/api_result.dart';
 import 'package:edzo/models/course_model.dart';
+import 'package:edzo/models/playlist_model.dart';
 import 'package:edzo/models/video_model.dart';
 import 'package:edzo/repos/courses/courses_repo.dart';
 import 'package:edzo/repos/courses/public_courses_repo.dart';
@@ -16,6 +17,7 @@ class CourseController extends GetxController {
   PublicCoursesRepo publicCoursesRepo = Get.find<PublicCoursesRepo>();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   RxList<VideoModel> videos = <VideoModel>[].obs;
+  RxList<PlaylistModel> playlists = <PlaylistModel>[].obs;
   CourseModel courseModel = Get.arguments['courseModel'];
 RxInt totalDuration = 0.obs;
 
@@ -63,7 +65,7 @@ RxInt totalDuration = 0.obs;
   Future<void> getVideos() async {
     isLoading.value = true;
 
-    late ApiResult res;
+    late ApiResult<VideosResponseModel> res;
 
     if (SessionHelper.user == null) {
       res = await publicCoursesRepo.getCourseVideos(courseModel.id!);
@@ -79,20 +81,24 @@ RxInt totalDuration = 0.obs;
       isLoading.value = false;
       return;
     }
-    videos.value = res.data ?? [];
+    videos.value = res.data?.directVideos ?? [];
+    playlists.value = res.data?.playlists ?? [];
     getTotalDuration();
     isLoading.value = false;
     update();
   }
 
   RxString durationFromSeconds(int seconds) {
-    int minutes = seconds ~/ 60;
-    int remainingSeconds = seconds % 60;
-    int hours = minutes ~/ 60;
+  int hours = seconds ~/ 3600;
+  int minutes = (seconds % 3600) ~/ 60;
+  int remainingSeconds = seconds % 60;
 
+  String twoDigits(int n) => n.toString().padLeft(2, "0");
 
-    return "${hours > 0 ? "$hours:" : ''}$minutes:$remainingSeconds".obs;
-  }
+  return "${hours > 0 ? "${twoDigits(hours)}:" : ""}"
+         "${twoDigits(minutes)}:"
+         "${twoDigits(remainingSeconds)}".obs;
+}
 
   void getTotalDuration() {
     var total = 0;

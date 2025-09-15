@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:edzo/controllers/edit_course_controller.dart';
+import 'package:edzo/controllers/teacher_playlist_controller.dart';
 import 'package:edzo/core/helpers/local_storage.dart';
 import 'package:edzo/models/upload_video_model.dart';
 import 'package:edzo/repos/courses/courses_repo.dart';
@@ -53,7 +54,7 @@ Future<int> getYoutubeVideoDuration(String url) async {
 
   return video.duration!.inSeconds;
 }
-Future<void> uploadVideo(int courseId) async {
+Future<void> uploadVideo(int courseId,int? playlistId) async {
   isUploading.value = true;
 
  
@@ -67,6 +68,7 @@ int seconds =await  getYoutubeVideoDuration(  urlController.text);
     isPaid: isPaid.value,
     url: urlController.text,
     duration: seconds,
+    playlistId: playlistId
   );
 
   // بعدها ترفع
@@ -85,6 +87,7 @@ int seconds =await  getYoutubeVideoDuration(  urlController.text);
   clear();
   isUploading.value = false;
   await Get.find<EditCourseController>().getCourseVideos();
+  await Get.find<TeacherPlaylistController>().getPlaylists(courseId);
 }
 
   // Future<void> _upload(

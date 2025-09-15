@@ -80,13 +80,13 @@ class PublicCoursesRepo {
 
   
 
-  Future<ApiResult<List<VideoModel>>> getCourseVideos(int id) async {
+  Future<ApiResult<VideosResponseModel>> getCourseVideos(int id) async {
     try {
       var res = await mainApi.getPublicCourseVideos(id);
-      return ApiResult<List<VideoModel>>(
+      return ApiResult<VideosResponseModel>(
         status: true,
         message: "تم الحصول على الفيديو بنجاح",
-        data: res.data,
+        data: res,
       );
     } on DioException catch (e) {
       return ApiResult(

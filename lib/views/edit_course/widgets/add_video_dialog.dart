@@ -10,11 +10,31 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 
-class AddVideoDialog extends StatelessWidget {
-  AddVideoDialog({super.key});
+class AddVideoDialog extends StatefulWidget {
+  AddVideoDialog({super.key,this.courseId,this.playlistId});
+  int? courseId;
+  int? playlistId;
+  @override
+  State<AddVideoDialog> createState() => _AddVideoDialogState();
+}
+
+class _AddVideoDialogState extends State<AddVideoDialog> {
   UploadVideoController uploadVideoController = Get.find();
+
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  CourseModel courseModel = Get.arguments['courseModel'];
+
+  late  CourseModel courseModel;
+  @override
+  initState() {
+    super.initState();
+    if(widget.courseId == null ){
+      courseModel = Get.arguments;
+    }
+    else{
+      courseModel = CourseModel(id: widget.courseId,isSubscribed: false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -164,7 +184,7 @@ class AddVideoDialog extends StatelessWidget {
                     title: uploadVideoController.unableToUpload.value ? "اعادة المحاولة" : "اضافة",
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
-                        uploadVideoController.uploadVideo(courseModel.id ?? 0);
+                        uploadVideoController.uploadVideo(courseModel.id ?? 0,widget.playlistId);
                       }
                     },
                   ),
