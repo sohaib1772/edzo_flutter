@@ -33,10 +33,10 @@ class CourseCardWidget extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 10.r),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              width: MediaQuery.of(context).size.width,
+              width: MediaQuery.of(context).size.width > 500 ? 500 : MediaQuery.of(context).size.width,
               height: 200,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16.r),
@@ -56,7 +56,7 @@ class CourseCardWidget extends StatelessWidget {
               ),
             ),
             Container(
-              width: double.infinity,
+              width: MediaQuery.of(context).size.width > 500 ? 500 : MediaQuery.of(context).size.width,
               padding: EdgeInsets.only(right: 16.r, bottom: 16.r, top: 16.r),
               decoration: BoxDecoration(
                 color: Theme.of(context).cardColor,

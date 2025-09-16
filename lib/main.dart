@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:device_preview/device_preview.dart';
 import 'package:edzo/core/constance/app_router_keys.dart';
 import 'package:edzo/core/di/binding.dart';
 import 'package:edzo/core/routing/app_router.dart';
@@ -11,16 +12,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 
-// متطلبات جديدة
-// نظام جابترات
-// لكل فيديو مدة و لكل جابتر مجموع المدة
-// لكل كورس مجموع مدة الفيديوهات و عدد الفيديواهات و عدد الطلاب المشتركين 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await ScreenUtil.ensureScreenSize();
   await Get.putAsync(() => AppServices().init());
-  runApp(MyApp());
+  runApp(DevicePreview(
+    enabled: true,
+    builder: (context) => MyApp()));
 }
 
 class MyApp extends StatefulWidget {

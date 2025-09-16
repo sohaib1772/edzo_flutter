@@ -24,60 +24,63 @@ class LoginScreen extends StatelessWidget {
       body: Center(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Image.asset('assets/images/edzo_logo.png', height: 200.h),
-
-              SizedBox(height: 28.h),
-              Text(
-                'تسجيل الدخول',
-                style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 18.h),
-              LoginForm(),
-              SizedBox(height: 18.h),
-              GestureDetector(
-                onTap: () => Get.toNamed(AppRouterKeys.mainLayout),
-                child: Text("الدخول كزائر"),
-              ),
-              SizedBox(height: 18.h),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("ليس لديك حساب؟", style: TextStyle(fontSize: 14.sp)),
-                  SizedBox(width: 10.w),
-                  GestureDetector(
-                    onTap: () => Get.toNamed(AppRouterKeys.registerScreen),
-                    child: Text(
-                      " إنشاء حساب",
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.bold,
-                        decoration: TextDecoration.underline,
-                        color: Theme.of(context).primaryColor,
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width > 500 ? 500.w : MediaQuery.of(context).size.width,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Image.asset('assets/images/edzo_logo.png', height: 200.h),
+            
+                SizedBox(height: 28.h),
+                Text(
+                  'تسجيل الدخول',
+                  style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 18.h),
+                LoginForm(),
+                SizedBox(height: 18.h),
+                GestureDetector(
+                  onTap: () => Get.toNamed(AppRouterKeys.mainLayout),
+                  child: Text("الدخول كزائر"),
+                ),
+                SizedBox(height: 18.h),
+            
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("ليس لديك حساب؟", style: TextStyle(fontSize: 14.sp)),
+                    SizedBox(width: 10.w),
+                    GestureDetector(
+                      onTap: () => Get.toNamed(AppRouterKeys.registerScreen),
+                      child: Text(
+                        " إنشاء حساب",
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.bold,
+                          decoration: TextDecoration.underline,
+                          color: Theme.of(context).primaryColor,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 28.h),
-              //terms and conditions
-              Text(
-                "سياسة الخصوصية و الشروط و الاحكام",
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.bold,
-                  decoration: TextDecoration.underline,
-                  color: Theme.of(context).primaryColor,
+                  ],
                 ),
-              ),
-              SizedBox(height: 18.h),
-
-              //
-            ],
+                SizedBox(height: 28.h),
+                //terms and conditions
+                Text(
+                  "سياسة الخصوصية و الشروط و الاحكام",
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.bold,
+                    decoration: TextDecoration.underline,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+                SizedBox(height: 18.h),
+            
+                //
+              ],
+            ),
           ),
         ),
       ),

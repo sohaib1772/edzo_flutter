@@ -21,13 +21,16 @@ class SearchScreen extends StatelessWidget {
             child: Column(
                 children: [
                   SizedBox(height: 16.h),
-                  AppTextForm(
-                    hint: "ابحث عن دورة",
-                    controller: searchController.searchController,
-                    onChanged: (value) {
-                      searchController.search();
-                    },
-                    
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width > 500 ? 500.w : MediaQuery.of(context).size.width,
+                    child: AppTextForm(
+                      hint: "ابحث عن دورة",
+                      controller: searchController.searchController,
+                      onChanged: (value) {
+                        searchController.search();
+                      },
+                      
+                    ),
                   ),
                   SizedBox(height: 16.h),
                   ListView.builder(

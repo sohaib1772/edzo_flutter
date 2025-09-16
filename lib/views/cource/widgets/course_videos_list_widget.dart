@@ -67,7 +67,6 @@ final watchedTime = LocalStorage.getVideoLastWatchedSecond(controller.videos[ind
           child: Container(
             margin: EdgeInsets.symmetric(vertical: 5.h),
             padding: EdgeInsets.symmetric(horizontal: 10.w),
-            height: 85.h,
             decoration: BoxDecoration(
               color: Theme.of(context).cardColor,
               borderRadius: BorderRadius.circular(16.r),

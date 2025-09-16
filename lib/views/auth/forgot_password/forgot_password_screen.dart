@@ -12,23 +12,26 @@ class ForgotPasswordScreen extends StatelessWidget {
       showAppBar: false,
       body: Center(
         child: SingleChildScrollView(
-          child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Image.asset('assets/images/edzo_logo.png', height: 200.h),
-          
-                    SizedBox(height: 28.h),
-                    Text(
-                      'نسيت كلمة المرور',
-                      style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 18.h),
-                    ForgotPasswordForm(),
-          
-                    
-                  ],
-                ),
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width > 500 ? 500.w : MediaQuery.of(context).size.width,
+            child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset('assets/images/edzo_logo.png', height: 200.h),
+            
+                      SizedBox(height: 28.h),
+                      Text(
+                        'نسيت كلمة المرور',
+                        style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 18.h),
+                      ForgotPasswordForm(),
+            
+                      
+                    ],
+                  ),
+          ),
         ),
       ),
     );
