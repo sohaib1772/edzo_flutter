@@ -26,11 +26,11 @@ class MySubscriptionsScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.hourglass_empty_outlined,size: 50.sp,),  
+                    Icon(Icons.hourglass_empty_outlined,size: 50.sp.clamp(50, 55),),  
                     SizedBox(height: 20.h),
                     Text("لا يوجد دورات مشترك بها",
                       style: TextStyle(
-                        fontSize: 20.sp,
+                        fontSize: 20.sp.clamp(20, 24),
                         fontWeight: FontWeight.bold,
                       ),
                     ),

@@ -10,7 +10,7 @@ part of 'main_api.dart';
 
 class _MainApi implements MainApi {
   _MainApi(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'http://192.168.0.102:8003/api/';
+    baseUrl ??= 'http://10.223.98.27:8003/api/';
   }
 
   final Dio _dio;

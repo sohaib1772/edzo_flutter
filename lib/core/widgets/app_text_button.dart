@@ -1,3 +1,4 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,10 +21,18 @@ class AppTextButton extends StatelessWidget {
   Function()? onPressed;
 
   @override
+
   Widget build(BuildContext context) {
+
+    double height = 50.h;
+    if(MediaQuery.of(context).orientation == Orientation.landscape){
+      height = 50.h.clamp(50, 55);
+    }else{
+      height = 50.h;
+    }
     return SizedBox(
       width: 250.w,
-      height: 50.h,
+      height: height,
       child: isLoading
           ? ClipRRect(
               borderRadius: BorderRadius.circular(10.r),
@@ -88,7 +97,7 @@ class AppTextButton extends StatelessWidget {
                 title!,
                 style: TextStyle(
                   color: color ?? Theme.of(context).primaryColor,
-                  fontSize: 18.sp,
+                  fontSize: 18.sp.clamp(18, 22),
                   fontWeight: FontWeight.bold,
                 ),
               ),

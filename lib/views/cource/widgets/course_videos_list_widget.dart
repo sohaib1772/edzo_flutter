@@ -77,7 +77,7 @@ final watchedTime = LocalStorage.getVideoLastWatchedSecond(controller.videos[ind
               children: [
                 Row(
                   children: [
-                    Icon(Icons.play_arrow, size: 30.sp),
+                    Icon(Icons.play_arrow, size: 30.sp.clamp(30, 35)),
                     SizedBox(width: 10.w),
                     Expanded(
                       child: Text(
@@ -85,7 +85,7 @@ final watchedTime = LocalStorage.getVideoLastWatchedSecond(controller.videos[ind
                             ? "اشترك بالدورة لمشاهدة الدرس"
                             : controller.videos[index].title ?? "",
                         style: TextStyle(
-                          fontSize: 16.sp,
+                          fontSize: 16.sp.clamp(16, 18),
                           fontWeight: FontWeight.bold,
                         ),
                         maxLines: 2,
@@ -103,13 +103,13 @@ final watchedTime = LocalStorage.getVideoLastWatchedSecond(controller.videos[ind
                     SizedBox(width: 8.w),
                     Icon(
                       Icons.timer_outlined,
-                      size: 18.sp,
+                      size: 18.sp.clamp(18, 22),
                     ),
                     SizedBox(width: 5.w),
                     Text(
                       controller.durationFromSeconds(
                           controller.videos[index].duration ?? 0).value ,
-                      style: TextStyle(fontSize: 13.sp),
+                      style: TextStyle(fontSize: 13.sp.clamp(13, 15)),
                     ),     
                     Spacer(),
                     Text(

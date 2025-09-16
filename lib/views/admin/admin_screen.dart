@@ -38,7 +38,6 @@ class AdminScreen extends StatelessWidget {
                   Get.bottomSheet(AdminSearchBottomSheet());
                 },
                 title: "بحث عن مستخدم",
-                icon: Icons.search,
               ),
             ),
       

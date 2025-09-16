@@ -66,8 +66,8 @@ class AppTextForm extends StatelessWidget {
       textInputAction: textInputAction,
       obscureText: showText,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 15.h),
-        prefixIcon: prefixIcon == null ? null : Icon(prefixIcon, size: 24.sp),
+        contentPadding: EdgeInsets.symmetric(horizontal: 10.w.clamp(10, 12), vertical: 15.h.clamp(15, 18)),
+        prefixIcon: prefixIcon == null ? null : Icon(prefixIcon, size: 24.sp.clamp(24, 28)),
         suffixIcon: suffix,
         hintText: hint,
         filled: true,

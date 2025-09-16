@@ -32,8 +32,8 @@ class _TeacherReportsScreenState extends State<TeacherReportsScreen> {
         child: Column(
           children: [
             SizedBox(
-              height: 100.h,
-              width: 100.w,
+              height: 100.h.clamp(100, 105),
+              width: 100.w.clamp(100, 105),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(100),
                 child: teachersInfoModel.user?.teacherInfo?.image != null
@@ -46,16 +46,16 @@ class _TeacherReportsScreenState extends State<TeacherReportsScreen> {
             ),
             SizedBox(height: 20.h),
             Text(teachersInfoModel.user?.name ?? "",
-                style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold)),
+                style: TextStyle(fontSize: 20.sp.clamp(20, 24), fontWeight: FontWeight.bold)),
             SizedBox(height: 10.h),
-            Text(teachersInfoModel.user?.email ?? ""),
+            Text(teachersInfoModel.user?.email ?? "", style: TextStyle(fontSize: 20.sp.clamp(20, 24), fontWeight: FontWeight.bold)),
             SizedBox(height: 10.h),
-            Text(teachersInfoModel.user?.teacherInfo?.bio ?? ""),
+            Text(teachersInfoModel.user?.teacherInfo?.bio ?? "", style: TextStyle(fontSize: 20.sp.clamp(20, 24), )),
             SizedBox(height: 20),
             Row(children: [
-                Text("عدد الكورسات - ${teachersInfoModel.user?.teacherCoursesModel?.length}"),
+                Text("عدد الكورسات - ${teachersInfoModel.user?.teacherCoursesModel?.length}", style: TextStyle(fontSize: 20.sp.clamp(20, 24),)),
                 Spacer(),
-                Text("عدد المشتركين - ${teachersInfoModel.user?.totalSubscriptionsCount}"),
+                Text("عدد المشتركين - ${teachersInfoModel.user?.totalSubscriptionsCount}", style: TextStyle(fontSize: 20.sp.clamp(20, 24),)),
             ],),
             Divider(),
         
@@ -67,7 +67,7 @@ class _TeacherReportsScreenState extends State<TeacherReportsScreen> {
                 TeacherCoursesModel? teacherCoursesModel = teachersInfoModel.user?.teacherCoursesModel?[index];
 
                 return ExpansionTile(
-                  subtitle: Text("عدد المشتركين - ${teacherCoursesModel?.monthlySubscribers?.length}"),
+                  subtitle: Text("عدد المشتركين - ${teacherCoursesModel?.monthlySubscribers?.length}", style: TextStyle(fontSize: 20.sp.clamp(20, 24),)),
                  title: Text(teacherCoursesModel?.title ?? ""),
                   children: List.generate(
                     teacherCoursesModel?.monthlySubscribers?.length ?? 0,

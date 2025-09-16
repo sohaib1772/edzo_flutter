@@ -38,7 +38,10 @@ class CoursePlaylistWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(16.r),
           ),
           child: ExpansionTile(
-            title: Text(controller.playlists[index].title!),
+            title: Text(controller.playlists[index].title!,style: TextStyle(
+              fontSize: 16.sp.clamp(16, 18),
+              fontWeight: FontWeight.bold,
+            ),),
             subtitle: Padding(
               padding:  EdgeInsets.symmetric(vertical: 10.h),
               child: Row(
@@ -110,7 +113,6 @@ class CoursePlaylistWidget extends StatelessWidget {
                   child: Container(
                     margin: EdgeInsets.symmetric(vertical: 5.h),
                     padding: EdgeInsets.symmetric(horizontal: 10.w),
-                    height: 85.h,
                     decoration: BoxDecoration(
                       color: Theme.of(context).cardColor,
                       borderRadius: BorderRadius.circular(16.r),
@@ -121,15 +123,15 @@ class CoursePlaylistWidget extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            Icon(Icons.play_arrow, size: 30.sp),
-                            SizedBox(width: 10.w),
+                            Icon(Icons.play_arrow, size: 30.sp.clamp(30, 35)),
+                            SizedBox(width: 10.w.clamp(10,14)),
                             Expanded(
                               child: Text(
                                 !canPlay
                                     ? "اشترك بالدورة لمشاهدة الدرس"
                                     : controller.playlists[index].videos?[generator].title ?? "",
                                 style: TextStyle(
-                                  fontSize: 16.sp,
+                                  fontSize: 16.sp.clamp(16, 18),
                                   fontWeight: FontWeight.bold,
                                 ),
                                 maxLines: 2,
@@ -146,9 +148,9 @@ class CoursePlaylistWidget extends StatelessWidget {
                             ? SizedBox.shrink()
                             : Row(
                                 children: [
-                                  SizedBox(width: 8.w),
-                                  Icon(Icons.timer_outlined, size: 18.sp),
-                                  SizedBox(width: 5.w),
+                                  SizedBox(width: 2.w.clamp(2, 4)),
+                                  Icon(Icons.timer_outlined, size: 18.sp.clamp(18, 22)),
+                                  SizedBox(width: 5.w.clamp(5, 8)),
                                   Text(
                                     controller
                                         .durationFromSeconds(
@@ -156,7 +158,7 @@ class CoursePlaylistWidget extends StatelessWidget {
                                               0,
                                         )
                                         .value,
-                                    style: TextStyle(fontSize: 13.sp),
+                                    style: TextStyle(fontSize: 13.sp.clamp(13, 15)),
                                   ),
                                   Spacer(),
                                   Text(

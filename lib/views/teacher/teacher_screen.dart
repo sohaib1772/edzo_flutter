@@ -41,12 +41,12 @@ class TeacherScreen extends StatelessWidget {
                             children: [
                               TeacherInfoWidget(),
                               SizedBox(height: 20.h),
-                              Icon(Icons.hourglass_empty_outlined, size: 50.sp),
+                              Icon(Icons.hourglass_empty_outlined, size: 50.sp.clamp(50, 55)),
                               SizedBox(height: 20.h),
                               Text(
                                 "لا يوجد دورات تم نشرها حتى الان",
                                 style: TextStyle(
-                                  fontSize: 20.sp,
+                                  fontSize: 20.sp.clamp(20, 24),
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -62,34 +62,48 @@ class TeacherScreen extends StatelessWidget {
                           ),
                         ),
                       )
-                    : Column(
-                        children: [
-
-                          TeacherInfoWidget(),
-
-                          SizedBox(height: 20.h),
-                          AppTextButton(
-                            title: "اضافة دورة جديدة",
-                            icon: Icons.add,
-                            onPressed: () {
-                              Get.toNamed(AppRouterKeys.addCourseScreen);
-                            },
-                          ),
-                          SizedBox(height: 20.h),
-                          ListView.builder(
-                            shrinkWrap: true,
-
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: controller.courses.length,
-                            itemBuilder: (context, index) {
-                              return CourseCardWidget(
-                                isTeacher: true,
-                                course: controller.courses[index],
-                              );
-                            },
-                          ),
-                        ],
+                    : Center(
+                      child: LayoutBuilder(
+                        builder:(context, constraints){
+                          
+                          double width = constraints.maxWidth;
+                                 
+                          if(constraints.maxWidth > 500){
+                            width = 500;
+                          }
+                          
+                          return  SizedBox(
+                            width: width,
+                            child: Column(
+                              children: [
+                                                  
+                                TeacherInfoWidget(),
+                                                  
+                                SizedBox(height: 20.h),
+                                AppTextButton(
+                                  title: "اضافة دورة جديدة",
+                                  onPressed: () {
+                                    Get.toNamed(AppRouterKeys.addCourseScreen);
+                                  },
+                                ),
+                                SizedBox(height: 20.h),
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                                  
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount: controller.courses.length,
+                                  itemBuilder: (context, index) {
+                                    return CourseCardWidget(
+                                      isTeacher: true,
+                                      course: controller.courses[index],
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                          );},
                       ),
+                    ),
               ),
             ),
     );

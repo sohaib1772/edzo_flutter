@@ -38,8 +38,8 @@ class TeacherInfoWidget extends StatelessWidget {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(80.r),
                   ),
-                  height: 150.h,
-                  width: 150.w,
+                  height: 150.h.clamp(150, 160),
+                  width: 150.w.clamp(150, 160),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(80.r),
                     child: controller.selectedImage?.path != null

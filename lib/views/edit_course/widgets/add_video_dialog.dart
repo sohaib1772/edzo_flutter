@@ -38,6 +38,10 @@ class _AddVideoDialogState extends State<AddVideoDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      constraints: BoxConstraints(
+        maxWidth: 500.w,
+        
+      ),
       child: Container(
         padding: EdgeInsets.all(20.r),
         decoration: BoxDecoration(
@@ -53,7 +57,7 @@ class _AddVideoDialogState extends State<AddVideoDialog> {
               children: [
                 Text(
                   "اضافة درس",
-                  style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 20.sp.clamp(20, 24), fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 20.h),
                 // Obx(
@@ -144,7 +148,7 @@ class _AddVideoDialogState extends State<AddVideoDialog> {
                       Text(
                         "مدفوع ؟",
                         style: TextStyle(
-                          fontSize: 18.sp,
+                          fontSize: 18.sp.clamp(18, 20),
                           fontWeight: FontWeight.bold,
                         ),
                       ),

@@ -52,7 +52,7 @@ class LoginForm extends StatelessWidget {
                   controller.showPassword.value
                       ? Icons.visibility_off_outlined
                       : Icons.remove_red_eye_outlined,
-                  size: 24.sp,
+                  size: 24.sp.clamp(24, 28),
                 ),
               ),
             ),
@@ -65,7 +65,7 @@ class LoginForm extends StatelessWidget {
               child: Text(
                 "نسيت كلمة المرور؟",
                 style: TextStyle(
-                  fontSize: 14.sp,
+                  fontSize: 14.sp.clamp(12, 18),
                   fontWeight: FontWeight.bold,
                   decoration: TextDecoration.underline,
                   color: Theme.of(context).primaryColor,
@@ -111,7 +111,7 @@ class LoginForm extends StatelessWidget {
             },
             child: Text(
               "فتح الحساب من جهاز جديد",
-              style: TextStyle(fontSize: 14.sp, color: Colors.grey.shade600),
+              style: TextStyle(fontSize: 14.sp.clamp(12, 18), color: Colors.grey.shade600),
             ),
           ),
           SizedBox(height: 28.h),

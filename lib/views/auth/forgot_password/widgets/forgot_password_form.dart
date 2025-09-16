@@ -73,7 +73,7 @@ class ForgotPasswordForm extends StatelessWidget {
                   controller.showPassword.value
                       ? Icons.visibility_off_outlined
                       : Icons.remove_red_eye_outlined,
-                  size: 24.sp,
+                  size: 24.sp.clamp(24, 28),
                 ),
               ),
             ),
@@ -98,7 +98,7 @@ class ForgotPasswordForm extends StatelessWidget {
                   controller.showPassword.value
                       ? Icons.visibility_off_outlined
                       : Icons.remove_red_eye_outlined,
-                  size: 24.sp,
+                  size: 24.sp.clamp(24, 28),
                 ),
               ),
             ),

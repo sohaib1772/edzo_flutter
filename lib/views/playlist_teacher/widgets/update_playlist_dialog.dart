@@ -41,8 +41,11 @@ class _UpdatePlaylistDialogState extends State<UpdatePlaylistDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      constraints: BoxConstraints(
+        maxWidth: 500.w,
+      ),
                   actionsAlignment: MainAxisAlignment.spaceBetween,
-
+alignment: Alignment.center,
                   title: Text("تعديل القائمة"),
                   content: Form(
                     key: formKey,
@@ -60,6 +63,7 @@ class _UpdatePlaylistDialogState extends State<UpdatePlaylistDialog> {
                   actions: [
                     Obx(
                       ()=> AppTextButton(
+                        width: double.infinity,
                         isLoading: controller.isLoading.value,
                         onPressed: ()async{
                           await controller.deletePlaylist(widget.playlist.id ?? 0);
@@ -68,6 +72,7 @@ class _UpdatePlaylistDialogState extends State<UpdatePlaylistDialog> {
                     SizedBox(height: 10.w,),
                     Obx(
                       ()=> AppTextButton(
+                         width: double.infinity,
                         isLoading: controller.isLoading.value,
                         onPressed: ()async{
                         if(formKey.currentState!.validate()){

@@ -22,7 +22,6 @@ class SubscribeInCourseWidget extends StatelessWidget {
         Expanded(
           child: Container(
             alignment: Alignment.center,
-            height: 45.h,
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             decoration: BoxDecoration(
               color: courseModel.price.toString() == "0"
@@ -36,7 +35,7 @@ class SubscribeInCourseWidget extends StatelessWidget {
                   : courseModel.price.toString() + " دينار",
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 16.sp,
+                fontSize: 18.sp.clamp(18, 22),
                 fontWeight: FontWeight.bold,
               ),
             ),

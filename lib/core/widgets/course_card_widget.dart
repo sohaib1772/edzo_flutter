@@ -56,7 +56,7 @@ class CourseCardWidget extends StatelessWidget {
               ),
             ),
             Container(
-              width: MediaQuery.of(context).size.width > 500 ? 500 : MediaQuery.of(context).size.width,
+              width: MediaQuery.of(context).size.width > 500 ? 600 : MediaQuery.of(context).size.width,
               padding: EdgeInsets.only(right: 16.r, bottom: 16.r, top: 16.r),
               decoration: BoxDecoration(
                 color: Theme.of(context).cardColor,
@@ -71,14 +71,14 @@ class CourseCardWidget extends StatelessWidget {
                   Text(
                     course.title ?? "",
                     style: TextStyle(
-                      fontSize: 16.sp,
+                      fontSize: 16.sp.clamp(16, 18),
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
                     course.description ?? "",
                     style: TextStyle(
-                      fontSize: 16.sp,
+                      fontSize: 16.sp.clamp(16, 18),
                       fontWeight: FontWeight.bold,
                     ),
                     maxLines: 2,
@@ -105,7 +105,7 @@ class CourseCardWidget extends StatelessWidget {
                               Shadow(color: Colors.black, offset: Offset(0, 1)),
                             ],
                             fontWeight: FontWeight.bold,
-                            fontSize: 24.sp,
+                            fontSize: 24.sp.clamp(24, 28),
                             color: Colors.white,
                           ),
                           textAlign: TextAlign.center,
@@ -138,8 +138,8 @@ class CourseCardWidget extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               SizedBox(
-                                height: 50.h,
-                                width: 50.w,
+                                height: 50.h.clamp(50, 55),
+                                width: 50.w.clamp(50, 55),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(50.r),
                                   child: course.teacherInfo?.image != null
@@ -153,12 +153,12 @@ class CourseCardWidget extends StatelessWidget {
                                         ),
                                 ),
                               ),
-                              SizedBox(width: 16.w),
+                              SizedBox(width: 16.w.clamp(16, 18)),
                               Text(
                                 course.teacherName ?? "",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 18.sp,
+                                  fontSize: 18.sp.clamp(18, 22),
                                 ),
                               ),
                               Spacer(),
@@ -170,7 +170,7 @@ class CourseCardWidget extends StatelessWidget {
                                     course.subscribersCount.toString(),
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 18.sp,
+                                      fontSize: 18.sp.clamp(18, 22),
                                     ),
                                   ),
                                   SizedBox(width: 8.w),

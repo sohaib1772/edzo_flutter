@@ -12,25 +12,34 @@ class EmailVerificationScreen extends StatelessWidget {
     return AppScaffold(
       showAppBar: false,
       body: Center(
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width > 500 ? 500.w : MediaQuery.of(context).size.width,
-          child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Image.asset('assets/images/edzo_logo.png', height: 200.h),
-          
-                    SizedBox(height: 28.h),
-                    Text(
-                      'تحقق من البريد الالكتروني',
-                      style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 18.h),
-                    EmailVerificationForm(),
-          
-                    
-                  ],
-                ),
+        child: LayoutBuilder(
+          builder:(context, constraints){
+            
+             double width = constraints.maxWidth;
+             
+              if(constraints.maxWidth > 500){
+                width = 500;
+              }
+            return SizedBox(
+            width: width,
+            child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset('assets/images/edzo_logo.png', height: 200.h),
+            
+                      SizedBox(height: 28.h),
+                      Text(
+                        'تحقق من البريد الالكتروني',
+                        style: TextStyle(fontSize: 18.sp.clamp(18, 22), fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 18.h),
+                      EmailVerificationForm(),
+            
+                      
+                    ],
+                  ),
+          );},
         ),
       ),
     );
