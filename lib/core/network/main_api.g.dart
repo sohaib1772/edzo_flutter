@@ -10,7 +10,8 @@ part of 'main_api.dart';
 
 class _MainApi implements MainApi {
   _MainApi(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'http://10.223.98.27:8003/api/';
+    baseUrl ??=
+        'https://disclaimer-beyond-announces-during.trycloudflare.com/api/';
   }
 
   final Dio _dio;

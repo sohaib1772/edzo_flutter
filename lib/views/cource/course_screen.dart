@@ -192,17 +192,19 @@ class CourseScreen extends StatelessWidget {
                         SizedBox(width: 8.w),
                         Text("عدد المحاضرات"),
                         Spacer(),
-                        Text(
-                          (courseController.videos.length +
-                                  courseController.playlists.fold(
-                                    0,
-                                    (previous, element) =>
-                                        previous + element.videos!.length,
-                                  ))
-                              .toString(),
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18.sp.clamp(18, 22),
+                        Obx(
+                          ()=> Text(
+                            (courseController.videos.length +
+                                    courseController.playlists.fold(
+                                      0,
+                                      (previous, element) =>
+                                          previous + element.videos!.length,
+                                    ))
+                                .toString(),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18.sp.clamp(18, 22),
+                            ),
                           ),
                         ),
                         SizedBox(width: 8.w),

@@ -28,7 +28,7 @@ class _AddVideoDialogState extends State<AddVideoDialog> {
   initState() {
     super.initState();
     if(widget.courseId == null ){
-      courseModel = Get.arguments;
+      courseModel = Get.arguments['courseModel'];
     }
     else{
       courseModel = CourseModel(id: widget.courseId,isSubscribed: false);
