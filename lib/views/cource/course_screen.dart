@@ -164,7 +164,7 @@ class CourseScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         SizedBox(width: 10.w),
-                        Text(courseController.courseModel.description ?? ""),
+                        Expanded(child: Text(courseController.courseModel.description ?? "")),
                       ],
                     ),
                     SizedBox(height: 10.h),
