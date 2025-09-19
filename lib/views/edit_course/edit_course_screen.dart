@@ -118,7 +118,10 @@ class EditCourseScreen extends StatelessWidget {
                                       Spacer(),
                                       IconButton(
                                         onPressed: () {
-                                          Get.dialog(AddVideoDialog());
+                                          int courseId = controller.courseModel.id ?? 0;
+                                          Get.dialog(AddVideoDialog(
+                                            courseId: courseId,
+                                          ));
                                         },
                                         icon: Icon(Icons.add, size: 30.sp.clamp(30, 34)),
                                       ),

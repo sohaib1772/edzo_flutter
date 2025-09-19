@@ -101,12 +101,12 @@ class CourseScreen extends StatelessWidget {
                             ),
                           ),
                           Spacer(),
-                          IconButton(
+                        courseController.courseModel.teacherInfo?.telegramUrl != null ?  IconButton(
                             onPressed: () async {
                               // url lancher
                               if (!await launchUrl(
                                 Uri.parse(
-                                  "https://${courseController.courseModel.teacherInfo?.telegramUrl}",
+                                  courseController.courseModel.teacherInfo?.telegramUrl ?? "",
                                 ),
                                 mode: LaunchMode.externalApplication,
                               )) {
@@ -116,7 +116,7 @@ class CourseScreen extends StatelessWidget {
                               }
                             },
                             icon: Icon(Icons.telegram),
-                          ),
+                          ) : SizedBox.shrink(),
                         ],
                       ),
                     ),
@@ -281,7 +281,8 @@ class CourseScreen extends StatelessWidget {
                                 await courseController.getVideos();
                               },
                             )
-                          : courseController.videos.isEmpty
+                          : courseController.videos.isEmpty &&
+                                  courseController.playlists.isEmpty
                           ? Center(
                               child: Column(
                                 children: [
