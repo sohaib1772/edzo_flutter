@@ -10,7 +10,8 @@ part of 'main_api.dart';
 
 class _MainApi implements MainApi {
   _MainApi(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'https://page-ottawa-apollo-delivery.trycloudflare.com/api/';
+    baseUrl ??=
+        'https://riding-runtime-subscribers-laugh.trycloudflare.com/api/';
   }
 
   final Dio _dio;
@@ -1028,6 +1029,26 @@ class _MainApi implements MainApi {
           .compose(
             _dio.options,
             '/courses/update-video-order',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    await _dio.fetch<void>(_options);
+  }
+
+  @override
+  Future<void> updatePlaylistOrder(Map<String, dynamic> data) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(data);
+    final _options = _setStreamType<void>(
+      Options(method: 'PUT', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/courses/update-playlist-order',
             queryParameters: queryParameters,
             data: _data,
           )

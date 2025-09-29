@@ -162,6 +162,7 @@ class _PlaylistTeacherScreenState extends State<PlaylistTeacherScreen> {
                     );
                     controller.playlists.insert(newListIndex, movedList);
                   });
+                  controller.updatePlaylistsOrder();
                 },
                 listDecorationWhileDragging: BoxDecoration(
                   color: Theme.of(context).primaryColor,

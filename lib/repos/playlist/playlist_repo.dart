@@ -110,5 +110,26 @@ class PlaylistRepo {
       );
     }
   }
+  Future<ApiResult<void>> updatePlaylistOrder(List<Map<String, dynamic>> data) async {
+    try {
+      await mainApi.updatePlaylistOrder({
+        "playlists": data
+      });
+      return ApiResult<void>(
+        status: true,
+        message: "تم تحديث ترتيب قوائم التشغيل بنجاح",
+        data: null,
+      );
+    } on DioException catch (e) {
+      return ApiResult(
+        status: false,
+        message:
+            e.response?.data["message"] ?? "حدث خطأ في تحديث ترتيب قوائم التشغيل",
+        error: e,
+        data: null,
+        errorHandler: ErrorHandler.fromJson(e.response?.data ?? {}),
+      );
+    }
+  }
   
 }

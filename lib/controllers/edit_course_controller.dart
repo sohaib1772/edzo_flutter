@@ -9,9 +9,11 @@ import 'package:edzo/models/add_course_model.dart';
 import 'package:edzo/models/course_model.dart';
 import 'package:edzo/models/video_model.dart';
 import 'package:edzo/repos/courses/courses_repo.dart';
+import 'package:edzo/repos/playlist/playlist_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide MultipartFile;
 import 'package:image_picker/image_picker.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 class EditCourseController  extends GetxController {
   RxBool isLoading = false.obs;
@@ -19,6 +21,7 @@ class EditCourseController  extends GetxController {
   TextEditingController descriptionController = TextEditingController();
   TextEditingController priceController = TextEditingController();
   TextEditingController telegramUrlController = TextEditingController();
+  PlaylistRepo playlistRepo = Get.find();
   XFile? image;
   RxString imagePath = ''.obs;
   CoursesRepo coursesRepo = Get.find<CoursesRepo>();
@@ -147,4 +150,25 @@ class EditCourseController  extends GetxController {
     isLoading.value = false;
 
   }
+ Future<void> updateOrder() async {
+  List<Map<String, dynamic>> videosOrder = [];
+
+  for (int itemIndex = 0; itemIndex < videos.length; itemIndex++) {
+    videosOrder.add({
+      "id": videos[itemIndex].id,
+      "playlist_id": null, // لأن الفيديوهات هنا لا تنتمي لأي قائمة
+      "order": itemIndex,
+    });
+  }
+
+  final res = await playlistRepo.updateOrder(videosOrder);
+  if (!res.status) {
+    Get.snackbar(
+      "خطأ في تحديث ترتيب الفيديوهات",
+      res.errorHandler!.getErrorsList(),
+      colorText: Colors.red.shade300,
+    );
+    return;
+  }
+}
 }

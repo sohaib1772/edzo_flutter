@@ -194,6 +194,11 @@ abstract class MainApi {
 
   @PUT('/courses/update-video-order')
   Future<void> updateVideoOrder(@Body() Map<String, dynamic> data);
+
+  @PUT('/courses/update-playlist-order')
+  Future<void> updatePlaylistOrder(@Body() Map<String, dynamic> data);
+
+
   @POST("/playlist")
   Future<PlaylistModel> addPlaylist(@Body() AddPlaylistModel data);
   @PUT("/playlist/{id}")

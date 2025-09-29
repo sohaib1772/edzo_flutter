@@ -120,4 +120,22 @@ class TeacherPlaylistController extends GetxController {
    
 
   }
+  Future<void> updatePlaylistsOrder() async {
+  List<Map<String, dynamic>> playlistsOrder = [];
+  for (int i = 0; i < playlists.length; i++) {
+    playlistsOrder.add({
+      "id": playlists[i].id,
+      "order": i,
+    });
+  }
+
+  final res = await playlistRepo.updatePlaylistOrder(playlistsOrder);
+  if (!res.status) {
+    Get.snackbar(
+      "خطأ في تحديث ترتيب القوائم",
+      res.errorHandler!.getErrorsList(),
+      colorText: Colors.red.shade300,
+    );
+  }
+}
 }
