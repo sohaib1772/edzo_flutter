@@ -19,6 +19,7 @@ class MainLayoutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => AppScaffold(
+        padding: 5,
         defaultLeading: true,
         title: mainLayoutController.getTitle(),
         body: Obx(

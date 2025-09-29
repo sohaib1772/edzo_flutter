@@ -11,6 +11,7 @@ import 'package:edzo/controllers/main_layout_controller.dart';
 import 'package:edzo/controllers/auth/login_controller.dart';
 import 'package:edzo/controllers/auth/register_controller.dart';
 import 'package:edzo/controllers/my_subscriptions_controller.dart';
+import 'package:edzo/controllers/pin_course_controller.dart';
 import 'package:edzo/controllers/teacher_controller.dart';
 import 'package:edzo/controllers/teacher_playlist_controller.dart';
 import 'package:edzo/controllers/teacher_profile_controller.dart';
@@ -38,6 +39,8 @@ class Binding extends Bindings {
     Get.lazyPut(() => TeacherProfileController(), fenix: true);
     Get.lazyPut(() => AdminController(), fenix: true);
     Get.lazyPut(() => TeacherPlaylistController(), fenix: true);
+    Get.lazyPut(() => PinCourseController(), fenix: true);
+    
 
     
   }

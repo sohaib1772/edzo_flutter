@@ -35,6 +35,7 @@ CourseModel _$CourseModelFromJson(Map<String, dynamic> json) =>
             ?.map((e) => CodeModel.fromJson(e as Map<String, dynamic>))
             .toList(),
         telegramUrl: json['telegram_url'] as String?,
+        isPin: json['is_pin'] as bool,
       )
       ..teacherInfo = json['teacher_info'] == null
           ? null
@@ -58,4 +59,5 @@ Map<String, dynamic> _$CourseModelToJson(CourseModel instance) =>
       'telegram_url': instance.telegramUrl,
       'codes': instance.codes,
       'teacher_info': instance.teacherInfo,
+      'is_pin': instance.isPin,
     };

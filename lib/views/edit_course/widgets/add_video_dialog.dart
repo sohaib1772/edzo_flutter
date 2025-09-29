@@ -31,7 +31,7 @@ class _AddVideoDialogState extends State<AddVideoDialog> {
       courseModel = Get.arguments['courseModel'];
     }
     else{
-      courseModel = CourseModel(id: widget.courseId,isSubscribed: false);
+      courseModel = CourseModel(id: widget.courseId,isSubscribed: false,isPin: false);
     }
   }
 

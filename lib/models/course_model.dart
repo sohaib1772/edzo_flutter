@@ -38,6 +38,8 @@ class CourseModel {
   @JsonKey(name: "teacher_info")
   TeacherInfoModel? teacherInfo;
 
+  @JsonKey(name: "is_pin")
+  bool isPin;
 
   CourseModel(
       {this.id,
@@ -52,7 +54,8 @@ class CourseModel {
       this.teacherImage,
       this.subscribersCount,
       this.codes,
-      this.telegramUrl
+      this.telegramUrl,
+      required this.isPin,
       });
 
       

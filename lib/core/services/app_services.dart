@@ -14,6 +14,7 @@ import 'package:edzo/repos/auth/login_repo.dart';
 import 'package:edzo/repos/auth/logout_repo.dart';
 import 'package:edzo/repos/auth/register_repo.dart';
 import 'package:edzo/repos/courses/courses_repo.dart';
+import 'package:edzo/repos/courses/pin_course_repo.dart';
 import 'package:edzo/repos/courses/public_courses_repo.dart';
 import 'package:edzo/repos/playlist/playlist_repo.dart';
 import 'package:edzo/repos/teacher_repo.dart';
@@ -48,6 +49,8 @@ class AppServices extends GetxService {
     Get.lazyPut(() => AdminRepo(Get.find<MainApi>()), fenix: true);
     Get.lazyPut(() => PublicCoursesRepo(Get.find<MainApi>()), fenix: true);
     Get.lazyPut(() => PlaylistRepo(Get.find<MainApi>()), fenix: true);
+    Get.lazyPut(() => PinCourseRepo(Get.find<MainApi>()), fenix: true);
+    
 
   }
 

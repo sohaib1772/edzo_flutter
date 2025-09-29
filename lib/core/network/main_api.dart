@@ -98,6 +98,12 @@ abstract class MainApi {
 
 
 
+  @POST('courses/{id}/pin')
+  Future<void> pinCourse(@Path("id") int id);
+
+  @DELETE('courses/{id}/pin')
+  Future<void> unpinCourse(@Path("id") int id);
+
   @POST("courses")
   @MultiPart()
   Future<AddCourseResponseModel> addCourse(
@@ -186,7 +192,8 @@ abstract class MainApi {
     @Part() MultipartFile image,
   );
 
-
+  @PUT('/courses/update-video-order')
+  Future<void> updateVideoOrder(@Body() Map<String, dynamic> data);
   @POST("/playlist")
   Future<PlaylistModel> addPlaylist(@Body() AddPlaylistModel data);
   @PUT("/playlist/{id}")
