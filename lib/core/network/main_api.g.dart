@@ -11,7 +11,7 @@ part of 'main_api.dart';
 class _MainApi implements MainApi {
   _MainApi(this._dio, {this.baseUrl, this.errorLogger}) {
     baseUrl ??=
-        'https://riding-runtime-subscribers-laugh.trycloudflare.com/api/';
+        'https://star-minister-anderson-postings.trycloudflare.com/api/';
   }
 
   final Dio _dio;
