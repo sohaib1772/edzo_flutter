@@ -10,8 +10,7 @@ part of 'main_api.dart';
 
 class _MainApi implements MainApi {
   _MainApi(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??=
-        'https://star-minister-anderson-postings.trycloudflare.com/api/';
+    baseUrl ??= 'https://educationzoneedzo.com/api/';
   }
 
   final Dio _dio;
