@@ -14,6 +14,7 @@ class AppRouterKeys {
   static const String privacyPolicy = '/privacyPolicy';
   static const String teacherReportsScreen = '/teacherReportsScreen';
   static const String teacherPlaylistsScreen = '/teacherPlaylistsScreen';
+  static const String courseVideosListScreen= '/courseVideosListScreen';
 }
 
 

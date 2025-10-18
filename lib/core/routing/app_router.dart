@@ -7,6 +7,7 @@ import 'package:edzo/views/auth/login/login_screen.dart';
 import 'package:edzo/views/auth/register/screens/register_screen.dart';
 import 'package:edzo/views/cource/course_screen.dart';
 import 'package:edzo/views/course_codes/course_codes_screen.dart';
+import 'package:edzo/views/edit_course/course_videos_list_screen.dart';
 import 'package:edzo/views/edit_course/edit_course_screen.dart';
 import 'package:edzo/views/edit_course/widgets/edit_course_form_widget.dart';
 import 'package:edzo/views/main_layout/main_layout_screen.dart';
@@ -35,6 +36,7 @@ class AppRouter {
     GetPage(name: AppRouterKeys.privacyPolicy, page: ()=> PolicyPage()),
     GetPage(name: AppRouterKeys.teacherReportsScreen, page: ()=> TeacherReportsScreen()),
     GetPage(name: AppRouterKeys.teacherPlaylistsScreen, page: ()=> PlaylistTeacherScreen()),
+    GetPage(name: AppRouterKeys.courseVideosListScreen, page: ()=> CourseVideosListScreen()),
 
   ];
 

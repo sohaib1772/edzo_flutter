@@ -34,36 +34,48 @@ class EditCourseScreen extends StatelessWidget {
             physics: const BouncingScrollPhysics(
               parent: AlwaysScrollableScrollPhysics(),
             ),
-            child: Center(
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  double width = constraints.maxWidth;
-                  if (constraints.maxWidth > 500) {
-                    width = 500;
-                  }
-
-                  return SizedBox(
-                    width: width,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        SizedBox(height: 20.h),
-
-                        /// فورم تعديل الكورس
-                        Obx(() => controller.isDelete.value
-                            ? _buildDeletedView(context)
-                            : EditCourseFormWidget()),
-
-                        Obx(() => controller.isDelete.value
-                            ? SizedBox(height: 20.h)
-                            : _buildVideosSection(context)),
-                      ],
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                double width = constraints.maxWidth;
+                if (constraints.maxWidth > 500) {
+                  width = 500;
+                }
+            
+                return ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: MediaQuery.of(
+                      context,
+                    ).size.height, // 🔥 ضروري حتى لا يظهر فراغ
+                  ),
+                  child: IntrinsicHeight(
+                    // 🔥 يسمح للعمود أن يتمدد بقدر المحتوى
+                    child: SizedBox(
+                      width: width,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox(height: 20.h),
+                                
+                          /// فورم تعديل الكورس
+                          Obx(
+                            () => controller.isDelete.value
+                                ? _buildDeletedView(context)
+                                : EditCourseFormWidget(),
+                          ),
+                                
+                          Obx(
+                            () => controller.isDelete.value
+                                ? SizedBox(height: 20.h)
+                                : _buildVideosSection(context),
+                          ),
+                                
+                        ],
+                      ),
                     ),
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             ),
           ),
         ),
@@ -119,105 +131,15 @@ class EditCourseScreen extends StatelessWidget {
         SizedBox(height: 20.h),
         Divider(),
         SizedBox(height: 20.h),
-        Row(
-          children: [
-            Text(
-              "الدروس",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20.sp.clamp(20, 24),
-              ),
-            ),
-            Spacer(),
-            IconButton(
-              onPressed: () {
-                int courseId = controller.courseModel.id ?? 0;
-                Get.dialog(AddVideoDialog(courseId: courseId));
-              },
-              icon: Icon(Icons.add, size: 30.sp.clamp(30, 34)),
-            ),
-          ],
+         AppTextButton(
+          title: "المحاضرات",
+          onPressed: () {
+            Get.toNamed(
+              AppRouterKeys.courseVideosListScreen,
+              arguments: controller.courseModel.id ?? 0,
+            );
+          },
         ),
-        SizedBox(height: 10.h),
-
-        /// القائمة القابلة للسحب والإفلات
-        Obx(() {
-          if (controller.videos.isEmpty && !controller.isLoading.value) {
-            return Center(child: Text("لا يوجد دروس حتى الان"));
-          } else if (controller.isLoading.value) {
-            return Center(child: CircularProgressIndicator());
-          }
-
-          return SizedBox(
-  height: MediaQuery.of(context).size.height * 0.3, // أو ارتفاع ثابت مثل 400
-  child: DragAndDropLists(
-    listPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-    listDraggingWidth: MediaQuery.of(Get.context!).size.width * 0.95,
-    children: [
-      DragAndDropList(
-        children: List.generate(controller.videos.length, (index) {
-          final video = controller.videos[index];
-          return DragAndDropItem(
-            child: Card(
-              margin: EdgeInsets.symmetric(vertical: 5.h),
-              child: ListTile(
-                title: Text(
-                  video.title ?? "",
-                  style: TextStyle(fontSize: 18.sp),
-                ),
-                trailing: IconButton(
-                  icon: Icon(Icons.delete, color: Colors.red),
-                  onPressed: () {
-                    Get.dialog(
-                      AlertDialog(
-                        title: Text("هل أنت متأكد من حذف الفيديو؟"),
-                        actions: [
-                          AppTextButton(
-                            isLoading: controller.isLoading.value,
-                            title: "نعم",
-                            onPressed: () {
-                              controller.deleteCourseVideo(video.id ?? 0);
-                            },
-                            color: Colors.red.shade300,
-                          ),
-                          AppTextButton(
-                            title: "لا",
-                            onPressed: () => Get.back(),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-                onTap: () {
-                  Get.toNamed(
-                    AppRouterKeys.videoPlayerScreen,
-                    arguments: {
-                      "videoModel": video,
-                      "courseVideos": controller.videos,
-                      "courseModel": controller.courseModel,
-                    },
-                  );
-                },
-              ),
-            ),
-          );
-        }),
-      )
-    ],
-    onListReorder: (oldListIndex, newListIndex) => {},
-    onItemReorder: (oldItemIndex, oldListIndex, newItemIndex, newListIndex) {
-      controller.videos.insert(
-        newItemIndex,
-        controller.videos.removeAt(oldItemIndex),
-      );
-      controller.updateOrder();
-    },
-    contentsWhenEmpty: Center(child: Text("لا يوجد فيديوهات")),
-  ),
-);
-        }),
-
         SizedBox(height: 20.h),
         AppTextButton(
           title: "قوائم التشغيل",
@@ -228,6 +150,7 @@ class EditCourseScreen extends StatelessWidget {
             );
           },
         ),
+        SizedBox(height: 100.h)
       ],
     );
   }
