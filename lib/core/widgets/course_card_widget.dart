@@ -19,10 +19,12 @@ import 'package:intl/intl.dart';
 class CourseCardWidget extends StatelessWidget {
   final CourseModel course;
   final bool isTeacher;
+  final bool fromTeacherProfile;
    CourseCardWidget({
     super.key,
     required this.course,
     this.isTeacher = false,
+    this.fromTeacherProfile = false
   });
 
 
@@ -38,6 +40,7 @@ class CourseCardWidget extends StatelessWidget {
             arguments: {"courseModel": course},
           );
         } else {
+         
           Get.toNamed(
             AppRouterKeys.courseScreen,
             arguments: {"courseModel": course},

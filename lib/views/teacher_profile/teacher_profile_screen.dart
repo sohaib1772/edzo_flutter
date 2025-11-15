@@ -84,7 +84,9 @@ class TeacherProfileScreen extends StatelessWidget {
                         physics: NeverScrollableScrollPhysics(),
                         itemCount: controller.courses.length,
                         itemBuilder: (context, index) =>
-                            CourseCardWidget(course: controller.courses[index]),
+                            CourseCardWidget(
+                              fromTeacherProfile: true,
+                              course: controller.courses[index]),
                       ),
               ),
             ],

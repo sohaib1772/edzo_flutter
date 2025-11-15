@@ -23,6 +23,7 @@ RxInt totalDuration = 0.obs;
 
   @override
   void onInit() async {
+    print(courseModel.title);
     super.onInit();
     await getVideos();
   }

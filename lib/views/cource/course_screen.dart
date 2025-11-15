@@ -64,7 +64,7 @@ class CourseScreen extends StatelessWidget {
                     SizedBox(height: 16.h),
                     GestureDetector(
                       onTap: () {
-                        Get.toNamed(
+                        Get.offNamed(
                           AppRouterKeys.teacherProfileScreen,
                           arguments: {
                             "teacherInfoModel":

@@ -44,15 +44,29 @@ class UploadVideoController extends GetxController {
 
   late YoutubePlayerController _controller;
 Future<int> getYoutubeVideoDuration(String url) async {
-  var yt = YoutubeExplode();
+  try {
+    // Regex لفحص صحة رابط اليوتيوب
+    final youtubeRegex = RegExp(
+      r'^(https?\:\/\/)?(www\.youtube\.com|youtu\.be)\/.+$',
+      caseSensitive: false,
+    );
 
-  // استخراج معلومات الفيديو
-  var video = await yt.videos.get(url);
+    if (!youtubeRegex.hasMatch(url)) {
+      // الرابط غير صالح
+      return -1;
+    }
 
-  print('Duration: ${video.duration?.inSeconds} seconds');
+    var yt = YoutubeExplode();
+
+    // استخراج معلومات الفيديو
+    var video = await yt.videos.get(url);
+
     yt.close();
 
-  return video.duration!.inSeconds;
+    return video.duration?.inSeconds ?? 0;
+  } catch (e) {
+    return 0;
+  }
 }
 Future<void> uploadVideo(int courseId,int? playlistId) async {
   isUploading.value = true;
@@ -61,6 +75,16 @@ Future<void> uploadVideo(int courseId,int? playlistId) async {
 
 
 int seconds =await  getYoutubeVideoDuration(  urlController.text);
+  if(seconds == 0){
+    Get.snackbar("خطاء في رفع الفيديو","يرجى المحاولة مرة اخرى",colorText: Colors.red.shade300);
+    isUploading.value = false;
+    unableToUpload.value = true;
+    return;
+  }else if(seconds == -1){
+     Get.snackbar("خطاء في رفع الفيديو","يرجى وضع رابط صحيح",colorText: Colors.red.shade300);
+    isUploading.value = false;
+    unableToUpload.value = true;
+  }
 
   final model = UploadVideoModel(
     title: titleController.text,
