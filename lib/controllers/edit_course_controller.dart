@@ -11,12 +11,14 @@ import 'package:edzo/models/video_model.dart';
 import 'package:edzo/repos/courses/courses_repo.dart';
 import 'package:edzo/repos/playlist/playlist_repo.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart' hide MultipartFile;
 import 'package:image_picker/image_picker.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
-class EditCourseController  extends GetxController {
+class EditCourseController extends GetxController {
   RxBool isLoading = false.obs;
+  RxBool isGetCodeLoading = false.obs;
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController priceController = TextEditingController();
@@ -32,14 +34,13 @@ class EditCourseController  extends GetxController {
 
   RxList<VideoModel> videos = <VideoModel>[].obs;
 
-
   @override
-  void onInit() async{
+  void onInit() async {
     super.onInit();
-   await customInit(Get.arguments['courseModel']);
+    await customInit(Get.arguments['courseModel']);
   }
 
-  Future<void> customInit(CourseModel courseModel)async {
+  Future<void> customInit(CourseModel courseModel) async {
     titleController.text = courseModel.title ?? "";
     descriptionController.text = courseModel.description ?? "";
     priceController.text = courseModel.price.toString();
@@ -49,23 +50,47 @@ class EditCourseController  extends GetxController {
     await getCourseVideos();
   }
 
-  Future<void> getCourseVideos()async{
+  Future<void> copyCode() async {
+    isGetCodeLoading.value = true;
+    var res = await coursesRepo.copyCourseCode(courseModel.id ?? 0);
+    if (!res.status) {
+      Get.snackbar(
+        "خطاء في جلب الكودات",
+        res.errorHandler!.getErrorsList(),
+        colorText: Colors.red.shade300,
+      );
+      isGetCodeLoading.value = false;
+      return;
+    }
+    Get.snackbar(
+      "تم النسخ",
+      "الكود صالح لمدة ساعة",
+      colorText: Colors.green.shade300,
+    );
+    //save to clipboard
+    await Clipboard.setData(ClipboardData(text: res.data ?? ""));
+    isGetCodeLoading.value = false;
+  }
 
-    isLoading .value = true;
+  Future<void> getCourseVideos() async {
+    isLoading.value = true;
 
     var res = await coursesRepo.getCourseVideos(courseModel.id ?? 0);
-    if(!res.status){
-      isLoading .value = false;
-      Get.snackbar("خطاء في جلب الدروس", res.errorHandler!.getErrorsList(),colorText: Colors.red.shade300);
+    if (!res.status) {
+      isLoading.value = false;
+      Get.snackbar(
+        "خطاء في جلب الدروس",
+        res.errorHandler!.getErrorsList(),
+        colorText: Colors.red.shade300,
+      );
       return;
     }
     videos.value = res.data?.directVideos ?? [];
-    isLoading .value = false;
-
+    isLoading.value = false;
   }
 
   Future<void> pickImage() async {
-    if(!editMode.value) return;
+    if (!editMode.value) return;
 
     image = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (image != null) {
@@ -85,9 +110,9 @@ class EditCourseController  extends GetxController {
         image: imagePath.value.isEmpty
             ? null
             : MultipartFile.fromBytes(
-          File(imagePath.value).readAsBytesSync(),
-          filename: imagePath.value.split('/').last,
-        ),
+                File(imagePath.value).readAsBytesSync(),
+                filename: imagePath.value.split('/').last,
+              ),
         telegramUrl: telegramUrlController.text,
       ),
     );
@@ -104,7 +129,7 @@ class EditCourseController  extends GetxController {
     isLoading.value = false;
   }
 
-  void deleteCourse()async{
+  void deleteCourse() async {
     isLoading.value = true;
     final res = await coursesRepo.deleteCourse(courseModel.id ?? 0);
     if (!res.status) {
@@ -116,18 +141,23 @@ class EditCourseController  extends GetxController {
       );
       return;
     }
-    Get.find<TeacherController>().courses.removeWhere((element) => element.id == courseModel.id);
-    Get.find<HomeController>().courses.removeWhere((element) => element.id == courseModel.id);
-    Get.find<MySubscriptionsController>().courses.removeWhere((element) => element.id == courseModel.id);
+    Get.find<TeacherController>().courses.removeWhere(
+      (element) => element.id == courseModel.id,
+    );
+    Get.find<HomeController>().courses.removeWhere(
+      (element) => element.id == courseModel.id,
+    );
+    Get.find<MySubscriptionsController>().courses.removeWhere(
+      (element) => element.id == courseModel.id,
+    );
 
     Get.back();
 
     isLoading.value = false;
     isDelete.value = true;
-
   }
 
-  void deleteCourseVideo(int id,{int? courseId})async{
+  void deleteCourseVideo(int id, {int? courseId}) async {
     isLoading.value = true;
     final res = await coursesRepo.deleteCourseVideo(id);
     if (!res.status) {
@@ -139,36 +169,36 @@ class EditCourseController  extends GetxController {
       );
       return;
     }
-   
-    if(courseId != null){
-    await Get.find<TeacherPlaylistController>().getPlaylists(courseId );
-    return;
+
+    if (courseId != null) {
+      await Get.find<TeacherPlaylistController>().getPlaylists(courseId);
+      return;
     }
-     Get.back();
-    Get.snackbar("تم حذف الفيديو بنجاح","",colorText: Colors.green.shade300);
+    Get.back();
+    Get.snackbar("تم حذف الفيديو بنجاح", "", colorText: Colors.green.shade300);
     videos.removeWhere((element) => element.id == id);
     isLoading.value = false;
-
-  }
- Future<void> updateOrder() async {
-  List<Map<String, dynamic>> videosOrder = [];
-
-  for (int itemIndex = 0; itemIndex < videos.length; itemIndex++) {
-    videosOrder.add({
-      "id": videos[itemIndex].id,
-      "playlist_id": null, // لأن الفيديوهات هنا لا تنتمي لأي قائمة
-      "order": itemIndex,
-    });
   }
 
-  final res = await playlistRepo.updateOrder(videosOrder);
-  if (!res.status) {
-    Get.snackbar(
-      "خطأ في تحديث ترتيب الفيديوهات",
-      res.errorHandler!.getErrorsList(),
-      colorText: Colors.red.shade300,
-    );
-    return;
+  Future<void> updateOrder() async {
+    List<Map<String, dynamic>> videosOrder = [];
+
+    for (int itemIndex = 0; itemIndex < videos.length; itemIndex++) {
+      videosOrder.add({
+        "id": videos[itemIndex].id,
+        "playlist_id": null, // لأن الفيديوهات هنا لا تنتمي لأي قائمة
+        "order": itemIndex,
+      });
+    }
+
+    final res = await playlistRepo.updateOrder(videosOrder);
+    if (!res.status) {
+      Get.snackbar(
+        "خطأ في تحديث ترتيب الفيديوهات",
+        res.errorHandler!.getErrorsList(),
+        colorText: Colors.red.shade300,
+      );
+      return;
+    }
   }
-}
 }

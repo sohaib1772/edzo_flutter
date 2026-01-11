@@ -40,7 +40,7 @@ class EditCourseScreen extends StatelessWidget {
                 if (constraints.maxWidth > 500) {
                   width = 500;
                 }
-            
+
                 return ConstrainedBox(
                   constraints: BoxConstraints(
                     minHeight: MediaQuery.of(
@@ -56,20 +56,19 @@ class EditCourseScreen extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           SizedBox(height: 20.h),
-                                
+
                           /// فورم تعديل الكورس
                           Obx(
                             () => controller.isDelete.value
                                 ? _buildDeletedView(context)
                                 : EditCourseFormWidget(),
                           ),
-                                
+
                           Obx(
                             () => controller.isDelete.value
                                 ? SizedBox(height: 20.h)
                                 : _buildVideosSection(context),
                           ),
-                                
                         ],
                       ),
                     ),
@@ -119,19 +118,29 @@ class EditCourseScreen extends StatelessWidget {
     return Column(
       children: [
         SizedBox(height: 20.h),
-        AppTextButton(
-          title: "عرض الاكواد",
-          onPressed: () {
-            Get.toNamed(
-              AppRouterKeys.courseCodes,
-              arguments: {"courseId": controller.courseModel.id},
-            );
-          },
+        // AppTextButton(
+        //   title: "عرض الاكواد",
+        //   onPressed: () {
+        //     Get.toNamed(
+        //       AppRouterKeys.courseCodes,
+        //       arguments: {"courseId": controller.courseModel.id},
+        //     );
+        //   },
+        // ),
+        // SizedBox(height: 20.h),
+        Obx(
+          () => AppTextButton(
+            isLoading: controller.isGetCodeLoading.value,
+            title: "نسخ كود",
+            onPressed: () {
+              controller.copyCode();
+            },
+          ),
         ),
         SizedBox(height: 20.h),
         Divider(),
         SizedBox(height: 20.h),
-         AppTextButton(
+        AppTextButton(
           title: "المحاضرات",
           onPressed: () {
             Get.toNamed(
@@ -150,7 +159,7 @@ class EditCourseScreen extends StatelessWidget {
             );
           },
         ),
-        SizedBox(height: 100.h)
+        SizedBox(height: 100.h),
       ],
     );
   }

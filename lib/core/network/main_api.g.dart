@@ -20,6 +20,33 @@ class _MainApi implements MainApi {
   final ParseErrorLogger? errorLogger;
 
   @override
+  Future<SingleCodesResponseModel> getCourseCode(int id) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<SingleCodesResponseModel>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            'get-course-code/${id}',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late SingleCodesResponseModel _value;
+    try {
+      _value = SingleCodesResponseModel.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
   Future<void> register(RegisterModel registerModel) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

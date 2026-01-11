@@ -16,6 +16,18 @@ CodesResponseModel _$CodesResponseModelFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$CodesResponseModelToJson(CodesResponseModel instance) =>
     <String, dynamic>{'data': instance.data};
 
+SingleCodesResponseModel _$SingleCodesResponseModelFromJson(
+  Map<String, dynamic> json,
+) => SingleCodesResponseModel(
+  json['data'] == null
+      ? null
+      : CodeModel.fromJson(json['data'] as Map<String, dynamic>),
+);
+
+Map<String, dynamic> _$SingleCodesResponseModelToJson(
+  SingleCodesResponseModel instance,
+) => <String, dynamic>{'data': instance.data};
+
 CodeModel _$CodeModelFromJson(Map<String, dynamic> json) =>
     CodeModel(json['code'] as String?);
 

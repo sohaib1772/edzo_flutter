@@ -20,6 +20,10 @@ part 'main_api.g.dart';
 abstract class MainApi {
   factory MainApi(Dio dio, {String baseUrl}) = _MainApi;
 
+
+  @POST("get-course-code/{id}")
+  Future<SingleCodesResponseModel> getCourseCode(@Path("id") int id);
+
   @POST("register")
   Future<void> register(@Body() RegisterModel registerModel);
 

@@ -7,6 +7,12 @@ class CodesResponseModel {
   CodesResponseModel(this.data);
   factory CodesResponseModel.fromJson(Map<String, dynamic> json) => _$CodesResponseModelFromJson(json);
 }
+@JsonSerializable()
+class SingleCodesResponseModel {
+  CodeModel? data;
+  SingleCodesResponseModel(this.data);
+  factory SingleCodesResponseModel.fromJson(Map<String, dynamic> json) => _$SingleCodesResponseModelFromJson(json);
+}
 @JsonSerializable() 
 class CodeModel {
   String? code;

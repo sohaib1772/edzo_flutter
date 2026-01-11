@@ -12,6 +12,25 @@ class CoursesRepo {
   MainApi mainApi;
   CoursesRepo(this.mainApi);
 
+  Future<ApiResult> copyCourseCode(int courseId) async {
+    try {
+      var res = await mainApi.getCourseCode( courseId);
+
+      return ApiResult<String>(
+        status: true,
+        message: "تم الحصول على الكودات بنجاح",
+        data: res.data?.code ?? "ءءء",
+      );
+    } on DioException catch (e) {
+      return ApiResult(
+        status: false,
+        message: e.response?.data["message"] ?? "حدث خطاء في جلب الكودات",
+        error: e,
+        data: null,
+        errorHandler: ErrorHandler.fromJson(e.response?.data),
+      );
+    }
+  }
   Future<ApiResult> getCourses() async {
     try {
       var res = await mainApi.getCourses();
