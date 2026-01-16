@@ -10,6 +10,7 @@ import 'package:edzo/models/course_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class SubscribeInCourseWidget extends StatelessWidget {
   SubscribeInCourseWidget({super.key});
@@ -19,35 +20,14 @@ class SubscribeInCourseWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return RoleHelper.role == Role.full ? SizedBox.shrink() :  Row(
       children: [
-        Expanded(
-          child: Container(
-            alignment: Alignment.center,
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            decoration: BoxDecoration(
-              color: courseModel.price.toString() == "0"
-                  ? Colors.green.shade300
-                  : Colors.red.shade300,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Text(
-              courseModel.price.toString() == "0"
-                  ? "مجاني"
-                  : courseModel.price.toString() + " دينار",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18.sp.clamp(18, 22),
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ),
+        
         SizedBox(width: 10.w),
        courseModel.price.toString() == "0" ? SizedBox.shrink() :  Expanded(
-        flex: 2,
+        flex: 1,
           child: AppTextButton(
             title: "اشترك الان",
             color: Colors.green.shade300,
-            icon: Icons.add,
+            icon: Icons.check,
             onPressed: () {
               if(courseController.isLoading.value) return;
               if(SessionHelper.user == null){
@@ -98,6 +78,24 @@ class SubscribeInCourseWidget extends StatelessWidget {
                 ),
               );
             },
+          ),
+        ),
+        Expanded(
+          child: Container(
+            alignment: Alignment.center,           
+            child: Text(
+              
+              courseModel.price.toString() == "0"
+                  ? "مجاني"
+                  : NumberFormat("#,###").format(courseModel.price) + " د",
+              style: TextStyle(
+                color: courseModel.price.toString() == "0"
+                  ? Colors.green.shade300
+                  : Colors.red.shade300,
+                fontSize: 18.sp.clamp(18, 22),
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
         ),
       ],

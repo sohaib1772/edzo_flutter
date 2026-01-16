@@ -1,5 +1,6 @@
 import 'package:edzo/core/constance/app_router_keys.dart';
 import 'package:edzo/core/middlewares/is_login_middleware.dart';
+import 'package:edzo/core/middlewares/need_update_middleware.dart';
 import 'package:edzo/views/add_course/add_course_screen.dart';
 import 'package:edzo/views/auth/email_verification/email_verification_screen.dart';
 import 'package:edzo/views/auth/forgot_password/forgot_password_screen.dart';
@@ -15,15 +16,17 @@ import 'package:edzo/views/playlist_teacher/playlist_teacher_screen.dart';
 import 'package:edzo/views/privacy/privacy_policy_screen.dart';
 import 'package:edzo/views/teacher_profile/teacher_profile_screen.dart';
 import 'package:edzo/views/teacher_reports/teacher_reports_screen.dart';
+import 'package:edzo/views/update/update_screen.dart';
 import 'package:edzo/views/video_player/video_player_screen.dart';
 import 'package:get/get.dart';
 
 class AppRouter {
   static List<GetPage> pages = [
     GetPage(
-      middlewares: [IsLoginMiddleware()],
+      middlewares: [IsLoginMiddleware(),NeedUpdateMiddleware()],
       name: AppRouterKeys.loginScreen, page:()=>  LoginScreen()),
     GetPage(name: AppRouterKeys.registerScreen, page: ()=> RegisterScreen()),
+    GetPage(name: AppRouterKeys.updateScreen, page: ()=> UpdateScreen()),
     GetPage(name: AppRouterKeys.emailVerificationScreen, page: ()=> EmailVerificationScreen()),
     GetPage(name: AppRouterKeys.forgetPasswordScreen, page: ()=> ForgotPasswordScreen()),
     GetPage(name: AppRouterKeys.mainLayout, page: ()=> MainLayoutScreen()),

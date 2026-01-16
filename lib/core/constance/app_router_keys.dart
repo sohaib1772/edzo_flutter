@@ -1,5 +1,6 @@
 class AppRouterKeys {
   static const String loginScreen = '/login';
+  static const String updateScreen = '/update';
   static const String registerScreen = '/register';
   static const String emailVerificationScreen = '/emailVerification';
   static const String forgetPasswordScreen = '/forgetPassword';

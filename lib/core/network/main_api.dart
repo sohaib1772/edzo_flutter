@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:edzo/core/constance/app_constance.dart';
 import 'package:edzo/models/add_course_model.dart';
+import 'package:edzo/models/app_settings_model.dart';
 import 'package:edzo/models/auth/email_verification_model.dart';
 import 'package:edzo/models/auth/login_model.dart';
 import 'package:edzo/models/auth/register_model.dart';
@@ -23,6 +24,10 @@ abstract class MainApi {
 
   @POST("get-course-code/{id}")
   Future<SingleCodesResponseModel> getCourseCode(@Path("id") int id);
+
+
+  @GET("app-version")
+  Future<AppSettingsModel> getAppVersion();
 
   @POST("register")
   Future<void> register(@Body() RegisterModel registerModel);
