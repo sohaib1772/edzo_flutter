@@ -68,6 +68,7 @@ dependencies:
   video_thumbnail: ^0.5.6
   webview_flutter: ^4.10.0
   webview_flutter_android: ^4.3.0
+  webview_flutter_wkwebview: ^3.16.0
   youtube_explode_dart: ^2.5.2
   youtube_player_flutter: ^9.0.2
 

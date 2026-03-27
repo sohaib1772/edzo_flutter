@@ -15,6 +15,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_android/webview_flutter_android.dart';
+import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class VimeoPlayerScreen extends StatefulWidget {
@@ -129,7 +130,7 @@ class _VimeoPlayerScreenState extends State<VimeoPlayerScreen>
 
       final savedPosition = LocalStorage.getVideoLastWatchedSecond(videoModel.id.toString()) ?? 0;
       final playerUrl =
-          "${AppConstance.baseUrl}/video-player/$vimeoId?token=$token&t=$savedPosition";
+          "${AppConstance.baseUrl}/video-player/$vimeoId?token=$token&t=$savedPosition&playsinline=1";
 
       setState(() => _isLoadingData = false);
       await _initWebView(playerUrl);
@@ -142,7 +143,15 @@ class _VimeoPlayerScreenState extends State<VimeoPlayerScreen>
   }
 
   Future<void> _initWebView(String url) async {
-    final params = const PlatformWebViewControllerCreationParams();
+    late final PlatformWebViewControllerCreationParams params;
+    if (Platform.isIOS) {
+      params = WebKitWebViewControllerCreationParams(
+        allowsInlineMediaPlayback: true,
+      );
+    } else {
+      params = const PlatformWebViewControllerCreationParams();
+    }
+
     final webViewController = WebViewController.fromPlatformCreationParams(
       params,
     );
@@ -153,10 +162,13 @@ class _VimeoPlayerScreenState extends State<VimeoPlayerScreen>
       await androidController.setMediaPlaybackRequiresUserGesture(false);
     }
 
-    // Set a mobile user agent to ensure Vimeo loads the mobile player
-    const String mobileUserAgent =
+    // Correct User Agent for iOS
+    const String androidUserAgent =
         "Mozilla/5.0 (Linux; Android 10; SM-G973F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Mobile Safari/537.36";
-    await webViewController.setUserAgent(mobileUserAgent);
+    const String iosUserAgent =
+        "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/604.1";
+
+    await webViewController.setUserAgent(Platform.isIOS ? iosUserAgent : androidUserAgent);
 
     await webViewController.setJavaScriptMode(JavaScriptMode.unrestricted);
     await webViewController.setBackgroundColor(Colors.black);

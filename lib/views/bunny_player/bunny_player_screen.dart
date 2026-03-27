@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_android/webview_flutter_android.dart';
+import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
 import 'package:edzo/core/helpers/local_storage.dart';
 import 'package:edzo/core/helpers/session_helper.dart';
@@ -145,7 +146,15 @@ class _BunnyPlayerScreenState extends State<BunnyPlayerScreen>
         LocalStorage.getVideoLastWatchedSecond(videoModel.id.toString()) ?? 0;
     final double savedPosition = savedPositionInt.toDouble();
 
-    final params = const PlatformWebViewControllerCreationParams();
+    late final PlatformWebViewControllerCreationParams params;
+    if (Platform.isIOS) {
+      params = WebKitWebViewControllerCreationParams(
+        allowsInlineMediaPlayback: true,
+      );
+    } else {
+      params = const PlatformWebViewControllerCreationParams();
+    }
+
     final webViewController = WebViewController.fromPlatformCreationParams(
       params,
     );
@@ -155,9 +164,15 @@ class _BunnyPlayerScreenState extends State<BunnyPlayerScreen>
         await (webViewController.platform as AndroidWebViewController)
             .setMediaPlaybackRequiresUserGesture(false);
       }
-    } catch (_) {
-      // قد يفشل على بعض الأجهزة — نتجاهل الخطأ ونكمل
-    }
+    } catch (_) {}
+
+    // Set proper User Agents
+    const String androidUserAgent =
+        "Mozilla/5.0 (Linux; Android 10; SM-G973F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Mobile Safari/537.36";
+    const String iosUserAgent =
+        "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/604.1";
+
+    await webViewController.setUserAgent(Platform.isIOS ? iosUserAgent : androidUserAgent);
 
     await webViewController.setJavaScriptMode(JavaScriptMode.unrestricted);
     await webViewController.setBackgroundColor(Colors.black);
