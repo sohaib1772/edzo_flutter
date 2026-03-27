@@ -3,6 +3,7 @@ import 'package:edzo/core/widgets/scaffold/app_bar_default_leading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_popup/flutter_popup.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:edzo/core/widgets/responsive_center.dart';
 
 class AppScaffold extends StatelessWidget {
   AppScaffold({
@@ -15,15 +16,18 @@ class AppScaffold extends StatelessWidget {
     this.leading,
     this.padding = 20,
     this.actions,
+    this.useResponsive = true,
   });
-  Widget body;
-  bool showAppBar;
-  String title;
-  Widget? bottomNavigationBar;
-  bool defaultLeading = false;
-  Widget? leading;
-  double padding;
-  List<Widget>? actions;
+  final Widget body;
+  final bool showAppBar;
+  final String title;
+  final Widget? bottomNavigationBar;
+  final bool defaultLeading;
+  final Widget? leading;
+  final double padding;
+  final List<Widget>? actions;
+  final bool useResponsive;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,10 +48,15 @@ class AppScaffold extends StatelessWidget {
               leading: defaultLeading ? AppBarDefaultLeading() : leading,
             )
           : null,
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: padding.w),
-        child: body,
-      ),
+      body: useResponsive
+          ? ResponsiveCenter(
+              padding: padding,
+              child: body,
+            )
+          : Padding(
+              padding: EdgeInsets.symmetric(horizontal: padding.w),
+              child: body,
+            ),
       bottomNavigationBar: bottomNavigationBar,
     );
   }
