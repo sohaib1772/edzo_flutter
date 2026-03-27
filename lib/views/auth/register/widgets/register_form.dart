@@ -36,14 +36,14 @@ class RegisterForm extends StatelessWidget {
           AppTextForm(
             validator: (value) {
               if (AppFormValidator.isEmpty(value ?? ""))
-                return 'البريد الالكتروني مطلوب';
-              if (!AppFormValidator.isEmailValid(value ?? ""))
-                return 'البريد الالكتروني غير صحيح';
+                return 'البريد الالكتروني او رقم الهاتف مطلوب';
+              if (!AppFormValidator.isEmailOrPhoneValid(value ?? ""))
+                return 'البريد الالكتروني او رقم الهاتف غير صحيح';
               return null;
             },
             controller: controller.emailController,
-            hint: 'البريد الالكتروني',
-            prefixIcon: Icons.email_outlined,
+            hint: 'البريد الالكتروني او رقم الهاتف',
+            prefixIcon: Icons.person_outline,
           ),
           SizedBox(height: 18.h),
           Obx(
@@ -51,7 +51,8 @@ class RegisterForm extends StatelessWidget {
               validator: (value) {
                 if (AppFormValidator.isEmpty(value ?? ""))
                   return 'كلمة المرور مطلوبة';
-                if(!AppFormValidator.isPasswordValid(value ?? "")) return "كلمة المرور يجب ان تحتوي على رموز و ارقام و احرف \n و يجب ان تكون 8 أحرف على الأقل";
+                if (!AppFormValidator.isPasswordValid(value ?? ""))
+                  return "كلمة المرور يجب ان تحتوي على رموز و ارقام و احرف \n و يجب ان تكون 8 أحرف على الأقل";
                 return null;
               },
               controller: controller.passwordController,
@@ -91,13 +92,13 @@ class RegisterForm extends StatelessWidget {
                   controller.showPassword.value
                       ? Icons.visibility_off_outlined
                       : Icons.remove_red_eye_outlined,
-                  size: 24.sp.clamp(24,28),
+                  size: 24.sp.clamp(24, 28),
                 ),
               ),
             ),
           ),
           SizedBox(height: 18.h),
-        
+
           Obx(
             () => AppTextButton(
               isLoading: controller.isLoading.value,

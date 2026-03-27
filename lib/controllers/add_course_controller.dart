@@ -21,6 +21,7 @@ class AddCourseController extends GetxController {
   XFile? image;
   RxString imagePath = ''.obs;
   CoursesRepo coursesRepo = Get.find<CoursesRepo>();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   Future<void> pickImage() async {
     image = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -56,7 +57,10 @@ class AddCourseController extends GetxController {
     res.data?.subscribersCount = 0;
     Get.find<TeacherController>().courses.add(res.data!);
     Get.find<HomeController>().courses.add(res.data!);
-    Get.offNamed(AppRouterKeys.editCourseScreen, arguments: {"courseModel": res.data});
+    Get.offNamed(
+      AppRouterKeys.editCourseScreen,
+      arguments: {"courseModel": res.data},
+    );
     isLoading.value = false;
   }
 

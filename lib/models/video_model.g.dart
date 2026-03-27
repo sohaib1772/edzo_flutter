@@ -11,6 +11,9 @@ VideosResponseModel _$VideosResponseModelFromJson(Map<String, dynamic> json) =>
       directVideos: (json['direct_videos'] as List<dynamic>?)
           ?.map((e) => VideoModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      videos: (json['videos'] as List<dynamic>?)
+          ?.map((e) => VideoModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
       playlists: (json['playlists'] as List<dynamic>?)
           ?.map((e) => PlaylistModel.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -20,24 +23,31 @@ Map<String, dynamic> _$VideosResponseModelToJson(
   VideosResponseModel instance,
 ) => <String, dynamic>{
   'direct_videos': instance.directVideos,
+  'videos': instance.videos,
   'playlists': instance.playlists,
 };
 
 VideoModel _$VideoModelFromJson(Map<String, dynamic> json) => VideoModel(
   id: (json['id'] as num?)?.toInt(),
+  guid: json['guid'] as String?,
   title: json['title'] as String?,
   url: json['url'] as String?,
   isPaid: json['is_paid'] as bool?,
   courseId: (json['course_id'] as num?)?.toInt(),
   duration: (json['duration'] as num?)?.toInt(),
+  provider: (json['provider'] as num?)?.toInt(),
+  embedUrl: json['embed_url'] as String?,
 );
 
 Map<String, dynamic> _$VideoModelToJson(VideoModel instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'guid': instance.guid,
       'title': instance.title,
       'is_paid': instance.isPaid,
       'course_id': instance.courseId,
       'url': instance.url,
+      'provider': instance.provider,
+      'embed_url': instance.embedUrl,
       'duration': instance.duration,
     };

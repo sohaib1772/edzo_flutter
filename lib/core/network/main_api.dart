@@ -21,10 +21,8 @@ part 'main_api.g.dart';
 abstract class MainApi {
   factory MainApi(Dio dio, {String baseUrl}) = _MainApi;
 
-
   @POST("get-course-code/{id}")
   Future<SingleCodesResponseModel> getCourseCode(@Path("id") int id);
-
 
   @GET("app-version")
   Future<AppSettingsModel> getAppVersion();
@@ -34,18 +32,32 @@ abstract class MainApi {
 
   //email verification
   @POST("user/verify")
-  Future<void> emailVerification(
+  Future<LoginResponseModel> emailVerification(
     @Body() EmailVerificationModel emailVerificationModel,
   );
 
   @POST("user/resend-verify")
   Future<void> resendEmailVerification(@Body() Map<String, dynamic> email);
 
+  @POST("user/verify-phone")
+  Future<LoginResponseModel> phoneVerification(
+    @Body() Map<String, dynamic> data,
+  );
+
+  @POST("user/resend-phone")
+  Future<void> resendPhoneVerification(@Body() Map<String, dynamic> phone);
+
+  @POST("user/add-phone")
+  Future<void> addPhone(@Body() Map<String, dynamic> phone);
+
+  @POST("user/add-email")
+  Future<void> addEmail(@Body() Map<String, dynamic> email);
+
   @POST("user/forgot-password")
-  Future<void> forgotPassword(@Body() Map<String, dynamic> email);
+  Future<void> forgotPassword(@Body() Map<String, dynamic> data);
 
   @POST("user/resend-forgot-password")
-  Future<void> resendForgotPassword(@Body() Map<String, dynamic> email);
+  Future<void> resendForgotPassword(@Body() Map<String, dynamic> data);
 
   @POST("user/reset-password")
   Future<void> resetPassword(@Body() ResetPasswordModel resetPasswordModel);
@@ -60,7 +72,16 @@ abstract class MainApi {
   Future<void> setUserRole(@Body() Map<String, dynamic> data);
 
   @GET("teachers")
-  Future<TeachersResponseModel> getTeachers();
+  Future<TeachersResponseModel> getTeachers(@Query("count") int? count);
+
+  @GET("admin/teachers")
+  Future<TeachersResponseModel> getAdminTeachers();
+
+  @POST("user/pin-teacher")
+  Future<void> pinTeacher(@Body() Map<String, dynamic> data);
+
+  @GET("teachers/pinned")
+  Future<TeachersResponseModel> getPinnedTeachers();
 
   @POST("login")
   Future<LoginResponseModel> login(@Body() LoginModel loginModel);
@@ -74,6 +95,11 @@ abstract class MainApi {
   @DELETE("/user")
   Future<UserResponseModel> deleteUser(@Body() Map<String, dynamic> data);
 
+  @GET("bunny/video/{guid}")
+  Future<dynamic> getBunnyVideoUrl(@Path("guid") String guid);
+
+  @GET("public/bunny/video/{guid}")
+  Future<dynamic> getPublicBunnyVideoUrl(@Path("guid") String guid);
 
   // courses
 
@@ -85,27 +111,27 @@ abstract class MainApi {
 
   @GET("courses/subscribed")
   Future<CoursesResponseModel> getSubscribedCourses();
-  
+
   @GET("courses/teacher")
   Future<CoursesResponseModel> getTeacherCourses();
 
   @GET("courses/teacher/{id}")
-  Future<CoursesResponseModel> getTeacherCoursesById(@Path("id") int id,);
+  Future<CoursesResponseModel> getTeacherCoursesById(@Path("id") int id);
   // public courses
 
   @GET("public/courses")
   Future<CoursesResponseModel> getPublicCourses();
 
   @GET("public/courses/search")
-  Future<CoursesResponseModel> getPublicCoursesByTitle(@Query("title") String title);
+  Future<CoursesResponseModel> getPublicCoursesByTitle(
+    @Query("title") String title,
+  );
 
   @GET("public/courses/{id}/videos")
   Future<VideosResponseModel> getPublicCourseVideos(@Path("id") int id);
 
   @GET("public/courses/teacher/{id}")
-  Future<CoursesResponseModel> getPublicTeacherCoursesById(@Path("id") int id,);
-
-
+  Future<CoursesResponseModel> getPublicTeacherCoursesById(@Path("id") int id);
 
   @POST('courses/{id}/pin')
   Future<void> pinCourse(@Path("id") int id);
@@ -165,7 +191,6 @@ abstract class MainApi {
     @Path("video_id") int videoId,
   );
 
-
   @DELETE("courses/{id}")
   Future<void> deleteCourse(@Path("id") int id);
 
@@ -175,15 +200,41 @@ abstract class MainApi {
   @DELETE("courses/{id}/videos")
   Future<void> deleteCourseVideo(@Path("id") int id);
 
+  @PUT("courses/videos/{id}")
+  Future<void> updateVideoTitle(
+    @Path("id") int id,
+    @Body() Map<String, dynamic> data,
+  );
+
   @GET("courses/{id}/codes")
   Future<CodesResponseModel> getCourseCodes(@Path("id") int id);
-  
+
   @POST("courses/add-codes/{id}")
   Future<CodesResponseModel> addNewCodes(@Path("id") int id);
 
+  @POST("courses/codes/{id}/mark-as-copied")
+  Future<void> markAsCopied(@Path("id") int id);
 
   @POST("subscriptions")
   Future<CoursesResponseModel> subscribe(@Body() Map<String, dynamic> data);
+
+  @POST("courses/bunny-video")
+  Future<dynamic> prepareBunnyUpload(
+    @Body() Map<String, dynamic> data, {
+    @CancelRequest() CancelToken? cancelToken,
+  });
+
+  @POST("courses/vimeo-video")
+  Future<dynamic> prepareVimeoUpload(
+    @Body() Map<String, dynamic> data, {
+    @CancelRequest() CancelToken? cancelToken,
+  });
+
+  @GET("vimeo/video/{id}")
+  Future<dynamic> getVimeoVideoData(@Path("id") String id);
+
+  @PUT("user/name")
+  Future<void> updateUserName(@Body() Map<String, dynamic> data);
 
   @POST("/teacher-info")
   @MultiPart()
@@ -191,7 +242,6 @@ abstract class MainApi {
     @Part() String? bio,
     @Part() String? telegramUrl,
     @Part() MultipartFile? image,
-
   );
 
   @PUT("/teacher-info")
@@ -207,19 +257,21 @@ abstract class MainApi {
   @PUT('/courses/update-playlist-order')
   Future<void> updatePlaylistOrder(@Body() Map<String, dynamic> data);
 
-
   @POST("/playlist")
   Future<PlaylistModel> addPlaylist(@Body() AddPlaylistModel data);
   @PUT("/playlist/{id}")
-  Future<PlaylistModel> updatePlaylist(@Path("id") int id,@Body() AddPlaylistModel data);
+  Future<PlaylistModel> updatePlaylist(
+    @Path("id") int id,
+    @Body() AddPlaylistModel data,
+  );
   @DELETE("/playlist/{id}")
-  Future<void> deletePlaylist(@Path("id") int id,);
-  
+  Future<void> deletePlaylist(@Path("id") int id);
+
   @GET("/playlist/{course_id}")
   Future<List<PlaylistModel>> getPlaylistByCourseId(
     @Path("course_id") int courseId,
   );
 
-
+  @GET("courses/pending")
+  Future<VideosResponseModel> getPendingVideos();
 }
-

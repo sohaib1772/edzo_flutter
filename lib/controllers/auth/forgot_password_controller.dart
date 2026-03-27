@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:edzo/core/constance/app_router_keys.dart';
 import 'package:edzo/models/auth/email_verification_model.dart';
+import 'package:edzo/core/helpers/app_form_validator.dart';
 import 'package:edzo/models/auth/reset_password_model.dart';
 import 'package:edzo/repos/auth/email_verification_repo.dart';
 import 'package:edzo/repos/auth/forgot_password_repo.dart';
@@ -57,8 +58,11 @@ class ForgotPasswordController extends GetxController {
   Future<bool> forgotPasswordRequest() async {
     sendCodeLoading.value = true;
 
+    String input = emailController.text.trim();
+    bool isEmail = AppFormValidator.isEmailValid(input);
+
     var res = await forgotPasswordRepo.forgotPasswordRequest(
-      emailController.text,
+      isEmail ? {"email": input} : {"phone": input},
     );
     if (res.status) {
       Get.snackbar(
@@ -81,19 +85,32 @@ class ForgotPasswordController extends GetxController {
 
   void resetPassword() async {
     isLoading.value = true;
+
+    String input = emailController.text.trim();
+    bool isEmail = AppFormValidator.isEmailValid(input);
+
     final res = await forgotPasswordRepo.resetPassword(
       ResetPasswordModel(
-        email: emailController.text,
+        email: isEmail ? input : null,
+        phone: !isEmail ? input : null,
         code: codeController.text,
         password: passwordController.text,
         passwordConfirmation: passwordConfirmationController.text,
       ),
     );
-    if(res.status) {
-      Get.snackbar("تم تغيير كلمة المرور بنجاح", "يرجى تسجيل الدخول",colorText: Colors.green.shade300);
+    if (res.status) {
+      Get.snackbar(
+        "تم تغيير كلمة المرور بنجاح",
+        "يرجى تسجيل الدخول",
+        colorText: Colors.green.shade300,
+      );
       Get.offAllNamed(AppRouterKeys.loginScreen);
-    }else{
-      Get.snackbar("خطاء في تغيير كلمة المرور", res.errorHandler!.getErrorsList(),colorText: Colors.red.shade300);
+    } else {
+      Get.snackbar(
+        "خطاء في تغيير كلمة المرور",
+        res.errorHandler!.getErrorsList(),
+        colorText: Colors.red.shade300,
+      );
     }
     isLoading.value = false;
   }

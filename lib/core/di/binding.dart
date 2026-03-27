@@ -1,7 +1,10 @@
 import 'package:edzo/controllers/add_course_controller.dart';
+import 'package:edzo/controllers/bunny_upload_controller.dart';
+import 'package:edzo/controllers/vimeo_upload_controller.dart';
 import 'package:edzo/controllers/admin_controller.dart';
 import 'package:edzo/controllers/app_search_controller.dart';
 import 'package:edzo/controllers/auth/email_verification_controller.dart';
+import 'package:edzo/controllers/auth/phone_verification_controller.dart';
 import 'package:edzo/controllers/auth/forgot_password_controller.dart';
 import 'package:edzo/controllers/course_codes_controller.dart';
 import 'package:edzo/controllers/course_controller.dart';
@@ -26,6 +29,7 @@ class Binding extends Bindings {
     Get.lazyPut(() => RegisterController(), fenix: true);
     Get.lazyPut(() => MainLayoutController(), fenix: true);
     Get.lazyPut(() => EmailVerificationController(), fenix: true);
+    Get.lazyPut(() => PhoneVerificationController(), fenix: true);
     Get.lazyPut(() => ForgotPasswordController(), fenix: true);
     Get.lazyPut(() => HomeController(), fenix: true);
     Get.lazyPut(() => AppSearchController(), fenix: true);
@@ -40,8 +44,7 @@ class Binding extends Bindings {
     Get.lazyPut(() => AdminController(), fenix: true);
     Get.lazyPut(() => TeacherPlaylistController(), fenix: true);
     Get.lazyPut(() => PinCourseController(), fenix: true);
-    
-
-    
+    Get.put(BunnyUploadController(), permanent: true);
+    Get.put(VimeoUploadController(), permanent: true);
   }
 }

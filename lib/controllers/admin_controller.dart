@@ -85,4 +85,33 @@ class AdminController extends GetxController {
     isSetRoleLoading.value = false;
     update();
   }
+
+  RxBool isPinLoading = false.obs;
+  Future<void> pinTeacher(int teacherId) async {
+    isPinLoading.value = true;
+    final res = await adminRepo.pinTeacher(teacherId);
+    if (!res.status) {
+      Get.snackbar(
+        "خطاء في تحديث الحالة",
+        res.errorHandler?.getErrorsList() ?? res.message,
+        colorText: Colors.red.shade300,
+      );
+      isPinLoading.value = false;
+      return;
+    }
+
+    // Update local state
+    int index = teachers.indexWhere((t) => t.id == teacherId);
+    if (index != -1) {
+      teachers[index].isPin = !(teachers[index].isPin ?? false);
+      teachers.refresh();
+    }
+
+    Get.snackbar(
+      "تم تحديث الحالة بنجاح",
+      "",
+      colorText: Colors.green.shade300,
+    );
+    isPinLoading.value = false;
+  }
 }

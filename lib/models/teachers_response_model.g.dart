@@ -20,19 +20,40 @@ Map<String, dynamic> _$TeachersResponseModelToJson(
 
 TeachersInfoModel _$TeachersInfoModelFromJson(Map<String, dynamic> json) =>
     TeachersInfoModel(
+      id: (json['id'] as num?)?.toInt(),
+      name: json['name'] as String?,
+      bio: json['bio'] as String?,
+      image: json['image'] as String?,
+      coursesCount: (json['courses_count'] as num?)?.toInt(),
+      totalStudentsCount: (json['total_students_count'] as num?)?.toInt(),
       user: json['user'] == null
           ? null
           : UserModel.fromJson(json['user'] as Map<String, dynamic>),
+      courses: (json['courses'] as List<dynamic>?)
+          ?.map((e) => TeacherCoursesModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      isPin: json['is_pin'] as bool?,
     );
 
 Map<String, dynamic> _$TeachersInfoModelToJson(TeachersInfoModel instance) =>
-    <String, dynamic>{'user': instance.user};
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'bio': instance.bio,
+      'image': instance.image,
+      'courses_count': instance.coursesCount,
+      'total_students_count': instance.totalStudentsCount,
+      'user': instance.user,
+      'courses': instance.courses,
+      'is_pin': instance.isPin,
+    };
 
 TeacherCoursesModel _$TeacherCoursesModelFromJson(Map<String, dynamic> json) =>
     TeacherCoursesModel(
       id: (json['id'] as num?)?.toInt(),
       title: json['title'] as String?,
-      monthlySubscribers: (json['monthly_subscribers'] as List<dynamic>?)
+      totalSubscribers: (json['total_subscribers'] as num?)?.toInt(),
+      monthlySubscribers: (json['monthly_stats'] as List<dynamic>?)
           ?.map(
             (e) => MonthlySubscribersModel.fromJson(e as Map<String, dynamic>),
           )
@@ -44,5 +65,6 @@ Map<String, dynamic> _$TeacherCoursesModelToJson(
 ) => <String, dynamic>{
   'id': instance.id,
   'title': instance.title,
-  'monthly_subscribers': instance.monthlySubscribers,
+  'total_subscribers': instance.totalSubscribers,
+  'monthly_stats': instance.monthlySubscribers,
 };

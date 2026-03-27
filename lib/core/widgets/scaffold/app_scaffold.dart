@@ -13,7 +13,8 @@ class AppScaffold extends StatelessWidget {
     this.bottomNavigationBar,
     this.defaultLeading = false,
     this.leading,
-    this.padding=20
+    this.padding = 20,
+    this.actions,
   });
   Widget body;
   bool showAppBar;
@@ -22,6 +23,7 @@ class AppScaffold extends StatelessWidget {
   bool defaultLeading = false;
   Widget? leading;
   double padding;
+  List<Widget>? actions;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,9 +38,10 @@ class AppScaffold extends StatelessWidget {
 
               title: Text(title),
               centerTitle: true,
-              actions: [Image.asset("assets/images/edzo_logo.png")],
+              actions: actions != null && actions!.isNotEmpty
+                  ? [...actions!, Image.asset("assets/images/edzo_logo.png")]
+                  : [Image.asset("assets/images/edzo_logo.png")],
               leading: defaultLeading ? AppBarDefaultLeading() : leading,
-
             )
           : null,
       body: Padding(

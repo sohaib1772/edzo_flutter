@@ -5,7 +5,7 @@ part 'monthly_subscribers_model.g.dart';
 class MonthlySubscribersModel {
   @JsonKey(name: "month")
   String? date;
-  @JsonKey(name: "total_subscribers")
+  @JsonKey(name: "count")
   int? count;
 
   MonthlySubscribersModel({this.date, this.count});

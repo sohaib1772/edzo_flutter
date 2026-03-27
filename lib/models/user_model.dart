@@ -1,5 +1,3 @@
-
-
 import 'package:edzo/models/teacher_info_model.dart';
 import 'package:edzo/models/teachers_response_model.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -14,6 +12,7 @@ class UsersResponseModel {
 
   Map<String, dynamic> toJson() => _$UsersResponseModelToJson(this);
 }
+
 @JsonSerializable()
 class UserResponseModel {
   UserModel? data;
@@ -23,6 +22,7 @@ class UserResponseModel {
 
   Map<String, dynamic> toJson() => _$UserResponseModelToJson(this);
 }
+
 @JsonSerializable()
 class UserModel {
   int? id;
@@ -30,6 +30,20 @@ class UserModel {
   String? email;
   @JsonKey(name: "email_verified_at")
   String? emailVerifiedAt;
+  String? phone;
+  @JsonKey(name: "created_at")
+  String? createdAt;
+
+  bool get needsPhoneVerification {
+    if (createdAt == null) return false;
+    try {
+      final regDate = DateTime.parse(createdAt!);
+      final cutoffDate = DateTime(2026, 3, 26);
+      return regDate.isBefore(cutoffDate) && (phone == null || phone!.isEmpty);
+    } catch (e) {
+      return false;
+    }
+  }
 
   String? password;
   @JsonKey(name: "password_confirmation")
@@ -40,7 +54,7 @@ class UserModel {
 
   //for teahcers
   @JsonKey(name: "teacher_info")
-  TeacherInfoModel ? teacherInfo;
+  TeacherInfoModel? teacherInfo;
   @JsonKey(name: "teacher_courses_count")
   int? totalCoursesCount;
   @JsonKey(name: "total_subscribers_count")
@@ -57,16 +71,17 @@ class UserModel {
     this.role,
     this.uid,
     this.emailVerifiedAt,
+    this.phone,
     this.teacherInfo,
     this.totalCoursesCount,
     this.totalSubscriptionsCount,
     this.teacherCoursesModel,
     this.id,
+    this.createdAt,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>
       _$UserModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserModelToJson(this);
-
 }

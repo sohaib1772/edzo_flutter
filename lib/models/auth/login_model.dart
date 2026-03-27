@@ -1,16 +1,26 @@
-
 import 'package:edzo/models/user_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'login_model.g.dart';
+
 @JsonSerializable()
 class LoginModel {
+  @JsonKey(includeIfNull: false)
   String? email;
-  
+
+  @JsonKey(includeIfNull: false)
+  String? phone;
+
   String? emailVerifiedAt;
   String? password;
   String? uid;
 
-  LoginModel({this.email, this.password, this.uid, this.emailVerifiedAt});
+  LoginModel({
+    this.email,
+    this.phone,
+    this.password,
+    this.uid,
+    this.emailVerifiedAt,
+  });
 
   factory LoginModel.fromJson(Map<String, dynamic> json) =>
       _$LoginModelFromJson(json);

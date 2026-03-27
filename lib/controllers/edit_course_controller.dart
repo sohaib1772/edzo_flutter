@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:edzo/controllers/home_controller.dart';
+import 'package:edzo/core/constance/app_constance.dart';
+import 'package:edzo/core/helpers/session_helper.dart';
 import 'package:edzo/controllers/my_subscriptions_controller.dart';
 import 'package:edzo/controllers/teacher_controller.dart';
 import 'package:edzo/controllers/teacher_playlist_controller.dart';
@@ -14,7 +16,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart' hide MultipartFile;
 import 'package:image_picker/image_picker.dart';
-import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 class EditCourseController extends GetxController {
   RxBool isLoading = false.obs;
@@ -31,6 +32,7 @@ class EditCourseController extends GetxController {
   late CourseModel courseModel;
   RxBool isDelete = false.obs;
   RxBool editMode = false.obs;
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   RxList<VideoModel> videos = <VideoModel>[].obs;
 
@@ -64,11 +66,25 @@ class EditCourseController extends GetxController {
     }
     Get.snackbar(
       "تم النسخ",
-      "الكود صالح لمدة ساعة",
+      "رابط الانضمام جاهز للمشاركة",
       colorText: Colors.green.shade300,
     );
-    //save to clipboard
-    await Clipboard.setData(ClipboardData(text: res.data ?? ""));
+    // save to clipboard
+    final String teacherName =
+        courseModel.teacherName ?? SessionHelper.user?.name ?? "";
+    final fullLink =
+        "${AppConstance.deepLinkBaseUrl}/${courseModel.id}/${res.data}";
+
+    final String shareText =
+        "=========Edzo=========\n\n"
+        "course: ${courseModel.title}\n"
+        "teacher: $teacherName\n\n"
+        "price: ${courseModel.price}\n\n"
+        "======================\n\n"
+        "code: ${res.data}\n\n"
+        "link: $fullLink";
+
+    await Clipboard.setData(ClipboardData(text: shareText));
     isGetCodeLoading.value = false;
   }
 
@@ -200,5 +216,34 @@ class EditCourseController extends GetxController {
       );
       return;
     }
+  }
+
+  Future<void> updateVideoTitle(int id, String newTitle) async {
+    isLoading.value = true;
+    final res = await coursesRepo.updateVideoTitle(id, newTitle);
+    if (!res.status) {
+      isLoading.value = false;
+      Get.snackbar(
+        "خطاء في تحديث عنوان الفيديو",
+        res.errorHandler!.getErrorsList(),
+        colorText: Colors.red.shade300,
+      );
+      return;
+    }
+    
+    // Update local state in 'videos' list (direct videos)
+    int videoIndex = videos.indexWhere((v) => v.id == id);
+    if (videoIndex != -1) {
+      videos[videoIndex].title = newTitle;
+      videos.refresh();
+    }
+    
+    // Playlists are managed by TeacherPlaylistController, but we can trigger a refresh if needed.
+    // However, the playlist screen in playlist_teacher_screen.dart already provides courseId to getPlaylists.
+    // So we don't necessarily NEED to refresh EVERYTHING unless we want total sync.
+    // For now, updating 'videos' is enough for CourseVideosListScreen.
+    
+    Get.snackbar("تم تحديث عنوان الفيديو بنجاح", "", colorText: Colors.green.shade300);
+    isLoading.value = false;
   }
 }

@@ -8,14 +8,18 @@ import 'package:edzo/core/services/app_services.dart';
 import 'package:edzo/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
   await ScreenUtil.ensureScreenSize();
   await Get.putAsync(() => AppServices().init());
   runApp(MyApp());
+  FlutterNativeSplash.remove();
 }
 
 class MyApp extends StatefulWidget {
@@ -29,9 +33,37 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   bool _isScreenCaptured = false;
 
+  void _handleLink(String link) {
+    if (link.contains("/join")) {
+      final uri = Uri.parse(link);
+      final segments = uri.pathSegments;
+      final joinIndex = segments.indexOf("join");
+      if (joinIndex != -1 && segments.length > joinIndex + 2) {
+        final id = segments[joinIndex + 1];
+        final code = segments[joinIndex + 2];
+        Get.offAllNamed(
+          AppRouterKeys.joinCourse
+              .replaceFirst(':id', id)
+              .replaceFirst(':code', code),
+        );
+      }
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+
+    MyApp.platform.setMethodCallHandler((call) async {
+      if (call.method == "onDeepLink") {
+        _handleLink(call.arguments as String);
+      } else if (call.method == "screenCaptured" && Platform.isIOS) {
+        bool captured = call.arguments as bool;
+        setState(() {
+          _isScreenCaptured = captured;
+        });
+      }
+    });
 
     if (Platform.isIOS) {
       // ✅ جلب الحالة عند الإقلاع
@@ -39,16 +71,6 @@ class _MyAppState extends State<MyApp> {
         if (value != null && value is bool) {
           setState(() {
             _isScreenCaptured = value;
-          });
-        }
-      });
-
-      // ✅ متابعة التغييرات بعد الإقلاع
-      MyApp.platform.setMethodCallHandler((call) async {
-        if (call.method == "screenCaptured") {
-          bool captured = call.arguments as bool;
-          setState(() {
-            _isScreenCaptured = captured;
           });
         }
       });
@@ -61,9 +83,24 @@ class _MyAppState extends State<MyApp> {
       designSize: const Size(375, 812),
       minTextAdapt: true,
       splitScreenMode: true,
-      child: _isScreenCaptured
+      builder: (context, child) => _isScreenCaptured
           ? Container(color: Colors.black) // شاشة سوداء إذا في تسجيل
           : GetMaterialApp(
+              onReady: () async {
+                FlutterNativeSplash.remove();
+
+                // Manual Deep Link Handling for Cold Start
+                try {
+                  final String? initialLink = await MyApp.platform.invokeMethod(
+                    "getInitialLink",
+                  );
+                  if (initialLink != null) {
+                    _handleLink(initialLink);
+                  }
+                } catch (e) {
+                  print("Deep link error: $e");
+                }
+              },
               builder: (context, child) {
                 return MediaQuery(
                   data: MediaQuery.of(context).copyWith(

@@ -10,12 +10,9 @@ MonthlySubscribersModel _$MonthlySubscribersModelFromJson(
   Map<String, dynamic> json,
 ) => MonthlySubscribersModel(
   date: json['month'] as String?,
-  count: (json['total_subscribers'] as num?)?.toInt(),
+  count: (json['count'] as num?)?.toInt(),
 );
 
 Map<String, dynamic> _$MonthlySubscribersModelToJson(
   MonthlySubscribersModel instance,
-) => <String, dynamic>{
-  'month': instance.date,
-  'total_subscribers': instance.count,
-};
+) => <String, dynamic>{'month': instance.date, 'count': instance.count};

@@ -35,6 +35,7 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
   role: json['role'] as String?,
   uid: json['uid'] as String?,
   emailVerifiedAt: json['email_verified_at'] as String?,
+  phone: json['phone'] as String?,
   teacherInfo: json['teacher_info'] == null
       ? null
       : TeacherInfoModel.fromJson(json['teacher_info'] as Map<String, dynamic>),
@@ -44,6 +45,7 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       ?.map((e) => TeacherCoursesModel.fromJson(e as Map<String, dynamic>))
       .toList(),
   id: (json['id'] as num?)?.toInt(),
+  createdAt: json['created_at'] as String?,
 );
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
@@ -51,6 +53,8 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
   'name': instance.name,
   'email': instance.email,
   'email_verified_at': instance.emailVerifiedAt,
+  'phone': instance.phone,
+  'created_at': instance.createdAt,
   'password': instance.password,
   'password_confirmation': instance.passwordConfirmation,
   'token': instance.token,

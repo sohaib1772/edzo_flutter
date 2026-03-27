@@ -16,20 +16,19 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 
 class EditCourseFormWidget extends StatelessWidget {
   EditCourseFormWidget({super.key});
-  EditCourseController controller = Get.find<EditCourseController>();
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final EditCourseController controller = Get.find<EditCourseController>();
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: formKey,
+      key: controller.formKey,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           EditCourseSelectImageWidget(),
           SizedBox(height: 30.h),
           Obx(
-            ()=> !controller.editMode.value
+            () => !controller.editMode.value
                 ? AppTextButton(
                     title: "تعديل",
                     onPressed: () async {
@@ -82,13 +81,11 @@ class EditCourseFormWidget extends StatelessWidget {
                       AppTextForm(
                         prefixIcon: Icons.link_outlined,
                         hint: "رابط تيليجرام اختياري",
-                        validator: (value) {
-                        
-                        },
+                        validator: (value) {},
                         controller: controller.telegramUrlController,
                       ),
                       SizedBox(height: 30.h),
-            
+
                       Obx(
                         () => Row(
                           children: [
@@ -97,7 +94,8 @@ class EditCourseFormWidget extends StatelessWidget {
                                 isLoading: controller.isLoading.value,
                                 title: "حفظ",
                                 onPressed: () async {
-                                  if (formKey.currentState!.validate()) {
+                                  if (controller.formKey.currentState!
+                                      .validate()) {
                                     controller.editCourse();
                                   }
                                 },
@@ -112,11 +110,14 @@ class EditCourseFormWidget extends StatelessWidget {
                                 onPressed: () async {
                                   Get.dialog(
                                     AlertDialog(
-                                      title: Text("هل أنت متأكد من حذف الدورة؟"),
+                                      title: Text(
+                                        "هل أنت متأكد من حذف الدورة؟",
+                                      ),
                                       actions: [
                                         Obx(
                                           () => AppTextButton(
-                                            isLoading: controller.isLoading.value,
+                                            isLoading:
+                                                controller.isLoading.value,
                                             color: Colors.red.shade300,
                                             title: "نعم",
                                             onPressed: () {

@@ -14,7 +14,7 @@ class CoursesRepo {
 
   Future<ApiResult> copyCourseCode(int courseId) async {
     try {
-      var res = await mainApi.getCourseCode( courseId);
+      var res = await mainApi.getCourseCode(courseId);
 
       return ApiResult<String>(
         status: true,
@@ -31,6 +31,7 @@ class CoursesRepo {
       );
     }
   }
+
   Future<ApiResult> getCourses() async {
     try {
       var res = await mainApi.getCourses();
@@ -231,17 +232,14 @@ class CoursesRepo {
 
   Future<ApiResult> uploadVideo(UploadVideoModel uploadVideoModel) async {
     try {
-      await mainApi.uploadVideo(
-        {
-          "course_id": uploadVideoModel.courseId,
-          "title": uploadVideoModel.title,
-          "is_paid": uploadVideoModel.isPaid,
-          "url": uploadVideoModel.url,
-          "duration": uploadVideoModel.duration,
-          "playlist_id": uploadVideoModel.playlistId ?? ""
-
-        }
-      );
+      await mainApi.uploadVideo({
+        "course_id": uploadVideoModel.courseId,
+        "title": uploadVideoModel.title,
+        "is_paid": uploadVideoModel.isPaid,
+        "url": uploadVideoModel.url,
+        "duration": uploadVideoModel.duration,
+        "playlist_id": uploadVideoModel.playlistId ?? "",
+      });
       return ApiResult<CourseModel>(
         status: true,
         message: "تم رفع الفيديو بنجاح",
@@ -277,13 +275,13 @@ class CoursesRepo {
     }
   }
 
-  Future<ApiResult> deleteCourseVideo(int id)async{
+  Future<ApiResult> deleteCourseVideo(int id) async {
     try {
       await mainApi.deleteCourseVideo(id);
       return ApiResult(
-          status: true,
-          message: "تم حذف الفيديو بنجاح",
-          data: null,
+        status: true,
+        message: "تم حذف الفيديو بنجاح",
+        data: null,
       );
     } on DioException catch (e) {
       return ApiResult(
@@ -296,7 +294,27 @@ class CoursesRepo {
     }
   }
 
-  Future<ApiResult<List<CodeModel>>> getCourseCodes(int courseId)async{
+  Future<ApiResult> updateVideoTitle(int id, String title) async {
+    try {
+      await mainApi.updateVideoTitle(id, {"title": title});
+      return ApiResult(
+        status: true,
+        message: "تم تحديث عنوان الفيديو بنجاح",
+        data: null,
+      );
+    } on DioException catch (e) {
+      return ApiResult(
+        status: false,
+        message:
+            e.response?.data["message"] ?? "حدث خطاء في تحديث عنوان الفيديو",
+        error: e,
+        data: null,
+        errorHandler: ErrorHandler.fromJson(e.response?.data ?? {}),
+      );
+    }
+  }
+
+  Future<ApiResult<List<CodeModel>>> getCourseCodes(int courseId) async {
     try {
       var res = await mainApi.getCourseCodes(courseId);
       return ApiResult<List<CodeModel>>(
@@ -314,7 +332,8 @@ class CoursesRepo {
       );
     }
   }
-  Future<ApiResult<List<CodeModel>>> addNewCodes(int courseId)async{
+
+  Future<ApiResult<List<CodeModel>>> addNewCodes(int courseId) async {
     try {
       var res = await mainApi.addNewCodes(courseId);
       return ApiResult<List<CodeModel>>(
@@ -333,12 +352,28 @@ class CoursesRepo {
     }
   }
 
-  Future<ApiResult> getVideo(int courseId, int videoId)async{
+  Future<ApiResult> markAsCopied(int id) async {
     try {
-      var res = await mainApi.getVideo(
-        courseId,
-        videoId,
+      await mainApi.markAsCopied(id);
+      return ApiResult(
+        status: true,
+        message: "تم تحديث الحالة بنجاح",
+        data: null,
       );
+    } on DioException catch (e) {
+      return ApiResult(
+        status: false,
+        message: e.response?.data["message"] ?? "حدث خطاء في تحديث الحالة",
+        error: e,
+        data: null,
+        errorHandler: ErrorHandler.fromJson(e.response?.data ?? {}),
+      );
+    }
+  }
+
+  Future<ApiResult> getVideo(int courseId, int videoId) async {
+    try {
+      var res = await mainApi.getVideo(courseId, videoId);
       return ApiResult<VideoModel>(
         status: true,
         message: "تم الحصول على الفيديو بنجاح",
@@ -348,6 +383,116 @@ class CoursesRepo {
       return ApiResult(
         status: false,
         message: e.response?.data["message"] ?? "حدث خطاء في جلب الفيديو",
+        error: e,
+        data: null,
+        errorHandler: ErrorHandler.fromJson(e.response?.data ?? {}),
+      );
+    }
+  }
+
+  Future<ApiResult<Map<String, dynamic>>> prepareBunnyUpload({
+    required int courseId,
+    required String title,
+    required bool isPaid,
+    required int duration,
+    int? playlistId,
+    CancelToken? cancelToken,
+  }) async {
+    try {
+      final raw = await mainApi.prepareBunnyUpload({
+        "course_id": courseId,
+        "title": title,
+        "is_paid": isPaid,
+        "duration": duration,
+        if (playlistId != null) "playlist_id": playlistId,
+      }, cancelToken: cancelToken);
+      final res = Map<String, dynamic>.from(raw as Map);
+      return ApiResult<Map<String, dynamic>>(
+        status: true,
+        message: "تم تجهيز الفيديو للرفع بنجاح",
+        data: res,
+      );
+    } on DioException catch (e) {
+      return ApiResult(
+        status: false,
+        message: e.response?.data["message"] ?? "حدث خطأ في تجهيز رفع الفيديو",
+        error: e,
+        data: null,
+        errorHandler: ErrorHandler.fromJson(e.response?.data ?? {}),
+      );
+    }
+  }
+
+  Future<ApiResult<Map<String, dynamic>>> prepareVimeoUpload({
+    required int courseId,
+    required String title,
+    required bool isPaid,
+    required int size,
+    required int duration,
+    int? playlistId,
+    CancelToken? cancelToken,
+  }) async {
+    try {
+      final raw = await mainApi.prepareVimeoUpload({
+        "course_id": courseId,
+        "title": title,
+        "is_paid": isPaid,
+        "size": size,
+        "duration": duration,
+        if (playlistId != null) "playlist_id": playlistId,
+      }, cancelToken: cancelToken);
+      final res = Map<String, dynamic>.from(raw as Map);
+      return ApiResult<Map<String, dynamic>>(
+        status: true,
+        message: "تم تجهيز فيديو Vimeo للرفع بنجاح",
+        data: res,
+      );
+    } on DioException catch (e) {
+      return ApiResult(
+        status: false,
+        message: e.response?.data["message"] ?? "حدث خطأ في تجهيز رفع الفيديو",
+        error: e,
+        data: null,
+        errorHandler: ErrorHandler.fromJson(e.response?.data ?? {}),
+      );
+    }
+  }
+
+  Future<ApiResult<Map<String, dynamic>>> getVimeoVideoData(
+    String vimeoId,
+  ) async {
+    try {
+      final raw = await mainApi.getVimeoVideoData(vimeoId);
+      final res = Map<String, dynamic>.from(raw as Map);
+      return ApiResult<Map<String, dynamic>>(
+        status: true,
+        message: "تم جلب بيانات التشغيل بنجاح",
+        data: res,
+      );
+    } on DioException catch (e) {
+      return ApiResult(
+        status: false,
+        message: e.response?.data["message"] ?? "حدث خطأ في جلب بيانات الفيديو",
+        error: e,
+        data: null,
+        errorHandler: ErrorHandler.fromJson(e.response?.data ?? {}),
+      );
+    }
+  }
+
+  Future<ApiResult<VideosResponseModel>> getPendingVideos() async {
+    try {
+      var res = await mainApi.getPendingVideos();
+      return ApiResult<VideosResponseModel>(
+        status: true,
+        message: "تم الحصول على الفيديوهات المعلقة بنجاح",
+        data: res,
+      );
+    } on DioException catch (e) {
+      return ApiResult(
+        status: false,
+        message:
+            e.response?.data["message"] ?? "حدث خطأ في جلب الفيديوهات المعلقة",
         error: e,
         data: null,
         errorHandler: ErrorHandler.fromJson(e.response?.data ?? {}),

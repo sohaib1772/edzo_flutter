@@ -20,6 +20,7 @@ class TeacherController extends GetxController {
 
   TextEditingController bioController = TextEditingController();
   TextEditingController telegramUrlController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
   XFile? selectedImage;
   ImagePicker picker = ImagePicker();
 
@@ -38,6 +39,9 @@ class TeacherController extends GetxController {
 
   void cancelEdit() {
     bioController.text = SessionHelper.user?.teacherInfo?.bio ?? "";
+    telegramUrlController.text =
+        SessionHelper.user?.teacherInfo?.telegramUrl ?? "";
+    nameController.text = SessionHelper.user?.name ?? "";
     selectedImage = null;
     imageUrl.value = SessionHelper.user?.teacherInfo?.image ?? "";
     isEdited.value = false;
@@ -47,6 +51,21 @@ class TeacherController extends GetxController {
   void addTeacherInfo() async {
     isLoading.value = true;
 
+    if (nameController.text != SessionHelper.user?.name &&
+        nameController.text.isNotEmpty) {
+      final nameRes = await teacherRepo.updateUserName(nameController.text);
+      if (!nameRes.status) {
+        isLoading.value = false;
+        Get.snackbar(
+          "خطاء في تحديث الاسم",
+          nameRes.errorHandler!.getErrorsList(),
+          colorText: Colors.red.shade300,
+        );
+        return;
+      }
+      SessionHelper.user?.name = nameController.text;
+    }
+
     final res = await teacherRepo.addTeacherInfo(
       bioController.text,
       selectedImage?.path == null
@@ -54,7 +73,6 @@ class TeacherController extends GetxController {
           : MultipartFile.fromBytes(
               File(selectedImage!.path).readAsBytesSync(),
               filename: selectedImage?.path.split('/').last,
-              
             ),
       telegramUrlController.text,
     );
@@ -106,7 +124,19 @@ class TeacherController extends GetxController {
     imageUrl.value = SessionHelper.user?.teacherInfo?.image ?? "";
     bio.value = SessionHelper.user?.teacherInfo?.bio ?? "";
     bioController.text = bio.value;
+    telegramUrlController.text =
+        SessionHelper.user?.teacherInfo?.telegramUrl ?? "";
+    nameController.text = SessionHelper.user?.name ?? "";
+
+    nameController.addListener(() {
+      isEdited.value = true;
+      update();
+    });
     bioController.addListener(() {
+      isEdited.value = true;
+      update();
+    });
+    telegramUrlController.addListener(() {
       isEdited.value = true;
       update();
     });

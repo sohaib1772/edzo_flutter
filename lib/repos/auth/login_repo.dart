@@ -15,26 +15,29 @@ class LoginRepo {
   MainApi mainApi;
   LoginRepo(this.mainApi);
 
-  Future<ApiResult> login(LoginModel loginModel) async {
+  Future<ApiResult<LoginResponseModel>> login(LoginModel loginModel) async {
     try {
       final res = await mainApi.login(loginModel);
 
       await LocalStorage.saveToken(res.token!);
       RoleHelper.setRole(res.data!.role!);
       SessionHelper.user = res.data;
-      return ApiResult(
+      return ApiResult<LoginResponseModel>(
         data: res,
         status: true,
         message: "تم تسجيل الدخول بنجاح",
       );
     } on DioException catch (e) {
       if (e.response?.statusCode == 401 &&
-          e.response?.data["email_status"] == "false") {
+          (e.response?.data["email_status"] == "false" ||
+              e.response?.data["email_status"] == false ||
+              e.response?.data["phone_status"] == "false" ||
+              e.response?.data["phone_status"] == false)) {
         await LocalStorage.removeToken();
-        return ApiResult(
-          data: "notVerified",
+        return ApiResult<LoginResponseModel>(
+          data: null,
           status: false,
-          message: e.response?.data["message"] ?? "خطأ في تسجيل الدخول",
+          message: e.response?.data["message"] ?? "notVerified",
           error: e,
           errorHandler: ErrorHandler.fromJson(e.response?.data),
         );
@@ -91,5 +94,4 @@ class LoginRepo {
       );
     }
   }
-
 }

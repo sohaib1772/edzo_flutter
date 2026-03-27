@@ -56,7 +56,7 @@ class AdminRepo{
 
   Future<ApiResult<List<TeachersInfoModel>>> getTeachers()async{
     try {
-      var res = await mainApi.getTeachers();
+      var res = await mainApi.getAdminTeachers();
       return ApiResult<List<TeachersInfoModel>>(
         status: true,
         message: "تم الحصول على المعلمين بنجاح",
@@ -71,5 +71,23 @@ class AdminRepo{
       );
     }
   }
-  
+
+  Future<ApiResult<void>> pinTeacher(int teacherId) async {
+    try {
+      await mainApi.pinTeacher({
+        "teacher_id": teacherId,
+      });
+      return ApiResult<void>(
+        status: true,
+        message: "تم تحديث حالة التثبيت بنجاح",
+        data: null,
+      );
+    } on DioException catch (e) {
+      return ApiResult(
+        data: null,
+        status: false,
+        message: e.response?.data["message"] ?? "حدث خطاء في تحديث الحالة",
+      );
+    }
+  }
 }

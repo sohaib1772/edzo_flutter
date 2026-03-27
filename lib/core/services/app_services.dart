@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:edzo/core/constance/app_constance.dart';
-import 'package:edzo/core/constance/app_router_keys.dart';
 import 'package:edzo/core/helpers/check_app_version.dart';
 import 'package:edzo/core/helpers/local_storage.dart';
 import 'package:edzo/core/helpers/role_helper.dart';
@@ -12,7 +11,9 @@ import 'package:edzo/core/network/main_api.dart';
 import 'package:edzo/models/user_model.dart';
 import 'package:edzo/repos/admin_repo.dart';
 import 'package:edzo/repos/app_settings_repo.dart';
+import 'package:edzo/core/helpers/session_helper.dart';
 import 'package:edzo/repos/auth/email_verification_repo.dart';
+import 'package:edzo/repos/auth/phone_verification_repo.dart';
 import 'package:edzo/repos/auth/forgot_password_repo.dart';
 import 'package:edzo/repos/auth/login_repo.dart';
 import 'package:edzo/repos/auth/logout_repo.dart';
@@ -33,12 +34,10 @@ class AppServices extends GetxService {
   bool needUpdate = false;
   Role role = Role.student;
   Future<AppServices> init() async {
-    
-
     await LocalStorage.init();
     await setUpApi();
     print("app version ${await getAppVersion()}");
-    
+
     await checkToken();
     await getTheme();
     await requestStoragePermission();
@@ -50,11 +49,12 @@ class AppServices extends GetxService {
 
   Future<void> setUpApi() async {
     Get.putAsync(() async => MainApi(await DioFactory.getInstance()));
-     Get.lazyPut(()=> AppSettingsRepo(Get.find<MainApi>()), fenix: true);
+    Get.lazyPut(() => AppSettingsRepo(Get.find<MainApi>()), fenix: true);
     Get.lazyPut(() => LoginRepo(Get.find<MainApi>()), fenix: true);
     Get.lazyPut(() => LogoutRepo(Get.find<MainApi>()), fenix: true);
     Get.lazyPut(() => RegisterRepo(Get.find<MainApi>()), fenix: true);
     Get.lazyPut(() => EmailVerificationRepo(Get.find<MainApi>()), fenix: true);
+    Get.lazyPut(() => PhoneVerificationRepo(Get.find<MainApi>()), fenix: true);
     Get.lazyPut(() => ForgotPasswordRepo(Get.find<MainApi>()), fenix: true);
     Get.lazyPut(() => CoursesRepo(Get.find<MainApi>()), fenix: true);
     Get.lazyPut(() => TeacherRepo(Get.find<MainApi>()), fenix: true);
@@ -62,24 +62,21 @@ class AppServices extends GetxService {
     Get.lazyPut(() => PublicCoursesRepo(Get.find<MainApi>()), fenix: true);
     Get.lazyPut(() => PlaylistRepo(Get.find<MainApi>()), fenix: true);
     Get.lazyPut(() => PinCourseRepo(Get.find<MainApi>()), fenix: true);
-   
-    
-
   }
 
   Future<void> checkAppVersion() async {
     AppSettingsRepo appSettingsRepo = Get.find<AppSettingsRepo>();
     ApiResult<String> res = await appSettingsRepo.getAppVersion();
     if (res.status) {
-      if (isVersionLower(AppConstance.appDevVersion, res.data?? "")) {
+      if (isVersionLower(AppConstance.appDevVersion, res.data ?? "")) {
         print("need update");
         needUpdate = true;
-      }
-      else{
+      } else {
         print("no need update");
       }
     }
   }
+
   Future<void> checkToken() async {
     String? token = await LocalStorage.getToken();
     if (token == null) {
@@ -96,6 +93,7 @@ class AppServices extends GetxService {
       }
 
       isLoggedIn = true;
+      SessionHelper.user = res.data;
     } else {
       await LocalStorage.removeToken();
       isLoggedIn = false;
@@ -141,8 +139,9 @@ class AppServices extends GetxService {
 
     return false;
   }
+
   Future<String> getAppVersion() async {
-  final info = await PackageInfo.fromPlatform();
-  return info.version;
-}
+    final info = await PackageInfo.fromPlatform();
+    return info.version;
+  }
 }

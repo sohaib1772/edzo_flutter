@@ -3,6 +3,7 @@ class AppRouterKeys {
   static const String updateScreen = '/update';
   static const String registerScreen = '/register';
   static const String emailVerificationScreen = '/emailVerification';
+  static const String phoneVerificationScreen = '/phoneVerification';
   static const String forgetPasswordScreen = '/forgetPassword';
   static const String mainLayout = '/mainLayout';
   static const String homeScreen = '/home';
@@ -15,8 +16,12 @@ class AppRouterKeys {
   static const String privacyPolicy = '/privacyPolicy';
   static const String teacherReportsScreen = '/teacherReportsScreen';
   static const String teacherPlaylistsScreen = '/teacherPlaylistsScreen';
-  static const String courseVideosListScreen= '/courseVideosListScreen';
+  static const String courseVideosListScreen = '/courseVideosListScreen';
+  static const String settingsScreen = '/settingsScreen';
+  static const String bunnyPlayerScreen = '/bunnyPlayerScreen';
+  static const String vimeoPlayerScreen = '/vimeoPlayerScreen';
+  static const String uploadsMonitoringScreen = '/uploadsMonitoring';
+  static const String joinCourse = '/join/:id/:code';
+  static const String mandatoryPhoneScreen = '/mandatoryPhone';
+  static const String teachersScreen = '/teachers';
 }
-
-
-

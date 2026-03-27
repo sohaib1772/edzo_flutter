@@ -19,31 +19,53 @@ class TeachersResponseModel {
 
 @JsonSerializable()
 class TeachersInfoModel {
+  int? id;
+  String? name;
+  String? bio;
+  String? image;
+  @JsonKey(name: "courses_count")
+  int? coursesCount;
+  @JsonKey(name: "total_students_count")
+  int? totalStudentsCount;
+  // Backward compatibility
   UserModel? user;
-
-  
+  @JsonKey(name: "courses")
+  List<TeacherCoursesModel>? courses;
+  @JsonKey(name: "is_pin")
+  bool? isPin;
 
   TeachersInfoModel({
-     this.user,
+    this.id,
+    this.name,
+    this.bio,
+    this.image,
+    this.coursesCount,
+    this.totalStudentsCount,
+    this.user,
+    this.courses,
+    this.isPin,
   });
 
   factory TeachersInfoModel.fromJson(Map<String, dynamic> json) =>
       _$TeachersInfoModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$TeachersInfoModelToJson(this);
 }
 
 @JsonSerializable()
 class TeacherCoursesModel{
   int? id;
   String? title;
-  @JsonKey(name:"monthly_subscribers")
+  @JsonKey(name: "total_subscribers")
+  int? totalSubscribers;
+  @JsonKey(name: "monthly_stats")
   List<MonthlySubscribersModel>? monthlySubscribers;
 
-  TeacherCoursesModel(
-    {
-     this.id,
-     this.title,
-     this.monthlySubscribers,
+  TeacherCoursesModel({
+    this.id,
+    this.title,
+    this.totalSubscribers,
+    this.monthlySubscribers,
   });
   
 

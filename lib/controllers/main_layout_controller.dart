@@ -3,7 +3,9 @@ import 'package:edzo/core/helpers/local_storage.dart';
 import 'package:edzo/core/helpers/role_helper.dart';
 import 'package:edzo/core/helpers/session_helper.dart';
 import 'package:edzo/core/services/app_services.dart';
+import 'package:edzo/repos/auth/email_verification_repo.dart';
 import 'package:edzo/repos/auth/logout_repo.dart';
+import 'package:edzo/repos/auth/phone_verification_repo.dart';
 import 'package:edzo/views/admin/admin_screen.dart';
 import 'package:edzo/views/home/home_screen.dart';
 import 'package:edzo/views/my_subscriptions/my_subscriptions_screen.dart';
@@ -118,9 +120,10 @@ class MainLayoutController extends GetxController {
     isLoading.value = true;
     final res = await logoutRepo.logout();
     if (res.status) {
-      Get.offAllNamed(AppRouterKeys.loginScreen);
       SessionHelper.user = null;
       RoleHelper.role = Role.student;
+      Get.find<AppServices>().isLoggedIn = false;
+      Get.offAllNamed(AppRouterKeys.loginScreen);
     } else {
       Get.snackbar(
         "خطاء في تسجيل الخروج",
@@ -149,9 +152,10 @@ class MainLayoutController extends GetxController {
         deleteAccountConfirmationController.text,
       );
       if (res.status) {
-        Get.offAllNamed(AppRouterKeys.loginScreen);
         SessionHelper.user = null;
         RoleHelper.role = Role.student;
+        Get.find<AppServices>().isLoggedIn = false;
+        Get.offAllNamed(AppRouterKeys.loginScreen);
       } else {
         Get.snackbar(
           "خطاء في حذف الحساب",
@@ -164,6 +168,44 @@ class MainLayoutController extends GetxController {
         );
       }
       isLoading.value = false;
+    }
+  }
+
+  Future<void> addPhone(String phone) async {
+    isLoading.value = true;
+    final res = await Get.find<PhoneVerificationRepo>().addPhone(phone);
+    isLoading.value = false;
+    if (res.status) {
+      Get.back(); // close dialog
+      Get.toNamed(
+        AppRouterKeys.phoneVerificationScreen,
+        arguments: {"phone": phone, "from_settings": true},
+      );
+    } else {
+      Get.snackbar(
+        "خطاء",
+        res.errorHandler!.getErrorsList(),
+        colorText: Colors.red.shade300,
+      );
+    }
+  }
+
+  Future<void> addEmail(String email) async {
+    isLoading.value = true;
+    final res = await Get.find<EmailVerificationRepo>().addEmail(email);
+    isLoading.value = false;
+    if (res.status) {
+      Get.back(); // close dialog
+      Get.toNamed(
+        AppRouterKeys.emailVerificationScreen,
+        arguments: {"email": email, "from_settings": true},
+      );
+    } else {
+      Get.snackbar(
+        "خطاء",
+        res.errorHandler!.getErrorsList(),
+        colorText: Colors.red.shade300,
+      );
     }
   }
 }

@@ -14,15 +14,15 @@ import 'package:intl/intl.dart';
 
 class SubscribeInCourseWidget extends StatelessWidget {
   SubscribeInCourseWidget({super.key});
-  CourseController courseController = Get.find();
-  CourseModel courseModel = Get.arguments['courseModel'];
+  final CourseController courseController = Get.find();
+  CourseModel? get courseModel => courseController.courseModel;
   @override
   Widget build(BuildContext context) {
     return RoleHelper.role == Role.full ? SizedBox.shrink() :  Row(
       children: [
         
         SizedBox(width: 10.w),
-       courseModel.price.toString() == "0" ? SizedBox.shrink() :  Expanded(
+       (courseModel?.price?.toString() ?? "0") == "0" ? SizedBox.shrink() :  Expanded(
         flex: 1,
           child: AppTextButton(
             title: "اشترك الان",
@@ -68,7 +68,7 @@ class SubscribeInCourseWidget extends StatelessWidget {
                         onPressed: () {
                           if (courseController.formKey.currentState!
                               .validate()) {
-                            courseController.subscribe(courseModel.id!);
+                            courseController.subscribe(courseModel?.id ?? 0);
                           }
                         },
                         title: 'تأكيد',
@@ -85,11 +85,11 @@ class SubscribeInCourseWidget extends StatelessWidget {
             alignment: Alignment.center,           
             child: Text(
               
-              courseModel.price.toString() == "0"
+              (courseModel?.price?.toString() ?? "0") == "0"
                   ? "مجاني"
-                  : NumberFormat("#,###").format(courseModel.price) + " د",
+                  : NumberFormat("#,###").format(courseModel?.price ?? 0) + " د",
               style: TextStyle(
-                color: courseModel.price.toString() == "0"
+                color: (courseModel?.price?.toString() ?? "0") == "0"
                   ? Colors.green.shade300
                   : Colors.red.shade300,
                 fontSize: 18.sp.clamp(18, 22),

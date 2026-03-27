@@ -68,30 +68,50 @@ class AdminScreen extends StatelessWidget {
                             width: 48.w,
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(24.r),
-                              child:
-                                  controller
-                                          .teachers[index]
-                                          .user
-                                          ?.teacherInfo
-                                          ?.image !=
-                                      null
+                              child: (controller.teachers[index].image != null &&
+                                      controller.teachers[index].image!.isNotEmpty)
                                   ? CachedNetworkImage(
                                       fit: BoxFit.cover,
                                       imageUrl:
-                                          "${AppConstance.baseUrl}/storage/${controller.teachers[index].user?.teacherInfo?.image}",
+                                          "${AppConstance.baseUrl}/storage/${controller.teachers[index].image ?? controller.teachers[index].user?.teacherInfo?.image}",
                                     )
-                                  : Image.asset("assets/images/edzo_logo.png"),
+                                  : controller.teachers[index].user?.teacherInfo?.image != null
+                                      ? CachedNetworkImage(
+                                          fit: BoxFit.cover,
+                                          imageUrl:
+                                              "${AppConstance.baseUrl}/storage/${controller.teachers[index].user?.teacherInfo?.image}",
+                                        )
+                                      : Image.asset("assets/images/edzo_logo.png"),
                             ),
                           ),
                           title: Text(
+                            controller.teachers[index].name ?? 
                             controller.teachers[index].user?.name ?? "",
                           ),
                           subtitle: Text(
                             RoleHelper.getRole(
-                              controller.teachers[index].user?.role ?? "",
+                              controller.teachers[index].user?.role ?? "teacher",
                             ),
                           ),
-                          trailing: Text("عدد الكورسات ${controller.teachers[index].user?.totalCoursesCount ?? 0}"),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  controller.pinTeacher(controller.teachers[index].id!);
+                                },
+                                icon: Icon(
+                                  (controller.teachers[index].isPin ?? false)
+                                      ? Icons.push_pin
+                                      : Icons.push_pin_outlined,
+                                  color: (controller.teachers[index].isPin ?? false)
+                                      ? Colors.blue
+                                      : Colors.grey,
+                                ),
+                              ),
+                              Text("عدد الكورسات ${controller.teachers[index].coursesCount ?? controller.teachers[index].user?.totalCoursesCount ?? 0}"),
+                            ],
+                          ),
                         );
                       },
                     ),

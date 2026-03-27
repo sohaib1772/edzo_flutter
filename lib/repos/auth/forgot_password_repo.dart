@@ -10,10 +10,9 @@ class ForgotPasswordRepo {
 
   ForgotPasswordRepo(this.mainApi);
 
-
-  Future<ApiResult> forgotPasswordRequest(String email) async {
+  Future<ApiResult> forgotPasswordRequest(Map<String, dynamic> data) async {
     try {
-      await mainApi.forgotPassword({"email": email});
+      await mainApi.forgotPassword(data);
       return ApiResult(
         data: null,
         status: true,
@@ -30,7 +29,7 @@ class ForgotPasswordRepo {
     }
   }
 
-  Future<ApiResult> resetPassword(ResetPasswordModel resetPasswordModel)async{
+  Future<ApiResult> resetPassword(ResetPasswordModel resetPasswordModel) async {
     try {
       await mainApi.resetPassword(resetPasswordModel);
       return ApiResult(
@@ -49,9 +48,11 @@ class ForgotPasswordRepo {
     }
   }
 
-  Future<ApiResult> resendForgotPasswordRequest(String email) async {
+  Future<ApiResult> resendForgotPasswordRequest(
+    Map<String, dynamic> data,
+  ) async {
     try {
-      await mainApi.resendForgotPassword({"email": email});
+      await mainApi.resendForgotPassword(data);
       return ApiResult(
         data: null,
         status: true,
@@ -67,6 +68,4 @@ class ForgotPasswordRepo {
       );
     }
   }
-  
-
 }

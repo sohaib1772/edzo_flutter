@@ -22,9 +22,7 @@ class TeacherScreen extends StatelessWidget {
     return GetX(
       init: controller,
       builder: (controller) => controller.isLoading.value
-          ? CourseCardLoadingSkeleton(
-              onRefresh: () => controller.getCourses(),
-          )
+          ? CourseCardLoadingSkeleton(onRefresh: () => controller.getCourses())
           : RefreshIndicator(
               onRefresh: () => controller.getCourses(),
               child: SingleChildScrollView(
@@ -32,8 +30,12 @@ class TeacherScreen extends StatelessWidget {
                   parent: AlwaysScrollableScrollPhysics(),
                 ),
                 child: controller.courses.isEmpty
-                    ? SizedBox(
-                        height: MediaQuery.of(context).size.height - 200.h,
+                    ? ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minHeight: MediaQuery.of(context).size.height > 600
+                              ? MediaQuery.of(context).size.height - 200.h
+                              : 600,
+                        ),
                         child: Center(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -41,7 +43,10 @@ class TeacherScreen extends StatelessWidget {
                             children: [
                               TeacherInfoWidget(),
                               SizedBox(height: 20.h),
-                              Icon(Icons.hourglass_empty_outlined, size: 50.sp.clamp(50, 55)),
+                              Icon(
+                                Icons.hourglass_empty_outlined,
+                                size: 50.sp.clamp(50, 55),
+                              ),
                               SizedBox(height: 20.h),
                               Text(
                                 "لا يوجد دورات تم نشرها حتى الان",
@@ -63,47 +68,48 @@ class TeacherScreen extends StatelessWidget {
                         ),
                       )
                     : Center(
-                      child: LayoutBuilder(
-                        builder:(context, constraints){
-                          
-                          double width = constraints.maxWidth;
-                                 
-                          if(constraints.maxWidth > 500){
-                            width = 500;
-                          }
-                          
-                          return  SizedBox(
-                            width: width,
-                            child: Column(
-                              children: [
-                                                  
-                                TeacherInfoWidget(),
-                                                  
-                                SizedBox(height: 20.h),
-                                AppTextButton(
-                                  title: "اضافة دورة جديدة",
-                                  onPressed: () {
-                                    Get.toNamed(AppRouterKeys.addCourseScreen);
-                                  },
-                                ),
-                                SizedBox(height: 20.h),
-                                ListView.builder(
-                                  shrinkWrap: true,
-                                                  
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemCount: controller.courses.length,
-                                  itemBuilder: (context, index) {
-                                    return CourseCardWidget(
-                                      isTeacher: true,
-                                      course: controller.courses[index],
-                                    );
-                                  },
-                                ),
-                              ],
-                            ),
-                          );},
+                        child: LayoutBuilder(
+                          builder: (context, constraints) {
+                            double width = constraints.maxWidth;
+
+                            if (constraints.maxWidth > 500) {
+                              width = 500;
+                            }
+
+                            return SizedBox(
+                              width: width,
+                              child: Column(
+                                children: [
+                                  TeacherInfoWidget(),
+
+                                  SizedBox(height: 20.h),
+                                  AppTextButton(
+                                    title: "اضافة دورة جديدة",
+                                    onPressed: () {
+                                      Get.toNamed(
+                                        AppRouterKeys.addCourseScreen,
+                                      );
+                                    },
+                                  ),
+                                  SizedBox(height: 20.h),
+                                  ListView.builder(
+                                    shrinkWrap: true,
+
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemCount: controller.courses.length,
+                                    itemBuilder: (context, index) {
+                                      return CourseCardWidget(
+                                        isTeacher: true,
+                                        course: controller.courses[index],
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
                       ),
-                    ),
               ),
             ),
     );

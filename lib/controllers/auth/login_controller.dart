@@ -1,8 +1,10 @@
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:edzo/core/constance/app_router_keys.dart';
+import 'package:edzo/core/helpers/deep_link_helper.dart';
 import 'package:edzo/core/helpers/device_info.dart';
+import 'package:edzo/core/helpers/app_form_validator.dart';
 import 'package:edzo/models/auth/login_model.dart';
 import 'package:edzo/repos/auth/email_verification_repo.dart';
+import 'package:edzo/repos/auth/phone_verification_repo.dart';
 import 'package:edzo/repos/auth/login_repo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +21,6 @@ class LoginController extends GetxController {
 
   LoginRepo loginRepo = Get.find<LoginRepo>();
 
-  
   EmailVerificationRepo emailVerificationRepo =
       Get.find<EmailVerificationRepo>();
 
@@ -31,9 +32,14 @@ class LoginController extends GetxController {
     isLoading.value = true;
     String? deviceId = await DeviceInfo.getDeviceId();
     print(deviceId);
+
+    String input = emailController.text.trim();
+    bool isEmail = AppFormValidator.isEmailValid(input);
+
     final res = await loginRepo.login(
       LoginModel(
-        email: emailController.text,
+        email: isEmail ? input : null,
+        phone: !isEmail ? input : null,
         password: passwordController.text,
         uid: deviceId,
       ),
@@ -44,7 +50,11 @@ class LoginController extends GetxController {
         "مرحبا بعودتك 👋",
         colorText: Colors.green.shade300,
       );
-      Get.offAllNamed(AppRouterKeys.mainLayout);
+      
+      // The repo already updates SessionHelper.user = res.data.data
+      
+      DeepLinkHelper.navigateAfterAuth();
+      return;
     } else {
       if (res.data == null) {
         Get.snackbar(
@@ -56,53 +66,76 @@ class LoginController extends GetxController {
         return;
       }
 
-      if (res.data == "notVerified") {
-        final res = await emailVerificationRepo.resendEmailVerification(
-          emailController.text,
-        );
-        if (res.status) {
-          Get.snackbar(
-            "تم ارسال الكود بنجاح",
-            "يرجى التحقق من بريدك الالكتروني",
-            colorText: Colors.green.shade300,
+      if (res.message == "notVerified") {
+        if (isEmail) {
+          final resEmail = await emailVerificationRepo.resendEmailVerification(
+            input,
           );
-          Get.toNamed(
-            AppRouterKeys.emailVerificationScreen,
-            arguments: {"email": emailController.text},
-          );
+          if (resEmail.status) {
+            Get.snackbar(
+              "تم ارسال الكود بنجاح",
+              "يرجى التحقق من بريدك الالكتروني",
+              colorText: Colors.green.shade300,
+            );
+            Get.toNamed(
+              AppRouterKeys.emailVerificationScreen,
+              arguments: {"email": input},
+            );
+          } else {
+            Get.snackbar(
+              "خطأ في ارسال الكود",
+              resEmail.errorHandler!.getErrorsList(),
+              colorText: Colors.red.shade300,
+            );
+          }
         } else {
-          Get.snackbar(
-            "خطأ في ارسال الكود",
-            res.errorHandler!.getErrorsList(),
-            colorText: Colors.red.shade300,
-          );
+          final resPhone = await Get.find<PhoneVerificationRepo>()
+              .resendPhoneVerification(input);
+          if (resPhone.status) {
+            Get.snackbar(
+              "تم ارسال الكود بنجاح",
+              "يرجى التحقق من رسائل الهاتف",
+              colorText: Colors.green.shade300,
+            );
+            Get.toNamed(
+              AppRouterKeys.phoneVerificationScreen,
+              arguments: {"phone": input},
+            );
+          } else {
+            Get.snackbar(
+              "خطأ في ارسال الكود",
+              resPhone.errorHandler!.getErrorsList(),
+              colorText: Colors.red.shade300,
+            );
+          }
         }
       }
     }
     isLoading.value = false;
   }
 
-
-  void changeUid()async{
+  void changeUid() async {
     changeUidLoading.value = true;
-    String? deviceId =await DeviceInfo.getDeviceId();
-   final res = await loginRepo.changeUid(
+    String? deviceId = await DeviceInfo.getDeviceId();
+    String input = emailController.text.trim();
+    bool isEmail = AppFormValidator.isEmailValid(input);
+    final res = await loginRepo.changeUid(
       LoginModel(
-        email: emailController.text,
+        email: isEmail ? input : null,
+        phone: !isEmail ? input : null,
         password: passwordController.text,
         uid: deviceId,
       ),
     );
-    if(res.status){
-       Get.back();
+    if (res.status) {
+      Get.back();
       Get.snackbar(
         "تم تغيير الجهاز بنجاح",
         "يرجى تسجيل الدخول",
         colorText: Colors.green.shade300,
       );
-     
-    }else{
-       Get.back();
+    } else {
+      Get.back();
       Get.snackbar(
         "خطاء في تغيير الجهاز",
         res.errorHandler!.getErrorsList(),

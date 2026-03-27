@@ -18,7 +18,9 @@ class TeacherInfoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width > 500 ? 500 : MediaQuery.of(context).size.width,
+      width: MediaQuery.of(context).size.width > 500
+          ? 500
+          : MediaQuery.of(context).size.width,
       child: GetBuilder<TeacherController>(
         init: controller,
         builder: (controller) => Container(
@@ -49,7 +51,8 @@ class TeacherInfoWidget extends StatelessWidget {
                           )
                         : SessionHelper.user?.teacherInfo?.image != null
                         ? CachedNetworkImage(
-                            imageUrl: "${AppConstance.baseUrl}/storage/${controller.imageUrl.value}",
+                            imageUrl:
+                                "${AppConstance.baseUrl}/storage/${controller.imageUrl.value}",
                             fit: BoxFit.cover,
                             placeholder: (context, url) =>
                                 Center(child: CircularProgressIndicator()),
@@ -59,6 +62,18 @@ class TeacherInfoWidget extends StatelessWidget {
                             fit: BoxFit.cover,
                           ),
                   ),
+                ),
+              ),
+              SizedBox(height: 10.h),
+              GestureDetector(
+                onTap: () {
+                  controller.isEdited.value = true;
+                  controller.update();
+                },
+                child: AppTextForm(
+                  enabled: controller.isEdited.value,
+                  controller: controller.nameController,
+                  hint: "الاسم",
                 ),
               ),
               SizedBox(height: 10.h),
@@ -87,7 +102,7 @@ class TeacherInfoWidget extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 10.h),
-      
+
               controller.isEdited.value
                   ? Row(
                       children: [

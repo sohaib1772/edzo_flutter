@@ -1,5 +1,6 @@
 import 'package:edzo/core/constance/app_router_keys.dart';
 import 'package:edzo/core/helpers/device_info.dart';
+import 'package:edzo/core/helpers/app_form_validator.dart';
 import 'package:edzo/core/network/api_result.dart';
 import 'package:edzo/models/auth/register_model.dart';
 import 'package:edzo/repos/auth/register_repo.dart';
@@ -28,10 +29,14 @@ class RegisterController extends GetxController {
 
     String? deviceId = await DeviceInfo.getDeviceId();
 
+    String input = emailController.text.trim();
+    bool isEmail = AppFormValidator.isEmailValid(input);
+
     ApiResult res = await registerRepo.register(
       RegisterModel(
         name: nameController.text,
-        email: emailController.text,
+        email: isEmail ? input : null,
+        phone: !isEmail ? input : null,
         password: passwordController.text,
         passwordConfirmation: passwordConfirmationController.text,
         uid: deviceId,
@@ -41,16 +46,26 @@ class RegisterController extends GetxController {
     if (res.status) {
       Get.snackbar(
         "تم التسجيل بنجاح",
-        "يرجى تأكيد بريدك الالكتروني",
+        isEmail ? "يرجى تأكيد بريدك الالكتروني" : "يرجى تأكيد رقم الهاتف",
         colorText: Colors.green.shade300,
       );
-      Get.toNamed(AppRouterKeys.emailVerificationScreen,
-          arguments: {
-            'email': emailController.text,
-          });
+      if (isEmail) {
+        Get.toNamed(
+          AppRouterKeys.emailVerificationScreen,
+          arguments: {'email': input},
+        );
+      } else {
+        Get.toNamed(
+          AppRouterKeys.phoneVerificationScreen,
+          arguments: {'phone': input},
+        );
+      }
     } else {
-      Get.snackbar("خطاء في التسجيل", res.errorHandler!.getErrorsList(),
-          colorText: Colors.red.shade300);
+      Get.snackbar(
+        "خطاء في التسجيل",
+        res.errorHandler!.getErrorsList(),
+        colorText: Colors.red.shade300,
+      );
     }
 
     isLoading.value = false;

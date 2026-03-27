@@ -1,4 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:edzo/core/helpers/local_storage.dart';
+import 'package:edzo/core/helpers/role_helper.dart';
+import 'package:edzo/core/helpers/session_helper.dart';
 import 'package:edzo/core/network/api_result.dart';
 import 'package:edzo/core/network/error_handler.dart';
 import 'package:edzo/core/network/main_api.dart';
@@ -9,12 +12,20 @@ class EmailVerificationRepo {
 
   EmailVerificationRepo(this.mainApi);
 
-
-  Future<ApiResult> emailVerification(EmailVerificationModel emailVerificationModel) async {
+  Future<ApiResult> emailVerification(
+    EmailVerificationModel emailVerificationModel,
+  ) async {
     try {
-      await mainApi.emailVerification(emailVerificationModel);
+      final res = await mainApi.emailVerification(emailVerificationModel);
+      await LocalStorage.saveToken(res.token!);
+
+      final userRes = await mainApi.getUser();
+      await LocalStorage.saveRole(userRes.data?.role ?? "student");
+      RoleHelper.setRole(userRes.data!.role!);
+      SessionHelper.user = userRes.data;
+
       return ApiResult(
-        data: null,
+        data: res,
         status: true,
         message: "تم تسجيل الدخول بنجاح",
       );
@@ -48,4 +59,22 @@ class EmailVerificationRepo {
     }
   }
 
+  Future<ApiResult> addEmail(String email) async {
+    try {
+      await mainApi.addEmail({"email": email});
+      return ApiResult(
+        data: null,
+        status: true,
+        message: "تم حفظ البريد الإلكتروني بنجاح، يرجى التوجه للبريد لتأكيده",
+      );
+    } on DioException catch (e) {
+      return ApiResult(
+        data: null,
+        status: false,
+        message: e.response?.data["message"] ?? "خطأ في حفظ البريد الإلكتروني",
+        error: e,
+        errorHandler: ErrorHandler.fromJson(e.response?.data),
+      );
+    }
+  }
 }

@@ -1,20 +1,19 @@
-import 'dart:convert';
-import 'dart:io';
+import 'package:edzo/core/network/api_result.dart';
 
 import 'package:chewie/chewie.dart';
 import 'package:edzo/core/helpers/local_storage.dart';
 import 'package:edzo/core/helpers/session_helper.dart';
-import 'package:edzo/core/network/api_result.dart';
 import 'package:edzo/repos/courses/courses_repo.dart';
 import 'package:edzo/repos/courses/public_courses_repo.dart';
+import 'package:edzo/models/video_model.dart';
 
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:photo_manager/photo_manager.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:edzo/core/constance/app_router_keys.dart';
+import 'package:edzo/models/video_model.dart';
 
 class VideoController extends GetxController {
   final String title;
@@ -94,12 +93,46 @@ class VideoController extends GetxController {
       update();
       return;
     }
-    final lastWatchedSecond = LocalStorage.getVideoLastWatchedSecond(videoId.toString());
+
+    // Redirect Check: If this video is actually Vimeo or Bunny, redirect to appropriate player
+    final videoData = res.data as VideoModel;
+    final int? provider = videoData.provider;
+    final String? videoUrl = videoData.url;
+
+    if (provider == 2 || (videoUrl?.contains('vimeo.com') ?? false)) {
+      // If the backend doesn't return vimeoId, we might not need to extract it here
+      // especially since VimeoPlayerScreen seems to use the database video ID.
+      // But we should at least check if we have a valid video to play.
+      
+      Get.offNamed(
+        AppRouterKeys.vimeoPlayerScreen,
+        arguments: {
+          "videoModel": VideoModel(
+            id: videoId,
+            title: title,
+            courseId: courseId,
+            url: videoUrl,
+            embedUrl: videoData.embedUrl,
+          ),
+        },
+      );
+      return;
+    }
+    
+    if (provider == 3 || (videoUrl?.contains('bunny') ?? false)) {
+       // Similar redirect for Bunny if needed, but usually Bunny is handled by BunnyPlayerScreen
+       // This is just a fail-safe
+    }
+    final lastWatchedSecond = LocalStorage.getVideoLastWatchedSecond(
+      videoId.toString(),
+    );
+    
     videoPlayerController = YoutubePlayerController(
       initialVideoId: res.data!.url ?? "",
       flags:  YoutubePlayerFlags(
+        
         startAt: lastWatchedSecond ?? 0,
-        autoPlay: true,
+        autoPlay: false,
         mute: false,
         showLiveFullscreenButton: false,
         disableDragSeek: false,
@@ -122,8 +155,7 @@ class VideoController extends GetxController {
       } else {
         isFullScreen.value = false;
       }
-      
-    
+
       if (videoPlayerController.value.playerState == PlayerState.playing) {
         isBufferingNow.value = false;
       } else if (videoPlayerController.value.playerState ==
@@ -135,7 +167,7 @@ class VideoController extends GetxController {
     isLoading.value = false;
     update();
   }
-  
+
   @override
   void onInit() async {
     super.onInit();
@@ -144,7 +176,7 @@ class VideoController extends GetxController {
 
   @override
   void onClose() {
-    videoPlayerController.dispose();
+   // videoPlayerController.dispose();
     chewieController?.dispose();
     super.onClose();
   }

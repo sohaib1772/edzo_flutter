@@ -18,14 +18,22 @@ class CourseController extends GetxController {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   RxList<VideoModel> videos = <VideoModel>[].obs;
   RxList<PlaylistModel> playlists = <PlaylistModel>[].obs;
-  CourseModel courseModel = Get.arguments['courseModel'];
-RxInt totalDuration = 0.obs;
+  CourseModel? courseModel;
+  RxInt totalDuration = 0.obs;
 
   @override
-  void onInit() async {
-    print(courseModel.title);
+  void onInit() {
+    if (Get.arguments != null) {
+      if (Get.arguments is CourseModel) {
+        courseModel = Get.arguments;
+      } else if (Get.arguments['courseModel'] != null) {
+        courseModel = Get.arguments['courseModel'];
+      }
+    }
     super.onInit();
-    await getVideos();
+    if (courseModel != null) {
+      getVideos();
+    }
   }
 
   void subscribe(int courseId) async {
@@ -46,18 +54,18 @@ RxInt totalDuration = 0.obs;
       "تم الاشتراك بالدورة بنجاح",
       colorText: Colors.green.shade300,
     );
-    courseModel.isSubscribed = true;
-    courseModel.subscribersCount = courseModel.subscribersCount! + 1;
-    Get.find<HomeController>().courses
-            .where((element) => element.id == courseModel.id)
-            .first
-            .subscribersCount =
-        courseModel.subscribersCount;
-    Get.find<HomeController>().courses
-            .where((element) => element.id == courseModel.id)
-            .first
-            .isSubscribed =
-        true;
+    courseModel?.isSubscribed = true;
+    courseModel?.subscribersCount = (courseModel?.subscribersCount ?? 0) + 1;
+    Get.find<HomeController>()
+        .courses
+        .where((element) => element.id == courseModel?.id)
+        .first
+        .subscribersCount = courseModel?.subscribersCount;
+    Get.find<HomeController>()
+        .courses
+        .where((element) => element.id == courseModel?.id)
+        .first
+        .isSubscribed = true;
     Get.find<HomeController>().update();
     update();
     isLoading.value = false;
@@ -69,9 +77,9 @@ RxInt totalDuration = 0.obs;
     late ApiResult<VideosResponseModel> res;
 
     if (SessionHelper.user == null) {
-      res = await publicCoursesRepo.getCourseVideos(courseModel.id!);
+      res = await publicCoursesRepo.getCourseVideos(courseModel?.id ?? 0);
     } else {
-      res = await coursesRepo.getCourseVideos(courseModel.id!);
+      res = await coursesRepo.getCourseVideos(courseModel?.id ?? 0);
     }
     if (!res.status) {
       Get.snackbar(
@@ -90,21 +98,24 @@ RxInt totalDuration = 0.obs;
   }
 
   RxString durationFromSeconds(int seconds) {
-  int hours = seconds ~/ 3600;
-  int minutes = (seconds % 3600) ~/ 60;
-  int remainingSeconds = seconds % 60;
+    int hours = seconds ~/ 3600;
+    int minutes = (seconds % 3600) ~/ 60;
+    int remainingSeconds = seconds % 60;
 
-  String twoDigits(int n) => n.toString().padLeft(2, "0");
+    String twoDigits(int n) => n.toString().padLeft(2, "0");
 
-  return "${hours > 0 ? "${twoDigits(hours)}:" : ""}"
-         "${twoDigits(minutes)}:"
-         "${twoDigits(remainingSeconds)}".obs;
-}
+    return "${hours > 0 ? "${twoDigits(hours)}:" : ""}"
+            "${twoDigits(minutes)}:"
+            "${twoDigits(remainingSeconds)}"
+        .obs;
+  }
 
   void getTotalDuration() {
     var total = 0;
     for (var video in videos) {
-      if (video.duration == null || video.duration == 0 || video.duration == "null") {
+      if (video.duration == null ||
+          video.duration == 0 ||
+          video.duration == "null") {
         continue;
       }
       total += video.duration ?? 0;

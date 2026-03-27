@@ -23,14 +23,14 @@ class LoginForm extends StatelessWidget {
           AppTextForm(
             validator: (value) {
               if (AppFormValidator.isEmpty(value ?? ""))
-                return 'البريد الالكتروني مطلوب';
-              if (!AppFormValidator.isEmailValid(value ?? ""))
-                return 'البريد الالكتروني غير صحيح';
+                return 'البريد الالكتروني او رقم الهاتف مطلوب';
+              if (!AppFormValidator.isEmailOrPhoneValid(value ?? ""))
+                return 'البريد الالكتروني او رقم الهاتف غير صحيح';
               return null;
             },
             controller: controller.emailController,
-            hint: 'البريد الالكتروني',
-            prefixIcon: Icons.email_outlined,
+            hint: 'البريد الالكتروني او رقم الهاتف',
+            prefixIcon: Icons.person_outline,
           ),
           SizedBox(height: 18.h),
           Obx(
@@ -74,9 +74,9 @@ class LoginForm extends StatelessWidget {
             ),
           ),
           SizedBox(height: 28.h),
-          // تم الغاء الميزة و استبدالها بالجلسات 
+
+          // تم الغاء الميزة و استبدالها بالجلسات
           // من الممكن ارجاع الميزة مستقبلا
-          
           GestureDetector(
             onTap: () {
               if (formKey.currentState!.validate()) {
@@ -86,7 +86,7 @@ class LoginForm extends StatelessWidget {
                     content: Text("هل تريد فتح الحساب من جهاز جديد؟"),
                     actions: [
                       Obx(
-                        ()=> AppTextButton(
+                        () => AppTextButton(
                           color: Theme.of(context).colorScheme.outline,
                           isLoading: controller.changeUidLoading.value,
                           title: "لا",
@@ -95,7 +95,7 @@ class LoginForm extends StatelessWidget {
                       ),
                       SizedBox(height: 16.w),
                       Obx(
-                        ()=> AppTextButton(
+                        () => AppTextButton(
                           color: Colors.red.shade300,
                           isLoading: controller.changeUidLoading.value,
                           onPressed: () {
@@ -111,7 +111,10 @@ class LoginForm extends StatelessWidget {
             },
             child: Text(
               "فتح الحساب من جهاز جديد",
-              style: TextStyle(fontSize: 14.sp.clamp(12, 18), color: Colors.grey.shade600),
+              style: TextStyle(
+                fontSize: 14.sp.clamp(12, 18),
+                color: Colors.grey.shade600,
+              ),
             ),
           ),
           SizedBox(height: 28.h),

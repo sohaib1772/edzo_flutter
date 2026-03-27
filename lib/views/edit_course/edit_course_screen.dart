@@ -118,24 +118,14 @@ class EditCourseScreen extends StatelessWidget {
     return Column(
       children: [
         SizedBox(height: 20.h),
-        // AppTextButton(
-        //   title: "عرض الاكواد",
-        //   onPressed: () {
-        //     Get.toNamed(
-        //       AppRouterKeys.courseCodes,
-        //       arguments: {"courseId": controller.courseModel.id},
-        //     );
-        //   },
-        // ),
-        // SizedBox(height: 20.h),
-        Obx(
-          () => AppTextButton(
-            isLoading: controller.isGetCodeLoading.value,
-            title: "نسخ كود",
-            onPressed: () {
-              controller.copyCode();
-            },
-          ),
+        AppTextButton(
+          title: "إدارة الأكواد",
+          onPressed: () {
+            Get.toNamed(
+              AppRouterKeys.courseCodes,
+              arguments: controller.courseModel,
+            );
+          },
         ),
         SizedBox(height: 20.h),
         Divider(),

@@ -22,14 +22,14 @@ class SendForgotPasswordCodeForm extends StatelessWidget {
           Expanded(
             flex: 3,
             child: AppTextForm(
-              hint: "البريد الالكتروني",
+              hint: "البريد الالكتروني او رقم الهاتف",
               controller: controller.emailController,
-              prefixIcon: Icons.email_outlined,
+              prefixIcon: Icons.person_outline,
               validator: (value) {
                 if (AppFormValidator.isEmpty(value ?? ""))
-                  return 'البريد الالكتروني مطلوب';
-                if (!AppFormValidator.isEmailValid(value ?? ""))
-                  return 'البريد الالكتروني غير صحيح';
+                  return 'البريد الالكتروني او رقم الهاتف مطلوب';
+                if (!AppFormValidator.isEmailOrPhoneValid(value ?? ""))
+                  return 'البريد الالكتروني او رقم الهاتف غير صحيح';
                 return null;
               },
             ),
