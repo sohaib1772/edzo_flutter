@@ -48,7 +48,7 @@ class CourseCardWidget extends StatelessWidget {
         }
       },
       child: Container(
-        height: 120.h.clamp(120, 140),
+        height: 140.h.clamp(140, 180),
         margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor,
@@ -145,7 +145,7 @@ class CourseCardWidget extends StatelessWidget {
                                   const SizedBox(width: 4),
                                   Icon(
                                     Icons.people,
-                                    size: screenWidth > 600 ? 18 : 16,
+                                    size: screenWidth > 600 ? 16 : 14,
                                     color: Colors.grey.shade600,
                                   ),
                                 ],
@@ -166,7 +166,7 @@ class CourseCardWidget extends StatelessWidget {
                       child: Stack(
                         children: [
                           Container(
-                            height: 120.h.clamp(120, 140),
+                            height: 140.h.clamp(140, 180),
                             child: CachedNetworkImage(
                               imageUrl:
                                   "${AppConstance.baseUrl}/storage/${course.image}",

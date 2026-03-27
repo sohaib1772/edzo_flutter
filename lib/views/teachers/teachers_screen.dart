@@ -26,7 +26,7 @@ class TeachersScreen extends StatelessWidget {
         return RefreshIndicator(
           onRefresh: () => controller.getTeachers(),
           child: ListView.separated(
-            padding: EdgeInsets.all(16.w),
+            padding: EdgeInsets.all(16.r),
             itemCount: controller.teachers.length,
             separatorBuilder: (context, index) => SizedBox(height: 16.h),
             itemBuilder: (context, index) {
@@ -46,7 +46,7 @@ class TeachersScreen extends StatelessWidget {
                   );
                 },
                 child: Container(
-                  padding: EdgeInsets.all(12.w),
+                  padding: EdgeInsets.all(12.r),
                   decoration: BoxDecoration(
                     color: Theme.of(context).cardColor,
                     borderRadius: BorderRadius.circular(12.r),
@@ -61,8 +61,8 @@ class TeachersScreen extends StatelessWidget {
                   child: Row(
                     children: [
                       Container(
-                        width: 80.w,
-                        height: 80.h,
+                        width: 80.r,
+                        height: 80.r,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           border: Border.all(

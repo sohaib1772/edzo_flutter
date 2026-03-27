@@ -54,7 +54,7 @@ class TeachersHorizontalListWidget extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 120.h,
+            height: 120.h.clamp(120, 140),
             child: ListView.separated(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               scrollDirection: Axis.horizontal,
@@ -79,8 +79,8 @@ class TeachersHorizontalListWidget extends StatelessWidget {
                   child: Column(
                     children: [
                       Container(
-                        width: 70.w,
-                        height: 70.h,
+                        width: 70.r,
+                        height: 70.r,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           border: Border.all(
@@ -114,7 +114,7 @@ class TeachersHorizontalListWidget extends StatelessWidget {
                       ),
                       SizedBox(height: 8.h),
                       SizedBox(
-                        width: 80.w,
+                        width: 80.r,
                         child: Text(
                           teacher.name ?? "استاذ",
                           textAlign: TextAlign.center,
