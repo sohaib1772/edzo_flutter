@@ -25,7 +25,7 @@ class SettingsScreen extends StatelessWidget {
     Widget? trailing,
   }) {
     return Container(
-      margin: EdgeInsets.only(bottom: 12.h),
+      margin: EdgeInsets.only(bottom: 12.r),
       decoration: BoxDecoration(
         color: controller.isDarkMode.value
             ? Colors.grey.shade900
@@ -40,9 +40,9 @@ class SettingsScreen extends StatelessWidget {
         ],
       ),
       child: ListTile(
-        contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
+        contentPadding: EdgeInsets.symmetric(horizontal: 16.r, vertical: 8.r),
         leading: Container(
-          padding: EdgeInsets.all(8.w),
+          padding: EdgeInsets.all(8.r),
           decoration: BoxDecoration(
             color: (iconColor ?? Theme.of(context).primaryColor).withOpacity(
               0.1,
@@ -149,7 +149,7 @@ class SettingsScreen extends StatelessWidget {
     return AppScaffold(
       title: "الإعدادات",
       body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
+        padding: EdgeInsets.symmetric(horizontal: 16.r, vertical: 24.r),
         child: Obx(
           () => Column(
             children: [

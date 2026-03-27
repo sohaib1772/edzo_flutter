@@ -54,7 +54,7 @@ class TeachersHorizontalListWidget extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 120.h.clamp(120, 140),
+            height: 160.h.clamp(160, 200),
             child: ListView.separated(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               scrollDirection: Axis.horizontal,

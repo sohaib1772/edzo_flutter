@@ -9,7 +9,7 @@ class ResponsiveCenter extends StatelessWidget {
   const ResponsiveCenter({
     super.key,
     required this.child,
-    this.maxWidth = 650,
+    this.maxWidth = 850,
     this.padding = 20,
   });
 
