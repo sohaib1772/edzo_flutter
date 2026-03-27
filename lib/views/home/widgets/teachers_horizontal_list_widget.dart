@@ -38,7 +38,7 @@ class TeachersHorizontalListWidget extends StatelessWidget {
                   child: Text(
                     "See All",
                     style: TextStyle(
-                      fontSize: 14.sp,
+                      fontSize: 14.sp.clamp(10, 14),
                       color: Get.theme.primaryColor,
                     ),
                   ),
@@ -46,7 +46,7 @@ class TeachersHorizontalListWidget extends StatelessWidget {
                 Text(
                   "Lectures",
                   style: TextStyle(
-                    fontSize: 18.sp,
+                    fontSize: 18.sp.clamp(14, 18),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -121,7 +121,7 @@ class TeachersHorizontalListWidget extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            fontSize: 12.sp,
+                            fontSize: 12.sp.clamp(8, 12),
                             fontWeight: FontWeight.w500,
                           ),
                         ),
