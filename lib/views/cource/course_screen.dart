@@ -20,7 +20,7 @@ class CourseScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool fromDeepLink = (Get.arguments?['fromDeepLink']) ?? false;
+    final bool fromDeepLink = courseController.fromDeepLink;
 
     return AppScaffold(
       leading: fromDeepLink

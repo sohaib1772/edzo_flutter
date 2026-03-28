@@ -20,14 +20,16 @@ class CourseController extends GetxController {
   RxList<PlaylistModel> playlists = <PlaylistModel>[].obs;
   CourseModel? courseModel;
   RxInt totalDuration = 0.obs;
+  bool fromDeepLink = false;
 
   @override
   void onInit() {
     if (Get.arguments != null) {
       if (Get.arguments is CourseModel) {
         courseModel = Get.arguments;
-      } else if (Get.arguments['courseModel'] != null) {
+      } else if (Get.arguments is Map && Get.arguments['courseModel'] != null) {
         courseModel = Get.arguments['courseModel'];
+        fromDeepLink = Get.arguments['fromDeepLink'] ?? false;
       }
     }
     super.onInit();
