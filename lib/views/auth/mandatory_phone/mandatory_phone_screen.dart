@@ -2,6 +2,7 @@ import 'package:edzo/controllers/auth/mandatory_phone_controller.dart';
 import 'package:edzo/core/widgets/app_text_button.dart';
 import 'package:edzo/core/widgets/app_text_form.dart';
 import 'package:edzo/core/widgets/scaffold/app_scaffold.dart';
+import 'package:edzo/views/auth/widgets/telegram_support_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -76,6 +77,7 @@ class MandatoryPhoneScreen extends StatelessWidget {
                 },
                 child: Text("تسجيل الخروج"),
               ),
+              TelegramSupportWidget(),
             ],
           ),
         ),

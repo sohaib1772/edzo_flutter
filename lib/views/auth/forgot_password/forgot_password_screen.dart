@@ -1,4 +1,5 @@
 import 'package:edzo/core/widgets/scaffold/app_scaffold.dart';
+import 'package:edzo/views/auth/widgets/telegram_support_widget.dart';
 import 'package:edzo/views/auth/forgot_password/widgets/forgot_password_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -34,8 +35,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 18.h),
                         ForgotPasswordForm(),
-              
-                        
+                        TelegramSupportWidget(),
                       ],
                     ),
             );},
