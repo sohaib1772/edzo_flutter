@@ -22,6 +22,7 @@ class VimeoUploadTask {
   final String filePath;
   final bool isPaid;
 
+  int totalSize = 0;
   final RxDouble progress = 0.0.obs;
   final RxInt duration = 0.obs;
   final Rx<UploadStatus> status = UploadStatus.uploading.obs;
@@ -42,6 +43,7 @@ class VimeoUploadTask {
     this.laravelId,
     this.vimeoId,
     this.uploadUrl,
+    this.totalSize = 0,
     UploadStatus? initialStatus,
   }) {
     if (initialStatus != null) status.value = initialStatus;
@@ -59,6 +61,8 @@ class VimeoUploadTask {
       'laravelId': laravelId,
       'vimeoId': vimeoId,
       'uploadUrl': uploadUrl,
+      'totalSize': totalSize,
+      'progress': progress.value,
       'duration': duration.value,
       'status': status.value.index,
     };
@@ -76,10 +80,13 @@ class VimeoUploadTask {
       laravelId: json['laravelId'],
       vimeoId: json['vimeoId'],
       uploadUrl: json['uploadUrl'],
+      totalSize: json['totalSize'] ?? 0,
       initialStatus: json['status'] != null
           ? UploadStatus.values[json['status']]
           : UploadStatus.failed,
-    )..duration.value = json['duration'] ?? 0;
+    )
+      ..duration.value = json['duration'] ?? 0
+      ..progress.value = json['progress'] ?? 0.0;
   }
 }
 
@@ -166,6 +173,7 @@ class VimeoUploadController extends GetxController {
       fileName: taskFileName,
       filePath: taskFilePath,
       isPaid: taskIsPaid,
+      totalSize: taskSize,
     )..duration.value = taskDuration;
 
     tasks.add(newTask);
@@ -183,6 +191,13 @@ class VimeoUploadController extends GetxController {
         _handleTaskError(task, "ملف الفيديو لم يعد موجوداً");
         return;
       }
+
+      // Ensure we have a valid totalSize (especially after app restart)
+      if (task.totalSize <= 0) {
+        task.totalSize = await file.length();
+        _saveTasks();
+      }
+      final size = task.totalSize;
 
       int attempts = 0;
       const int maxAttempts = 3;
@@ -213,6 +228,13 @@ class VimeoUploadController extends GetxController {
         }
 
         final offset = await _tusGetOffset(task);
+        if (offset == -2) {
+          // Session expired or 404, force re-preparation
+          debugPrint("Vimeo Session expired (404). Re-preparing...");
+          task.uploadUrl = null;
+          continue;
+        }
+
         if (offset == -1) {
           await Future.delayed(const Duration(seconds: 5));
           continue;
@@ -248,10 +270,11 @@ class VimeoUploadController extends GetxController {
           validateStatus: (status) => status != null && status < 500,
         ),
       );
-      if (response.statusCode == 404) return 0;
+      if (response.statusCode == 404) return -2; // Session expired
       final offsetStr = response.headers.value('upload-offset');
       return int.tryParse(offsetStr ?? '0') ?? 0;
-    } catch (_) {
+    } catch (e) {
+      debugPrint("Vimeo GetOffset error: $e");
       return -1;
     }
   }
@@ -310,7 +333,7 @@ class VimeoUploadController extends GetxController {
     final task = tasks.firstWhereOrNull((t) => t.id == taskId);
     if (task == null) return;
     task.cancelToken = CancelToken();
-    _processTask(task, _videoSize, task.duration.value);
+    _processTask(task, task.totalSize, task.duration.value);
   }
 
   void removeTask(String taskId) {

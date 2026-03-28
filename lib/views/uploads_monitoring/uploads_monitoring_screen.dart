@@ -78,7 +78,10 @@ class UploadsMonitoringScreen extends StatelessWidget {
                   delegate: SliverChildBuilderDelegate((context, index) {
                     return Padding(
                       padding: EdgeInsets.only(bottom: 12.h),
-                      child: _buildVimeoTaskItem(vimeoTasks[index], vimeoController),
+                      child: _buildVimeoTaskItem(
+                        vimeoTasks[index],
+                        vimeoController,
+                      ),
                     );
                   }, childCount: vimeoTasks.length),
                 ),
@@ -114,46 +117,46 @@ class UploadsMonitoringScreen extends StatelessWidget {
             ],
 
             // ── Server Pending Videos ──
-            if (pending.isNotEmpty) ...[
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(16.r, 20.r, 16.r, 8.r),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "فيديوهات قيد المعالجة (سيرفر)",
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.orange,
-                        ),
-                      ),
-                      if (bunnyController.isLoadingPending.value)
-                        SizedBox(
-                          width: 14.w,
-                          height: 14.w,
-                          child: const CircularProgressIndicator(
-                            strokeWidth: 2,
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-              ),
-              SliverPadding(
-                padding: EdgeInsets.symmetric(horizontal: 16.r),
-                sliver: SliverList(
-                  delegate: SliverChildBuilderDelegate((context, index) {
-                    final video = pending[index];
-                    return Padding(
-                      padding: EdgeInsets.only(bottom: 12.h),
-                      child: _buildPendingVideoItem(video, bunnyController),
-                    );
-                  }, childCount: pending.length),
-                ),
-              ),
-            ],
+            // if (pending.isNotEmpty) ...[
+            //   SliverToBoxAdapter(
+            //     child: Padding(
+            //       padding: EdgeInsets.fromLTRB(16.r, 20.r, 16.r, 8.r),
+            //       child: Row(
+            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //         children: [
+            //           Text(
+            //             "فيديوهات قيد المعالجة (سيرفر)",
+            //             style: TextStyle(
+            //               fontSize: 14.sp,
+            //               fontWeight: FontWeight.bold,
+            //               color: Colors.orange,
+            //             ),
+            //           ),
+            //           if (bunnyController.isLoadingPending.value)
+            //             SizedBox(
+            //               width: 14.w,
+            //               height: 14.w,
+            //               child: const CircularProgressIndicator(
+            //                 strokeWidth: 2,
+            //               ),
+            //             ),
+            //         ],
+            //       ),
+            //     ),
+            //   ),
+            //   SliverPadding(
+            //     padding: EdgeInsets.symmetric(horizontal: 16.r),
+            //     sliver: SliverList(
+            //       delegate: SliverChildBuilderDelegate((context, index) {
+            //         final video = pending[index];
+            //         return Padding(
+            //           padding: EdgeInsets.only(bottom: 12.h),
+            //           child: _buildPendingVideoItem(video, bunnyController),
+            //         );
+            //       }, childCount: pending.length),
+            //     ),
+            //   ),
+            // ],
             SliverToBoxAdapter(child: SizedBox(height: 40.h)),
           ],
         );
@@ -205,7 +208,10 @@ class UploadsMonitoringScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildVimeoTaskItem(VimeoUploadTask task, VimeoUploadController controller) {
+  Widget _buildVimeoTaskItem(
+    VimeoUploadTask task,
+    VimeoUploadController controller,
+  ) {
     return Container(
       padding: EdgeInsets.all(12.r),
       decoration: BoxDecoration(
@@ -253,7 +259,11 @@ class UploadsMonitoringScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   child: LinearProgressIndicator(
                     minHeight: 8.h,
-                    value: task.progress.value,
+                    value: task.status.value == UploadStatus.success
+                        ? 1.0
+                        : task.progress.value.isFinite
+                        ? task.progress.value
+                        : 0.0,
                     backgroundColor: Colors.grey.shade200,
                     valueColor: AlwaysStoppedAnimation<Color>(
                       task.status.value == UploadStatus.failed
@@ -271,7 +281,7 @@ class UploadsMonitoringScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "${(task.progress.value * 100).toStringAsFixed(0)}%",
+                      "${(task.status.value == UploadStatus.success ? 100 : (task.progress.value.isFinite ? task.progress.value : 0.0) * 100).toStringAsFixed(0)}%",
                       style: TextStyle(
                         fontSize: 12.sp,
                         fontWeight: FontWeight.bold,
@@ -386,7 +396,9 @@ class UploadsMonitoringScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   child: LinearProgressIndicator(
                     minHeight: 8.h,
-                    value: task.progress.value,
+                    value: task.progress.value.isFinite
+                        ? task.progress.value
+                        : 0.0,
                     backgroundColor: Colors.grey.shade200,
                     valueColor: AlwaysStoppedAnimation<Color>(
                       task.status.value == UploadStatus.failed
@@ -404,7 +416,7 @@ class UploadsMonitoringScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "${(task.progress.value * 100).toStringAsFixed(0)}%",
+                      "${((task.progress.value.isFinite ? task.progress.value : 0.0) * 100).toStringAsFixed(0)}%",
                       style: TextStyle(
                         fontSize: 12.sp,
                         fontWeight: FontWeight.bold,

@@ -58,6 +58,7 @@ class UploadTask {
       'laravelId': laravelId,
       'bunny': bunny?.toJson(),
       'uploadUrl': uploadUrl,
+      'progress': progress.value,
       'duration': duration.value,
       'status': status.value.index,
     };
@@ -80,7 +81,9 @@ class UploadTask {
       initialStatus: json['status'] != null
           ? UploadStatus.values[json['status']]
           : UploadStatus.failed,
-    )..duration.value = json['duration'] ?? 0;
+    )
+      ..duration.value = json['duration'] ?? 0
+      ..progress.value = json['progress'] ?? 0.0;
   }
 }
 
