@@ -26,19 +26,19 @@ class CourseCodeCard extends StatelessWidget {
       case 1:
         statusColor = Theme.of(context).cardColor;
         statusText = "تم النسخ";
-        textColor = Colors.grey.shade800;
+        textColor = Theme.of(context).colorScheme.inverseSurface.withAlpha(50);
         statusIcon = Icons.content_copy_outlined;
         break;
       case 2:
         statusColor = Theme.of(context).cardColor;
         statusText = "مستعمل";
-        textColor = Colors.grey.shade400;
+        textColor = Theme.of(context).colorScheme.inverseSurface.withAlpha(50);
         statusIcon = Icons.check_circle_outline;
         break;
       default:
         statusColor = Theme.of(context).cardColor;
         statusText = "لم يستعمل";
-        textColor = Colors.grey.shade400;
+        textColor = Theme.of(context).colorScheme.inverseSurface;
         statusIcon = Icons.hourglass_empty;
     }
 
@@ -50,13 +50,13 @@ class CourseCodeCard extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
       color: statusColor,
       child: ListTile(
-        contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+        contentPadding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
         title: isUsed
             ? Text(
                 codeText,
                 style: TextStyle(
                   color: textColor,
-                  fontSize: 18.sp,
+                  fontSize: 14.sp,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 1.2,
                   decoration: TextDecoration.lineThrough,
@@ -67,7 +67,7 @@ class CourseCodeCard extends StatelessWidget {
                 codeText,
                 style: TextStyle(
                   color: textColor,
-                  fontSize: 18.sp,
+                  fontSize: 14.sp,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 1.2,
                 ),
@@ -78,7 +78,7 @@ class CourseCodeCard extends StatelessWidget {
             SizedBox(height: 4.h),
             Row(
               children: [
-                Icon(statusIcon, size: 16.sp, color: textColor),
+                Icon(statusIcon, size: 12.sp, color: textColor),
                 SizedBox(width: 4.w),
                 Text(
                   statusText,
@@ -91,7 +91,7 @@ class CourseCodeCard extends StatelessWidget {
               Text(
                 "بواسطة: ${code.user?.name ?? 'طالب مجهول'}",
                 style: TextStyle(
-                  fontSize: 14.sp,
+                  fontSize: 12.sp,
                   fontWeight: FontWeight.w600,
                   color: Colors.green.shade800,
                 ),
@@ -104,25 +104,18 @@ class CourseCodeCard extends StatelessWidget {
           children: [
             if (!isUsed) ...[
               IconButton(
+                iconSize: 18.sp,
                 icon: const Icon(Icons.share, color: Colors.blue),
                 onPressed: () => controller.shareCode(code, index),
                 tooltip: "مشاركة الكود",
               ),
               IconButton(
+                iconSize: 18.sp,
                 icon: const Icon(Icons.copy),
                 onPressed: () => controller.copyCode(code, index),
                 tooltip: "نسخ الكود",
               ),
             ],
-            SizedBox(width: 4.w),
-            Text(
-              "${index + 1}",
-              style: TextStyle(
-                color: textColor,
-                fontSize: 18.sp,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
           ],
         ),
       ),

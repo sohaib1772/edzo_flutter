@@ -32,7 +32,7 @@ class CourseCodesScreen extends StatelessWidget {
                   Expanded(
                     child: Obx(
                       () => ListView.builder(
-                        padding: EdgeInsets.symmetric(horizontal: 16.w),
+                        padding: EdgeInsets.symmetric(horizontal: 4.w),
                         itemCount: controller.filteredCodes.length,
                         itemBuilder: (_, index) {
                           final code = controller.filteredCodes[index];
